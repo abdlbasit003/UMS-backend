@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class UniversityManagementSystemApplication {
 
 	public static void main(String[] args) {
-		System.out.println("Testing push 2");
+		System.out.println("Testing again!");
 		SpringApplication.run(UniversityManagementSystemApplication.class, args);
 	}
 
