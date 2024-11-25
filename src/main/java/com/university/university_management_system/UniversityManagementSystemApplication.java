@@ -10,5 +10,4 @@ public class UniversityManagementSystemApplication {
 		System.out.println("Testing again!");
 		SpringApplication.run(UniversityManagementSystemApplication.class, args);
 	}
-
 }
