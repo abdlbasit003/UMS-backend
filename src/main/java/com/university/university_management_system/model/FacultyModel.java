@@ -13,12 +13,9 @@ public class FacultyModel {
     @Column(name = "faculty_name", nullable = false)
     private String facultyName;
 
-    @ManyToOne
-    @JoinColumn(name = "department_id", referencedColumnName = "department_id", nullable = false)
-    private DepartmentModel department;
 
-    @ManyToOne
-    @JoinColumn(name = "designation_id", referencedColumnName = "designation_id", nullable = false)
+    @OneToOne
+    @JoinColumn(name = "designation_id", referencedColumnName = "designation_id")
     private DesignationModel designation;
 
     @Column(name = "faculty_arrival_time", nullable = false)
@@ -35,9 +32,6 @@ public class FacultyModel {
         return facultyName;
     }
 
-    public DepartmentModel getDepartment() {
-        return department;
-    }
 
     public DesignationModel getDesignation() {
         return designation;

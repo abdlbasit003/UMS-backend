@@ -11,12 +11,12 @@ public class InvigilatorModel {
     @Column(name = "invigilator_id")
     private int invigilatorId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "faculty_id", referencedColumnName = "faculty_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "faculty_id", referencedColumnName = "faculty_id")
     private FacultyModel faculty;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "exam_hall_id", referencedColumnName = "exam_hall_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "exam_hall_id", referencedColumnName = "exam_hall_id")
     private ExamHallModel examHall;
 
 

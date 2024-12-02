@@ -10,11 +10,11 @@ public class DepartmentModel {
     @Column(name = "department_id")
     private int departmentId;
 
-    @Column(name = "department_name", nullable = false)
+    @Column(name = "department_name")
     private String departmentName;
 
-    @ManyToOne
-    @JoinColumn(name = "department_head_id", referencedColumnName = "faculty_id", nullable = false)
+    @OneToOne
+    @JoinColumn(name = "department_head_id", referencedColumnName = "faculty_id")
     private FacultyModel departmentHead;
 
 

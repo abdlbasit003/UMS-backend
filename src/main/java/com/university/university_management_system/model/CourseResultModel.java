@@ -11,22 +11,22 @@ public class CourseResultModel {
     @Column(name = "course_result_id")
     private int courseResultId;
 
-    @Column(name = "marks_obtained", nullable = false)
-    private int marksObtained;
+    @Column(name = "marks_obtained")
+    private double marksObtained;
 
-    @Column(name = "grade", nullable = false)
+    @Column(name = "grade")
     private String grade;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "student_id", referencedColumnName = "student_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "student_id", referencedColumnName = "student_id")
     private StudentModel student;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "course_code", referencedColumnName = "course_code", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "course_code", referencedColumnName = "course_code")
     private CourseModel course;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "exam_id", referencedColumnName = "exam_id", nullable = false)
+    @OneToOne
+    @JoinColumn(name = "exam_id", referencedColumnName = "exam_id")
     private ExamModel exam;
 
 
@@ -34,7 +34,7 @@ public class CourseResultModel {
         return courseResultId;
     }
 
-    public int getMarksObtained() {
+    public double getMarksObtained() {
         return marksObtained;
     }
 

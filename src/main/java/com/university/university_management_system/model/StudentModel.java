@@ -7,31 +7,30 @@ import jakarta.persistence.*;
 public class StudentModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "student_id")
-    private int studentId;
+    private String studentId;
 
-    @Column(name = "student_name", nullable = false)
+    @Column(name = "student_name")
     private String studentName;
 
-    @Column(name = "student_email", nullable = false, unique = true)
+    @Column(name = "student_email")
     private String studentEmail;
 
-    @Column(name = "student_phone_number", nullable = false)
+    @Column(name = "student_phone_number")
     private String studentPhoneNumber;
 
     @ManyToOne
-    @JoinColumn(name = "department_id", referencedColumnName = "department_id", nullable = false)
+    @JoinColumn(name = "department_id", referencedColumnName = "department_id")
     private DepartmentModel department;
 
     @Column(name = "student_cgpa")
     private double studentCgpa;
 
-    @Column(name = "student_enrollment_year", nullable = false)
+    @Column(name = "student_enrollment_year")
     private int studentEnrollmentYear;
 
 
-    public int getStudentId() {
+    public String getStudentId() {
         return studentId;
     }
 

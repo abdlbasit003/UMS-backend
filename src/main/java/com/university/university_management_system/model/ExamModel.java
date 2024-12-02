@@ -14,28 +14,28 @@ public class ExamModel {
     private int examId;
 
     @ManyToOne
-    @JoinColumn(name = "course_code", referencedColumnName = "course_code", nullable = false)
+    @JoinColumn(name = "course_code", referencedColumnName = "course_code")
     private CourseModel course;
 
-    @ManyToOne
-    @JoinColumn(name = "exam_type_id", referencedColumnName = "exam_type_id", nullable = false)
+    @OneToOne
+    @JoinColumn(name = "exam_type_id", referencedColumnName = "exam_type_id")
     private ExamTypeModel examType;
 
-    @Column(name = "exam_start_time", nullable = false)
+    @Column(name = "exam_start_time")
     private LocalTime examStartTime;
 
-    @Column(name = "exam_end_time", nullable = false)
+    @Column(name = "exam_end_time")
     private LocalTime examEndTime;
 
-    @Column(name = "exam_date", nullable = false)
+    @Column(name = "exam_date")
     private LocalDate examDate;
 
     @ManyToOne
-    @JoinColumn(name = "exam_hall_id", referencedColumnName = "exam_hall_id", nullable = false)
+    @JoinColumn(name = "exam_hall_id", referencedColumnName = "exam_hall_id")
     private ExamHallModel examHall;
 
-    @ManyToOne
-    @JoinColumn(name = "exam_mode_id", referencedColumnName = "exam_mode_id", nullable = false)
+    @OneToOne
+    @JoinColumn(name = "exam_mode_id", referencedColumnName = "exam_mode_id")
     private ExamModeModel examMode;
 
 

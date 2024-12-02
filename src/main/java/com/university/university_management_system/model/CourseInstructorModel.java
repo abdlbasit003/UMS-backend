@@ -11,12 +11,12 @@ public class CourseInstructorModel {
     @Column(name = "course_instructor_id")
     private int courseInstructorId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "faculty_id", referencedColumnName = "faculty_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "faculty_id", referencedColumnName = "faculty_id")
     private FacultyModel faculty;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "course_code", referencedColumnName = "course_code", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "course_code", referencedColumnName = "course_code")
     private CourseModel course;
 
 

@@ -7,16 +7,11 @@ import jakarta.persistence.*;
 public class CourseModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "course_code")
     private String courseCode;
 
     @Column(name = "course_name", nullable = false)
     private String courseName;
-
-    @ManyToOne
-    @JoinColumn(name = "department_id", referencedColumnName = "department_id", nullable = false)
-    private DepartmentModel department;
 
     @Column(name = "course_credit_hours", nullable = false)
     private int courseCreditHours;
@@ -24,9 +19,8 @@ public class CourseModel {
     @Column(name = "course_pre_requisite")
     private String coursePreRequisite;
 
-    @ManyToOne
-    @JoinColumn(name = "faculty_id", referencedColumnName = "faculty_id", nullable = false)
-    private FacultyModel faculty;
+    @Column(name = "course_co_requisite")
+    private String courseCoRequisite;
 
 
     public String getCourseCode() {
@@ -37,9 +31,7 @@ public class CourseModel {
         return courseName;
     }
 
-    public DepartmentModel getDepartment() {
-        return department;
-    }
+
 
     public int getCourseCreditHours() {
         return courseCreditHours;
@@ -49,9 +41,6 @@ public class CourseModel {
         return coursePreRequisite;
     }
 
-    public FacultyModel getFaculty() {
-        return faculty;
-    }
 
 
 }

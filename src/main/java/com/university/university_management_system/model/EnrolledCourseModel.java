@@ -12,11 +12,11 @@ public class EnrolledCourseModel {
     private int enrolledCourseId;
 
     @ManyToOne
-    @JoinColumn(name = "student_id", referencedColumnName = "student_id", nullable = false)
+    @JoinColumn(name = "student_id", referencedColumnName = "student_id")
     private StudentModel student;
 
     @ManyToOne
-    @JoinColumn(name = "course_code", referencedColumnName = "course_code", nullable = false)
+    @JoinColumn(name = "course_code", referencedColumnName = "course_code")
     private CourseModel course;
 
 

@@ -11,10 +11,10 @@ public class ExamHallModel {
     @Column(name = "exam_hall_id")
     private int examHallId;
 
-    @Column(name = "exam_hall_name", nullable = false)
+    @Column(name = "exam_hall_name")
     private String examHallName;
 
-    @Column(name = "number_of_seats", nullable = false)
+    @Column(name = "number_of_seats")
     private int numberOfSeats;
 
 
