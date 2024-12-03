@@ -23,9 +23,9 @@ public class EnrolledCoursesController {
         return enrolledCourseRepository.findAll();
     }
 
-    @GetMapping("/{id}")
-    public EnrolledCourseModel getEnrolledCourseByID(@PathVariable int id){
-        return enrolledCourseRepository.findById(id).orElseThrow();
+    @GetMapping("/{enrolledCourseId}")
+    public EnrolledCourseModel getEnrolledCourseByID(@PathVariable int enrolledCourseId){
+        return enrolledCourseRepository.findById(enrolledCourseId).orElseThrow();
     }
 
 }
