@@ -4,15 +4,23 @@ import java.util.*;
 import com.university.university_management_system.model.DesignationModel;
 import com.university.university_management_system.repository.DesignationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-public class designationcontroller {
+@RestController
+@RequestMapping("/designations")
+public class DesignationController {
     @Autowired
     DesignationRepository designationRepository;
 
+    @GetMapping("")
     public List<DesignationModel> getall(){
         return designationRepository.findAll();
     }
-    public DesignationModel getbyid(int id){
-        return designationRepository.findById(id).orElseThrow();
+    @GetMapping("/{designationId}")
+    public DesignationModel getbyid(@PathVariable int designationId){
+        return designationRepository.findById(designationId).orElseThrow();
     }
 }
