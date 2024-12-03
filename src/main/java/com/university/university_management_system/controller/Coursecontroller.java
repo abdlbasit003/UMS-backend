@@ -1,20 +1,23 @@
 package com.university.university_management_system.controller;
 
 import com.university.university_management_system.model.CourseModel;
-import com.university.university_management_system.model.StudentModel;
 import com.university.university_management_system.repository.CourseRepository;
-import com.university.university_management_system.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-public class Coursecontroller {
+@RestController
+@RequestMapping("/courses")
+public class CourseController {
     @Autowired
     CourseRepository courseRepository;
+    @GetMapping("")
     public List<CourseModel> getAllCourses(){
         return courseRepository.findAll();
     }
-    public CourseModel getbyIDCourse(String id){
-        return courseRepository.findById(id).orElseThrow();
+    @GetMapping("/{courseCode}")
+    public CourseModel getbyIDCourse(@PathVariable String courseCode){
+        return courseRepository.findById(courseCode).orElseThrow();
     }
 }
