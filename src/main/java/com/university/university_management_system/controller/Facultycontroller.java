@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/faculty")
-public class Facultycontroller {
+public class FacultyController {
     @Autowired
     FacultyRepository facultyRepository;
 
