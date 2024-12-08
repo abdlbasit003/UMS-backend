@@ -24,6 +24,11 @@ public class FacultyModel {
     @Column(name = "faculty_off_time", nullable = false)
     private String facultyOffTime;
 
+
+    @OneToOne
+    @JoinColumn(name="faculty_uuid",referencedColumnName = "uuid")
+    private UserModel user;
+
     public int getFacultyId() {
         return facultyId;
     }
@@ -48,4 +53,11 @@ public class FacultyModel {
     }
 
 
+    public UserModel getUuid() {
+        return user;
+    }
+
+    public void setUuid(UserModel user) {
+        this.user = user;
+    }
 }

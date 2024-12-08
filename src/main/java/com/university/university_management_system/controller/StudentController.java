@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.print.DocFlavor;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/students")
@@ -18,12 +20,12 @@ public class StudentController {
 
     @GetMapping("")
     public List<StudentModel> getAllStudents(){
-        return studentRepository.findAll();
+        return studentRepository.getAllStudents();
 
     }
     @GetMapping("/{studentId}")
     public StudentModel getStudentById(@PathVariable String studentId){
        return studentRepository.findById(studentId).orElseThrow();
-
     }
+
 }

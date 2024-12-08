@@ -1,10 +1,13 @@
 package com.university.university_management_system.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+
+import java.io.Serializable;
 
 @Entity
 @Table(name = "student")
-public class StudentModel {
+public class StudentModel{
 
     @Id
     @Column(name = "student_id")
@@ -12,12 +15,6 @@ public class StudentModel {
 
     @Column(name = "student_name")
     private String studentName;
-
-    @Column(name = "student_email")
-    private String studentEmail;
-
-    @Column(name = "student_phone_number")
-    private String studentPhoneNumber;
 
     @ManyToOne
     @JoinColumn(name = "department_id", referencedColumnName = "department_id")
@@ -29,6 +26,10 @@ public class StudentModel {
     @Column(name = "student_enrollment_year")
     private int studentEnrollmentYear;
 
+    @OneToOne
+    @JoinColumn(name="student_uuid",referencedColumnName = "uuid")
+    private UserModel user;
+
 
     public String getStudentId() {
         return studentId;
@@ -37,14 +38,6 @@ public class StudentModel {
 
     public String getStudentName() {
         return studentName;
-    }
-
-    public String getStudentEmail() {
-        return studentEmail;
-    }
-
-    public String getStudentPhoneNumber() {
-        return studentPhoneNumber;
     }
 
     public DepartmentModel getDepartment() {
@@ -60,4 +53,11 @@ public class StudentModel {
     }
 
 
+    public UserModel getUser() {
+        return user;
+    }
+
+    public void setUser(UserModel user) {
+        this.user = user;
+    }
 }
