@@ -17,7 +17,7 @@ public class FacultyController {
 
     @GetMapping("")
     public List<FacultyModel> getall(){
-        return facultyRepository.findAll();
+        return facultyRepository.getAllFaculty();
     }
 
     @GetMapping("/{facultyId}")

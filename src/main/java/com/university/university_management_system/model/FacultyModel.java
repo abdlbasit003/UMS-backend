@@ -53,11 +53,11 @@ public class FacultyModel {
     }
 
 
-    public UserModel getUuid() {
+    public UserModel getUser() {
         return user;
     }
 
-    public void setUuid(UserModel user) {
+    public void setUser(UserModel user) {
         this.user = user;
     }
 }

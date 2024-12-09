@@ -1,18 +1,21 @@
 package com.university.university_management_system.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import jakarta.persistence.*;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "user")
 public class UserModel{
 
     @Id
-    @Column(name="uuid")
-    private UUID uuid;
+    @Column(name = "uuid", columnDefinition = "UUID")
+    private String uuid;
 
     @Column(name = "full_name")
     private String fullName;
@@ -26,6 +29,7 @@ public class UserModel{
     @Column(name = "user_phone")
     private String userPhone;
 
+    @JsonIgnore
     @Column(name = "password")
     private String password;
 
@@ -39,7 +43,6 @@ public class UserModel{
     @JoinColumn(name = "user_role_id")
     private UserRoleModel userRole;
 
-    // Getters and Setters
 
     public UUID getUuid() {
         return uuid;
@@ -114,7 +117,7 @@ public class UserModel{
     }
 
 
-    public Map<String,Object> toJson(UserModel userModel){
+    public static Map<String,Object> toJson(UserModel userModel){
         Map<String,Object> userJson = new HashMap<>();
         userJson.put("uuid",userModel.getUuid());
         userJson.put("fullName",userModel.getFullName());

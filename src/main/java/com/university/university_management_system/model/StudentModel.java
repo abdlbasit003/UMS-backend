@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity
 @Table(name = "student")
@@ -26,7 +28,7 @@ public class StudentModel{
     @Column(name = "student_enrollment_year")
     private int studentEnrollmentYear;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="student_uuid",referencedColumnName = "uuid")
     private UserModel user;
 
@@ -59,5 +61,14 @@ public class StudentModel{
 
     public void setUser(UserModel user) {
         this.user = user;
+    }
+
+    public static Map<String,Object> toJson(StudentModel studentModel){
+        Map<String,Object> studentJson = new HashMap<>();
+        studentJson.put("studentId",studentModel.getStudentId());
+        studentJson.put("studentName",studentModel.getStudentName());
+        studentJson.put("studentDepartment",studentModel.getDepartment());
+        studentJson.put("studentEnrollmentYear",studentModel.getStudentEnrollmentYear());
+        return studentJson;
     }
 }
