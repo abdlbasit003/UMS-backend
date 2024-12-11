@@ -26,7 +26,7 @@ public class StudentModel{
     private double studentCgpa;
 
     @Column(name = "student_enrollment_year")
-    private int studentEnrollmentYear;
+    private String studentEnrollmentYear;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="student_uuid",referencedColumnName = "uuid")
@@ -50,7 +50,7 @@ public class StudentModel{
         return studentCgpa;
     }
 
-    public int getStudentEnrollmentYear() {
+    public String getStudentEnrollmentYear() {
         return studentEnrollmentYear;
     }
 

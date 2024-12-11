@@ -1,4 +1,4 @@
-package com.university.university_management_system.helpers;
+package com.university.university_management_system.utils;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -10,7 +10,7 @@ public class SHA256Hashing {
 
 
 
-    public String hashWithSHA256(String input) {
+    public static String hashWithSHA256(String input) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] encodedhash = digest.digest(input.getBytes(StandardCharsets.UTF_8));

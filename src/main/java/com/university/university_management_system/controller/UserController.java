@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.*;
 
 @RestController
-
+@RequestMapping("users")
 public class UserController {
 
 
@@ -22,16 +22,14 @@ public class UserController {
     UserRepository userRepository;
 
 
-    @GetMapping("/users")
+    @GetMapping("")
     public List<UserModel> getAll(){
         return userRepository.findAll();
     }
 
-    @GetMapping("/users/{uuid}")
-    public void getUser(@PathVariable String uuid){
-        System.out.println(UUID.fromString(uuid));
-
-//        return userRepository.findByUuid(uuid);
+    @GetMapping("/{uuid}")
+    public UserModel getUserByUuid(@PathVariable String uuid){
+          return userRepository.findById(uuid).orElseThrow();
     }
 
 

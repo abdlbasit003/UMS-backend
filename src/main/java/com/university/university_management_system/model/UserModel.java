@@ -1,12 +1,7 @@
 package com.university.university_management_system.model;
-
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import jakarta.persistence.*;
-
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -44,11 +39,11 @@ public class UserModel{
     private UserRoleModel userRole;
 
 
-    public UUID getUuid() {
+    public String getUuid() {
         return uuid;
     }
 
-    public void setUuid(UUID uuid) {
+    public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 
@@ -117,16 +112,5 @@ public class UserModel{
     }
 
 
-    public static Map<String,Object> toJson(UserModel userModel){
-        Map<String,Object> userJson = new HashMap<>();
-        userJson.put("uuid",userModel.getUuid());
-        userJson.put("fullName",userModel.getFullName());
-        userJson.put("userEmail",userModel.getUserEmail());
-        userJson.put("userPhone",userModel.getUserPhone());
-        userJson.put("gender",userModel.getGender());
-        userJson.put("age",userModel.getAge());
-        userJson.put("role",userModel.getUserRole());
-        return userJson;
-    }
 }
 
