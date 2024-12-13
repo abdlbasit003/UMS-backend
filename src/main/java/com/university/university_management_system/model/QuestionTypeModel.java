@@ -10,12 +10,10 @@ public class QuestionTypeModel {
     @Column(name = "question_type_id")
     public int typeId;
 
-    @Column(name = "question_type_name")
+    @Column(name = "type")
     public String name;
 
-    public QuestionTypeModel(String name) {
-        this.name = name;
-    }
+
 
     public int getTypeId() {
         return typeId;

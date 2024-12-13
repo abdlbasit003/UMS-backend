@@ -3,6 +3,7 @@ package com.university.university_management_system.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name="exam_questions")
 public class ExamQuestionsModel {
 
     @Id
@@ -18,9 +19,6 @@ public class ExamQuestionsModel {
     @JoinColumn(name = "question_id", referencedColumnName = "question_id")
     private QuestionModel question;
 
-    @Column(name = "marks", nullable = false)
-    private int marks;
-
 
     public int getExamQuestionId() {
         return examQuestionId;
@@ -34,9 +32,7 @@ public class ExamQuestionsModel {
         return question;
     }
 
-    public int getMarks() {
-        return marks;
-    }
+
 
     public void setExamQuestionId(int examQuestionId) {
         this.examQuestionId = examQuestionId;
@@ -50,7 +46,5 @@ public class ExamQuestionsModel {
         this.question = question;
     }
 
-    public void setMarks(int marks) {
-        this.marks = marks;
-    }
+
 }

@@ -9,26 +9,26 @@ public class ExamPaperSubmissionModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "submission_id")
+    @Column(name = "exam_paper_submission_id")
     private int submissionId;
 
     @ManyToOne
-    @JoinColumn(name = "exam_id", nullable = false)
+    @JoinColumn(name = "exam_id", referencedColumnName = "exam_id")
     private ExamModel exam;
 
     @ManyToOne
-    @JoinColumn(name = "status_id", nullable = false)
+    @JoinColumn(name = "exam_paper_status_id", referencedColumnName = "exam_paper_status_id")
     private ExamPaperStatus status;
 
-    @Column(name = "submission_due_date", nullable = false)
+    @Column(name = "submission_due_date")
     private LocalDateTime submissionDueDate;
 
     @Column(name = "submitted_on")
     private LocalDateTime submittedOn;
 
     @ManyToOne
-    @JoinColumn(name = "submitted_by", nullable = false)
-    private StudentModel submittedBy;
+    @JoinColumn(name = "submitted_by" , referencedColumnName = "faculty_id")
+    private FacultyModel submittedBy;
 
 
     public int getSubmissionId() {
@@ -51,7 +51,7 @@ public class ExamPaperSubmissionModel {
         return submittedOn;
     }
 
-    public StudentModel getSubmittedBy() {
+    public FacultyModel getSubmittedBy() {
         return submittedBy;
     }
 }

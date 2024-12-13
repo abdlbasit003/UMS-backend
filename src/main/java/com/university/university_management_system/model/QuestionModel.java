@@ -25,7 +25,7 @@ public class QuestionModel {
 
     @ManyToOne
     @JoinColumn(name = "clo_id", referencedColumnName = "clo_id")
-    public CLOModel cloId;
+    public CLOModel clo;
 
     public int getQuestionId() {
         return questionId;
@@ -68,10 +68,10 @@ public class QuestionModel {
     }
 
     public CLOModel getClo() {
-        return cloId;
+        return clo;
     }
 
     public void setClo(CLOModel clo) {
-        this.cloId = clo;
+        this.clo = clo;
     }
 }

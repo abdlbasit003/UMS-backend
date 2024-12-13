@@ -3,6 +3,7 @@ package com.university.university_management_system.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "exam_content")
 public class ExamContentModel {
 
     @Id
@@ -10,18 +11,18 @@ public class ExamContentModel {
     @Column(name = "exam_content_id")
     private int examContentId;
 
-    @Column(name = "exam_content_title", nullable = false)
+    @Column(name = "exam_content_title")
     private String examContentTitle;
 
     @Column(name = "description")
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "content_type_id", referencedColumnName = "type_id", nullable = false)
+    @JoinColumn(name = "content_type_id", referencedColumnName = "content_type_id")
     private ExamContentTypeModel contentType;
 
     @ManyToOne
-    @JoinColumn(name = "question_id", referencedColumnName = "question_id", nullable = false)
+    @JoinColumn(name = "question_id", referencedColumnName = "question_id")
     private QuestionModel question;
 
 

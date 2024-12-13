@@ -2,7 +2,7 @@ package com.university.university_management_system.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "course_learning_objectives")
+@Table(name = "clo")
 public class CLOModel {
 
     @Id
@@ -10,17 +10,15 @@ public class CLOModel {
     @Column(name = "clo_id")
     public int cloId;
 
-    @Column(name = "description", nullable = false)
+    @Column(name = "description")
     public String description;
 
-    @ManyToOne
-    @JoinColumn(name = "course_code", referencedColumnName = "course_code", nullable = false)
-    public CourseModel course;
+    @Column(name = "clo_title")
+    public String title;
 
-    public CLOModel(String description, CourseModel course) {
-        this.description = description;
-        this.course = course;
-    }
+    @ManyToOne
+    @JoinColumn(name = "course_code", referencedColumnName = "course_code")
+    public CourseModel course;
 
     public int getCloId() {
         return cloId;
@@ -28,6 +26,14 @@ public class CLOModel {
 
     public void setCloId(int cloId) {
         this.cloId = cloId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {

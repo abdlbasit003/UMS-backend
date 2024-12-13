@@ -7,15 +7,12 @@ public class ExamPaperStatus {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "status_id")
+    @Column(name = "exam_paper_status_id")
     public int statusId;
 
-    @Column(name = "status_name", nullable = false)
+    @Column(name = "exam_paper_status_name", nullable = false)
     public String statusName;
 
-    public ExamPaperStatus(String statusName) {
-        this.statusName = statusName;
-    }
 
     public int getStatusId() {
         return statusId;
