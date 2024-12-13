@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/{studentId}/enrolledcourses")
+@RequestMapping("students/{studentId}/enrolledcourses")
 public class EnrolledCoursesController {
     @Autowired
     EnrolledCourseRepository enrolledCourseRepository;

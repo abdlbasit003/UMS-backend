@@ -22,6 +22,9 @@ public class CourseModel {
     @Column(name = "course_co_requisite")
     private String courseCoRequisite;
 
+    public String getCourseCoRequisite() {
+        return courseCoRequisite;
+    }
 
     public String getCourseCode() {
         return courseCode;
