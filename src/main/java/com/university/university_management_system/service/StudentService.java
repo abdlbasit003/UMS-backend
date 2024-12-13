@@ -14,20 +14,11 @@ public class StudentService {
     StudentRepository studentRepository;
 
 
-    public static StudentDTO fromModel(StudentModel studentModel){
-        return new StudentDTO(
-                studentModel.getUser().getUuid(),
-                studentModel.getStudentId(),
-                studentModel.getStudentName(),
-                studentModel.getDepartment().getDepartmentName(),
-                studentModel.getStudentEnrollmentYear(),
-                studentModel.getStudentCgpa()
-        );
-    }
+
 
     public StudentDTO getStudentById(String studentId){
         StudentModel studentModel = studentRepository.getById(studentId);
-        return StudentService.fromModel(studentModel);
+        return StudentDTO.fromModel(studentModel);
     }
 
 
