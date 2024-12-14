@@ -31,9 +31,8 @@ public class StudentController {
 
     @GetMapping("/{studentId}")
     public ResponseEntity<?> getStudentById(@PathVariable String studentId){
-        StudentDTO student = studentService.getStudentById(studentId);
-        if (student!=null)return ResponseEntity.ok(student);
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiException("Student not found"));
+       return ResponseEntity.ok(studentService.getStudentById(studentId));
+
 
     }
 

@@ -4,11 +4,10 @@ package com.university.university_management_system.controller;
 import com.university.university_management_system.model.UserModel;
 import com.university.university_management_system.model.UserRoleModel;
 import com.university.university_management_system.repository.UserRepository;
+import com.university.university_management_system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -19,18 +18,29 @@ public class UserController {
 
 
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
 
 
     @GetMapping("")
-    public List<UserModel> getAll(){
-        return userRepository.findAll();
+    public ResponseEntity<List<UserModel>> getAll(){
+        return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @GetMapping("/{uuid}")
-    public UserModel getUserByUuid(@PathVariable String uuid){
-          return userRepository.findById(uuid).orElseThrow();
+    public ResponseEntity<UserModel> getUserByUuid(@PathVariable String uuid){
+          return ResponseEntity.ok(userService.getUserByUuid(uuid));
     }
 
+    @GetMapping("/searchuser")
+    public ResponseEntity<List<UserModel>> searchUser(
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) String userName,
+            @RequestParam(required = false) Integer roleId,
+            @RequestParam(required = false) Integer minAge,
+            @RequestParam(required = false) Integer maxAge,
+            @RequestParam(required = false) String gender) {
 
+        List<UserModel> users = userService.searchUsers(email, userName, roleId, minAge, maxAge, gender);
+        return ResponseEntity.ok(users);
+    }
 }

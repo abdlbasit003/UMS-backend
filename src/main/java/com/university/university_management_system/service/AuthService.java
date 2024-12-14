@@ -6,6 +6,7 @@ import com.university.university_management_system.repository.UserRepository;
 import com.university.university_management_system.exceptions.ApiException;
 import com.university.university_management_system.utils.SHA256Hashing;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -24,7 +25,7 @@ public class AuthService {
         if (user != null && user.getPassword().equals(passHash)) {
             return user;
         }
-        throw new ApiException("Invalid Credentials");
+        throw new ApiException("Invalid Credentials", HttpStatus.UNAUTHORIZED);
 
     }
 
@@ -37,7 +38,7 @@ public class AuthService {
             userRepository.save(user); // Save the updated user
             return user;
         }
-        throw new ApiException("Invalid Credentials");
+        throw new ApiException("Invalid Credentials",HttpStatus.UNAUTHORIZED);
     }
 
 

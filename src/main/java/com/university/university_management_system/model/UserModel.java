@@ -1,7 +1,5 @@
 package com.university.university_management_system.model;
 import jakarta.persistence.*;
-import java.util.HashMap;
-import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -16,7 +14,7 @@ public class UserModel{
     private String fullName;
 
     @Column(name = "username")
-    private String username;
+    private String userName;
 
     @Column(name = "user_email")
     private String userEmail;
@@ -55,12 +53,12 @@ public class UserModel{
         this.fullName = fullName;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getUserEmail() {

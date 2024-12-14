@@ -12,7 +12,7 @@ public class HandleGlobalException {
     public ResponseEntity<ErrorResponse> handleApiException(ApiException ex) {
 
         ErrorResponse errorResponse = new ErrorResponse(ex.getMessage());
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorResponse, ex.getStatus());
     }
 
 
