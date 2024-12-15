@@ -1,7 +1,8 @@
-package com.university.university_management_system.dto;
+package com.university.university_management_system.DTOs;
 
 import com.university.university_management_system.DTOs.StudentDTO;
 import com.university.university_management_system.model.EnrolledCourseModel;
+import com.university.university_management_system.service.StudentService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,28 +11,14 @@ public class EnrolledCourseDTO {
 
     private int enrolledCourseId;
     private StudentDTO studentDTO;
-    private Map<String, String> course;
+    private Map<String, Object> course;
 
-    /**
-     * Default constructor.
-     */
-    public EnrolledCourseDTO() {
-        this.course = new HashMap<>();
-    }
 
-    /**
-     * Parameterized constructor.
-     * @param enrolledCourseId the ID of the enrolled course.
-     * @param studentDTO the student DTO associated with the enrolled course.
-     * @param course the course details as a map.
-     */
-    public EnrolledCourseDTO(int enrolledCourseId, StudentDTO studentDTO, Map<String, String> course) {
+    public EnrolledCourseDTO(int enrolledCourseId, StudentDTO studentDTO, Map<String, Object> course) {
         this.enrolledCourseId = enrolledCourseId;
         this.studentDTO = studentDTO;
         this.course = course;
     }
-
-    // Getters and Setters
 
     public int getEnrolledCourseId() {
         return enrolledCourseId;
@@ -49,29 +36,18 @@ public class EnrolledCourseDTO {
         this.studentDTO = studentDTO;
     }
 
-    public Map<String, String> getCourse() {
+    public Map<String, Object> getCourse() {
         return course;
     }
 
-    public void setCourse(Map<String, String> course) {
+    public void setCourse(Map<String, Object> course) {
         this.course = course;
     }
 
-    /**
-     * Static method to convert EnrolledCourseModel to EnrolledCourseDTO.
-     * @param model the EnrolledCourseModel to convert.
-     * @return an EnrolledCourseDTO representation of the model.
-     */
     public static EnrolledCourseDTO fromModel(EnrolledCourseModel model) {
-        EnrolledCourseDTO dto = new EnrolledCourseDTO();
-        dto.setEnrolledCourseId(model.getEnrolledCourseId());
-        dto.setStudentDTO(StudentDTO.fromModel(model.getStudent()));
-
-        Map<String, String> courseMap = new HashMap<>();
+        Map<String, Object> courseMap = new HashMap<>();
         courseMap.put("courseCode", model.getCourse().getCourseCode());
         courseMap.put("courseName", model.getCourse().getCourseName());
-        dto.setCourse(courseMap);
-
-        return dto;
+        return new EnrolledCourseDTO(model.getEnrolledCourseId(),StudentService.fromModel(model.getStudent()),courseMap);
     }
 }
