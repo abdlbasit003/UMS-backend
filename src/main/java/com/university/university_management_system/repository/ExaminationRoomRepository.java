@@ -8,7 +8,4 @@ import org.springframework.stereotype.Repository;
 public interface ExaminationRoomRepository extends JpaRepository<ExaminationRoomModel, Integer> {
     List <ExaminationRoomModel> findAll();
     ExaminationRoomModel findById(int examinationRoomId);
-    List<ExaminationRoomModel> findByExamId(int examId);
-    List<ExaminationRoomModel> findByStudentId(String studentId);
-    List<ExaminationRoomModel> findByExamHallId(int examHallId);
 }

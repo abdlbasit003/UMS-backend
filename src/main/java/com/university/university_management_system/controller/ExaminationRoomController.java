@@ -1,11 +1,11 @@
 package com.university.university_management_system.controller;
+
 import com.university.university_management_system.DTOs.ExaminationRoomDTO;
 import com.university.university_management_system.service.ExaminationRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,30 +14,34 @@ import java.util.List;
 public class ExaminationRoomController {
 
     @Autowired
-    ExaminationRoomService examinationRoomService;
+    public ExaminationRoomService examinationRoomService;
+
+    public ExaminationRoomController(ExaminationRoomService examinationRoomService) {
+        this.examinationRoomService = examinationRoomService;
+    }
 
     @GetMapping("")
-    public List<ExaminationRoomDTO> getAllExaminationRooms(){
-        return examinationRoomService.getAllExaminationRooms();
+    public ResponseEntity<?> getAllExaminationRooms() {
+        return ResponseEntity.ok().body(examinationRoomService.getAllExaminationRooms());
     }
 
     @GetMapping("/{examRoomId}")
-    public ExaminationRoomDTO getExaminationRoomByID(@PathVariable Integer examRoomId){
-        return examinationRoomService.getExaminationRoomById(examRoomId);
+    public ResponseEntity<?> getExaminationRoomById(@PathVariable Integer examRoomId) {
+        return ResponseEntity.ok().body(examinationRoomService.getExaminationRoomById(examRoomId));
     }
 
     @GetMapping("/exam/{examId}")
-    public List<ExaminationRoomDTO> getExaminationRoomsByExamId(@PathVariable Integer examId) {
-        return examinationRoomService.getExaminationRoomsByExamId(examId);
+    public ResponseEntity<?> getExaminationRoomsByExamId(@PathVariable Integer examId) {
+        return ResponseEntity.ok().body(examinationRoomService.getExaminationRoomsByExamId(examId));
     }
 
     @GetMapping("/student/{studentId}")
-    public List<ExaminationRoomDTO> getExaminationRoomsByStudentId(@PathVariable String studentId) {
-        return examinationRoomService.getExaminationRoomsByStudentId(studentId);
+    public ResponseEntity<?> getExaminationRoomsByStudentId(@PathVariable String studentId) {
+        return ResponseEntity.ok().body(examinationRoomService.getExaminationRoomsByStudentId(studentId));
     }
 
     @GetMapping("/hall/{examHallId}")
-    public List<ExaminationRoomDTO> getStudentsInExamHall(@PathVariable Integer examHallId) {
-        return examinationRoomService.getStudentsInExamHall(examHallId);
+    public ResponseEntity<?> getStudentsInExamHall(@PathVariable Integer examHallId) {
+        return ResponseEntity.ok().body(examinationRoomService.getStudentsInExamHall(examHallId));
     }
 }

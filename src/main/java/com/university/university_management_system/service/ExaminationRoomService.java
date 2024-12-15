@@ -36,9 +36,7 @@ public class ExaminationRoomService {
         ExaminationRoomModel examRooms = examinationRoomRepository.findById(examinationRoomId);
         if (examRooms.getExaminationRoomId() == examinationRoomId) {
             ExaminationRoomDTO examRoomDto = null;
-            if (examRooms != null) {
-                examRoomDto = ExaminationRoomDTO.fromModel(examRooms);
-            }
+            examRoomDto = ExaminationRoomDTO.fromModel(examRooms);
             return examRoomDto;
         }
         throw new ApiException("Not found", HttpStatus.NOT_FOUND);
@@ -56,7 +54,7 @@ public class ExaminationRoomService {
                 return roomDTOs;
             }
         }
-        throw new ApiException("Not found", HttpStatus.NOT_FOUND);
+        throw new ApiException("Invalid Exam ID", HttpStatus.NOT_FOUND);
     }
 
     public List<ExaminationRoomDTO> getExaminationRoomsByStudentId(String studentId) {
@@ -64,7 +62,7 @@ public class ExaminationRoomService {
         if (!examinationRooms.isEmpty()) {
             List<ExaminationRoomDTO> roomDTOs = new ArrayList<>();
             for (ExaminationRoomModel room : examinationRooms) {
-                if (room.getStudent().getStudentId() == studentId) {
+                if (room.getStudent().getStudentId().equals(studentId)) {
                     ExaminationRoomDTO dto = ExaminationRoomDTO.fromModel(room);
                     roomDTOs.add(dto);
                 }
@@ -86,6 +84,6 @@ public class ExaminationRoomService {
                 return roomDTOs;
             }
         }
-        throw new ApiException("Not found", HttpStatus.NOT_FOUND);
+        throw new ApiException("Invalid ExamHall ID", HttpStatus.NOT_FOUND);
     }
 }
