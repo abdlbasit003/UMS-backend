@@ -13,7 +13,7 @@ public class HealthCheck {
 
     @GetMapping("/ok")
     public String healthCheck(){
-        return "OK";
+        return "Ok";
     }
 
 
