@@ -1,7 +1,8 @@
-package com.university.university_management_system.dto;
+package com.university.university_management_system.DTOs;
 
 import com.university.university_management_system.DTOs.StudentDTO;
 import com.university.university_management_system.model.EnrolledCourseModel;
+import com.university.university_management_system.service.StudentService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +35,7 @@ public class EnrolledCourseDTO {
     // Getters and Setters
 
     public int getEnrolledCourseId() {
+        System.out.println("i return enrolledcourseid");
         return enrolledCourseId;
     }
 
@@ -42,6 +44,7 @@ public class EnrolledCourseDTO {
     }
 
     public StudentDTO getStudentDTO() {
+        System.out.println("i return student DTO");
         return studentDTO;
     }
 
@@ -50,6 +53,7 @@ public class EnrolledCourseDTO {
     }
 
     public Map<String, String> getCourse() {
+        System.out.println("I return course");
         return course;
     }
 
@@ -65,13 +69,13 @@ public class EnrolledCourseDTO {
     public static EnrolledCourseDTO fromModel(EnrolledCourseModel model) {
         EnrolledCourseDTO dto = new EnrolledCourseDTO();
         dto.setEnrolledCourseId(model.getEnrolledCourseId());
-        dto.setStudentDTO(StudentDTO.fromModel(model.getStudent()));
+        dto.setStudentDTO(StudentService.fromModel(model.getStudent()));
 
         Map<String, String> courseMap = new HashMap<>();
         courseMap.put("courseCode", model.getCourse().getCourseCode());
         courseMap.put("courseName", model.getCourse().getCourseName());
         dto.setCourse(courseMap);
-
+        System.out.println("i work here");
         return dto;
     }
 }

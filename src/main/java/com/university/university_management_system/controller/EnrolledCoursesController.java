@@ -20,11 +20,13 @@ public class EnrolledCoursesController {
 
     @GetMapping("")
     public List<EnrolledCourseModel> getAllEnrolledCourses(){
+        System.out.println("i work here at controller");
         return enrolledCourseRepository.findAll();
     }
 
     @GetMapping("/{enrolledCourseId}")
     public EnrolledCourseModel getEnrolledCourseByID(@PathVariable int enrolledCourseId){
+        System.out.println("i return here ate controller");
         return enrolledCourseRepository.findById(enrolledCourseId).orElseThrow();
     }
 
