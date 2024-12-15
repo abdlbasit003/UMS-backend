@@ -44,4 +44,7 @@ public class ExaminationRoomModel {
     }
 
 
+    public int getId() {
+        return examinationRoomId;
+    }
 }

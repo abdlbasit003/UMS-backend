@@ -1,5 +1,7 @@
 package com.university.university_management_system.DTOs;
 
+import com.university.university_management_system.model.StudentModel;
+
 public class StudentDTO {
 
 
@@ -68,8 +70,14 @@ public class StudentDTO {
         this.CGPA = CGPA;
     }
 
-
-
-
-
+    public static StudentDTO fromModel(StudentModel studentModel){
+        return new StudentDTO(
+                studentModel.getUser().getUuid(),
+                studentModel.getStudentId(),
+                studentModel.getStudentName(),
+                studentModel.getDepartment().getDepartmentName(),
+                studentModel.getStudentEnrollmentYear(),
+                studentModel.getStudentCgpa()
+        );
+    }
 }
