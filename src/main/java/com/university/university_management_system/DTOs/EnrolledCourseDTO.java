@@ -11,71 +11,43 @@ public class EnrolledCourseDTO {
 
     private int enrolledCourseId;
     private StudentDTO studentDTO;
-    private Map<String, String> course;
+    private Map<String, Object> course;
 
-    /**
-     * Default constructor.
-     */
-    public EnrolledCourseDTO() {
-        this.course = new HashMap<>();
-    }
-
-    /**
-     * Parameterized constructor.
-     * @param enrolledCourseId the ID of the enrolled course.
-     * @param studentDTO the student DTO associated with the enrolled course.
-     * @param course the course details as a map.
-     */
-    public EnrolledCourseDTO(int enrolledCourseId, StudentDTO studentDTO, Map<String, String> course) {
-        this.enrolledCourseId = enrolledCourseId;
-        this.studentDTO = studentDTO;
+    public EnrolledCourseDTO(Map<String, Object> course, StudentDTO studentDTO, int enrolledCourseId) {
         this.course = course;
+        this.studentDTO = studentDTO;
+        this.enrolledCourseId = enrolledCourseId;
     }
-
-    // Getters and Setters
 
     public int getEnrolledCourseId() {
-        System.out.println("i return enrolledcourseid");
         return enrolledCourseId;
+    }
+
+    public StudentDTO getStudentDTO() {
+        return studentDTO;
+    }
+
+    public Map<String, Object> getCourse() {
+        return course;
     }
 
     public void setEnrolledCourseId(int enrolledCourseId) {
         this.enrolledCourseId = enrolledCourseId;
     }
 
-    public StudentDTO getStudentDTO() {
-        System.out.println("i return student DTO");
-        return studentDTO;
-    }
-
     public void setStudentDTO(StudentDTO studentDTO) {
         this.studentDTO = studentDTO;
     }
 
-    public Map<String, String> getCourse() {
-        System.out.println("I return course");
-        return course;
-    }
-
-    public void setCourse(Map<String, String> course) {
+    public void setCourse(Map<String, Object> course) {
         this.course = course;
     }
 
-    /**
-     * Static method to convert EnrolledCourseModel to EnrolledCourseDTO.
-     * @param model the EnrolledCourseModel to convert.
-     * @return an EnrolledCourseDTO representation of the model.
-     */
     public static EnrolledCourseDTO fromModel(EnrolledCourseModel model) {
-        EnrolledCourseDTO dto = new EnrolledCourseDTO();
-        dto.setEnrolledCourseId(model.getEnrolledCourseId());
-        dto.setStudentDTO(StudentService.fromModel(model.getStudent()));
-
-        Map<String, String> courseMap = new HashMap<>();
+        Map<String, Object> courseMap = new HashMap<>();
         courseMap.put("courseCode", model.getCourse().getCourseCode());
         courseMap.put("courseName", model.getCourse().getCourseName());
-        dto.setCourse(courseMap);
-        System.out.println("i work here");
-        return dto;
+
+        return new EnrolledCourseDTO(courseMap, StudentService.fromModel(model.getStudent()), model.getEnrolledCourseId());
     }
 }
