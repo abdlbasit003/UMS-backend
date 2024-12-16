@@ -1,31 +1,36 @@
 package com.university.university_management_system.controller;
 
-import com.university.university_management_system.model.EnrolledCourseModel;
-import com.university.university_management_system.repository.EnrolledCourseRepository;
+import com.university.university_management_system.DTOs.EnrolledCourseDTO;
+import com.university.university_management_system.service.EnrolledCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("students/{studentId}/enrolledcourses")
+
 public class EnrolledCoursesController {
+
     @Autowired
-    EnrolledCourseRepository enrolledCourseRepository;
+    EnrolledCourseService enrolledCourseService;
 
-
-    @GetMapping("")
-    public List<EnrolledCourseModel> getAllEnrolledCourses(){
-        return enrolledCourseRepository.findAll();
+    public List<EnrolledCourseDTO> getAllEnrolledCourses() {
+        return enrolledCourseService.getAllEnrolledCourses();
     }
 
-    @GetMapping("/{enrolledCourseId}")
-    public EnrolledCourseModel getEnrolledCourseByID(@PathVariable int enrolledCourseId){
-        return enrolledCourseRepository.findById(enrolledCourseId).orElseThrow();
+    public EnrolledCourseDTO getEnrolledCourseById(int enrolledCourseId) {
+        return enrolledCourseService.getEnrolledCourseById(enrolledCourseId);
     }
 
-}
+    public List<EnrolledCourseDTO> getCoursesByStudentId(String studentId) {
+        return enrolledCourseService.getCoursesByStudentId(studentId);
+    }
+    public List<EnrolledCourseDTO> getStudentsByCourseCode(String courseCode) {
+        return enrolledCourseService.getStudentsByCourseCode(courseCode);
+    }
+
+
+    }
