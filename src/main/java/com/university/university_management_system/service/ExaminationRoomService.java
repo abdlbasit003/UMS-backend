@@ -1,8 +1,14 @@
 package com.university.university_management_system.service;
 import com.university.university_management_system.DTOs.ExaminationRoomDTO;
 import com.university.university_management_system.exceptions.ApiException;
+import com.university.university_management_system.model.ExamHallModel;
+import com.university.university_management_system.model.ExamModel;
 import com.university.university_management_system.model.ExaminationRoomModel;
+import com.university.university_management_system.model.StudentModel;
+import com.university.university_management_system.repository.ExamHallRepository;
+import com.university.university_management_system.repository.ExamRepository;
 import com.university.university_management_system.repository.ExaminationRoomRepository;
+import com.university.university_management_system.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -13,11 +19,17 @@ import java.util.List;
 public class ExaminationRoomService {
 
     @Autowired
-    public ExaminationRoomRepository examinationRoomRepository;
+    private ExaminationRoomRepository examinationRoomRepository;
 
-    public ExaminationRoomService(ExaminationRoomRepository examinationRoomRepository) {
-        this.examinationRoomRepository = examinationRoomRepository;
-    }
+    @Autowired
+    private StudentRepository studentRepository;
+
+    @Autowired
+    ExamHallRepository examHallRepository;
+
+    @Autowired
+    ExamRepository examRepository;
+
 
     public List<ExaminationRoomDTO> getAllExaminationRooms() {
         List<ExaminationRoomModel> examRooms = examinationRoomRepository.findAll();
@@ -44,6 +56,7 @@ public class ExaminationRoomService {
 
     public List<ExaminationRoomDTO> getExaminationRoomsByExamId(int examId) {
         List<ExaminationRoomModel> examRooms = examinationRoomRepository.findAll();
+        ExamModel examModel = examRepository.findById(examId).orElseThrow(()-> new ApiException("No exam rooms found", HttpStatus.NOT_FOUND));
         if (!examRooms.isEmpty()) {
             List<ExaminationRoomDTO> roomDTOs = new ArrayList<>();
             for (ExaminationRoomModel rooms : examRooms) {
@@ -51,14 +64,15 @@ public class ExaminationRoomService {
                     ExaminationRoomDTO dto = ExaminationRoomDTO.fromModel(rooms);
                     roomDTOs.add(dto);
                 }
-                return roomDTOs;
             }
+            return roomDTOs;
         }
         throw new ApiException("Invalid Exam ID", HttpStatus.NOT_FOUND);
     }
 
     public List<ExaminationRoomDTO> getExaminationRoomsByStudentId(String studentId) {
         List<ExaminationRoomModel> examinationRooms = examinationRoomRepository.findAll();
+        StudentModel student = studentRepository.findById(studentId).orElseThrow(()-> new ApiException("No exam rooms found", HttpStatus.NOT_FOUND));
         if (!examinationRooms.isEmpty()) {
             List<ExaminationRoomDTO> roomDTOs = new ArrayList<>();
             for (ExaminationRoomModel room : examinationRooms) {
@@ -66,14 +80,15 @@ public class ExaminationRoomService {
                     ExaminationRoomDTO dto = ExaminationRoomDTO.fromModel(room);
                     roomDTOs.add(dto);
                 }
-                return roomDTOs;
             }
+            return roomDTOs;
         }
-        throw new ApiException("Invalid Student ID", HttpStatus.NOT_FOUND);
+        throw new ApiException("No exam rooms", HttpStatus.NOT_FOUND);
     }
 
     public List<ExaminationRoomDTO> getStudentsInExamHall(int examHallId) {
         List<ExaminationRoomModel> examinationRooms = examinationRoomRepository.findAll();
+        ExamHallModel examHallModel = examHallRepository.findById(examHallId).orElseThrow(() -> new ApiException("No exam rooms found", HttpStatus.NOT_FOUND));
         if (!examinationRooms.isEmpty()) {
             List<ExaminationRoomDTO> roomDTOs = new ArrayList<>();
             for (ExaminationRoomModel room : examinationRooms) {
@@ -81,9 +96,9 @@ public class ExaminationRoomService {
                     ExaminationRoomDTO dto = ExaminationRoomDTO.fromModel(room);
                     roomDTOs.add(dto);
                 }
-                return roomDTOs;
             }
+            return roomDTOs;
         }
-        throw new ApiException("Invalid ExamHall ID", HttpStatus.NOT_FOUND);
+        throw new ApiException("No exam rooms found", HttpStatus.NOT_FOUND);
     }
 }

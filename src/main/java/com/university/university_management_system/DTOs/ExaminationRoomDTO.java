@@ -4,13 +4,13 @@ import com.university.university_management_system.model.ExaminationRoomModel;
 
 public class ExaminationRoomDTO {
     public int examinationRoomId;
-    public ExamDTO examDTO;
-    public StudentDTO studentDTO;
+    public ExamDTO exam;
+    public StudentDTO student;
 
     public ExaminationRoomDTO(int examinationRoomId, ExamDTO examDTO, StudentDTO studentDTO) {
         this.examinationRoomId = examinationRoomId;
-        this.examDTO = examDTO;
-        this.studentDTO = studentDTO;
+        this.exam = examDTO;
+        this.student = studentDTO;
     }
 
     public int getExaminationRoomId() {
@@ -21,25 +21,25 @@ public class ExaminationRoomDTO {
         this.examinationRoomId = examinationRoomId;
     }
 
-    public ExamDTO getExamDTO() {
-        return examDTO;
+    public ExamDTO getExam() {
+        return exam;
     }
 
-    public void setExamDTO(ExamDTO examDTO) {
-        this.examDTO = examDTO;
+    public void setExam(ExamDTO examDTO) {
+        this.exam = examDTO;
     }
 
-    public StudentDTO getStudentDTO() {
-        return studentDTO;
+    public StudentDTO getStudent() {
+        return student;
     }
 
-    public void setStudentDTO(StudentDTO studentDTO) {
-        this.studentDTO = studentDTO;
+    public void setStudent(StudentDTO studentDTO) {
+        this.student = studentDTO;
     }
 
     public static ExaminationRoomDTO fromModel(ExaminationRoomModel model) {
-        ExamDTO examDTO = ExamDTO.fromModel(model.getExam());
-        StudentDTO studentDTO = StudentDTO.fromModel(model.getStudent());
-        return new ExaminationRoomDTO(model.getId(), examDTO, studentDTO);
+        ExamDTO exam = ExamDTO.fromModel(model.getExam());
+        StudentDTO student = StudentDTO.fromModel(model.getStudent());
+        return new ExaminationRoomDTO(model.getId(), exam, student);
     }
 }

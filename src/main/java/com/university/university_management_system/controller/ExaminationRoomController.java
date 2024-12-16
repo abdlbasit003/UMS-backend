@@ -16,16 +16,14 @@ public class ExaminationRoomController {
     @Autowired
     public ExaminationRoomService examinationRoomService;
 
-    public ExaminationRoomController(ExaminationRoomService examinationRoomService) {
-        this.examinationRoomService = examinationRoomService;
-    }
 
     @GetMapping("")
-    public ResponseEntity<?> getAllExaminationRooms() {
+    public ResponseEntity<?> getAllExaminationRooms(){
         return ResponseEntity.ok().body(examinationRoomService.getAllExaminationRooms());
     }
 
     @GetMapping("/{examRoomId}")
+
     public ResponseEntity<?> getExaminationRoomById(@PathVariable Integer examRoomId) {
         return ResponseEntity.ok().body(examinationRoomService.getExaminationRoomById(examRoomId));
     }
