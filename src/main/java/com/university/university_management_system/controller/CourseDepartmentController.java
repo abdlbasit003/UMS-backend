@@ -23,4 +23,6 @@ public class CourseDepartmentController {
     public DepartmentCourseModel getbyid(@PathVariable int courseDepartmentId){
         return departmentCourseRepository.findById(courseDepartmentId).orElseThrow();
     }
+    
+
 }

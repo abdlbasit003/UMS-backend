@@ -7,34 +7,34 @@ import java.util.Map;
 
 public class CourseDepartmentDTO {
 
-    private int courseInstructorId;
-    private Map<String, Object> faculty;
+    private int courseDepartmentId;
+    private Map<String, Object> department;
     private Map<String, Object> course;
 
-    public CourseDepartmentDTO(int courseInstructorId, Map<String, Object> faculty, Map<String, Object> course) {
-        this.courseInstructorId = courseInstructorId;
-        this.faculty = faculty;
+    public CourseDepartmentDTO(int courseDepartmentId, Map<String, Object> department, Map<String, Object> course) {
+        this.courseDepartmentId = courseDepartmentId;
+        this.department = department;
         this.course = course;
     }
 
-    public int getCourseInstructorId() {
-        return courseInstructorId;
+    public int getCourseDepartmentId() {
+        return courseDepartmentId;
     }
 
-    public Map<String, Object> getFaculty() {
-        return faculty;
+    public void setCourseDepartmentId(int courseDepartmentId) {
+        this.courseDepartmentId = courseDepartmentId;
+    }
+
+    public Map<String, Object> getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Map<String, Object> department) {
+        this.department = department;
     }
 
     public Map<String, Object> getCourse() {
         return course;
-    }
-
-    public void setCourseInstructorId(int courseInstructorId) {
-        this.courseInstructorId = courseInstructorId;
-    }
-
-    public void setFaculty(Map<String, Object> faculty) {
-        this.faculty = faculty;
     }
 
     public void setCourse(Map<String, Object> course) {
@@ -42,24 +42,20 @@ public class CourseDepartmentDTO {
     }
 
     public static CourseDepartmentDTO fromModel(DepartmentCourseModel model) {
-        Map<String, Object> facultyMap = new HashMap<>();
-        FacultyModel facultyModel = new FacultyModel();
-        UserModel userModel = new UserModel();
-        facultyMap.put("facultyName", facultyModel.getFacultyName());
-        facultyMap.put("facultyUuid", userModel.getUuid());
-        facultyMap.put("designation", facultyModel.getDesignation());
+        if (model == null || model.getDepartment() == null || model.getCourse() == null) {
+            throw new IllegalArgumentException("Model and its fields cannot be null.");
+        }
+
+        Map<String, Object> departmentMap = new HashMap<>();
+        DepartmentModel department = model.getDepartment();
+        departmentMap.put("departmentId", department.getDepartmentId());
+        departmentMap.put("departmentName", department.getDepartmentName());
 
         Map<String, Object> courseMap = new HashMap<>();
-        courseMap.put("courseCode", model.getCourse().getCourseCode());
-        courseMap.put("courseName", model.getCourse().getCourseName());
+        CourseModel course = model.getCourse();
+        courseMap.put("courseCode", course.getCourseCode());
+        courseMap.put("courseName", course.getCourseName());
 
-        CourseInstructorModel courseInstructorModel = new CourseInstructorModel();
-
-
-        return new CourseDepartmentDTO(
-                courseInstructorModel.getCourseInstructorId(),
-                facultyMap,
-                courseMap
-        );
+        return new CourseDepartmentDTO(model.getDepartmentCourseId(), departmentMap, courseMap);
     }
 }

@@ -1,18 +1,14 @@
 package com.university.university_management_system.service;
 
 import com.university.university_management_system.DTOs.CourseDepartmentDTO;
-import com.university.university_management_system.model.DepartmentCourseModel;
-import com.university.university_management_system.model.DepartmentModel;
-import com.university.university_management_system.model.CourseModel;
+import com.university.university_management_system.model.*;
 import com.university.university_management_system.repository.DepartmentCourseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CourseDepartmentService {
 
-    @Autowired
     private final DepartmentCourseRepository departmentCourseRepository;
 
     public CourseDepartmentService(DepartmentCourseRepository departmentCourseRepository) {
@@ -20,44 +16,28 @@ public class CourseDepartmentService {
     }
 
     public List<CourseDepartmentDTO> getAllDepartmentCourses() {
-        List<DepartmentCourseModel> departmentCourseModels = departmentCourseRepository.findAll();
-        List<CourseDepartmentDTO> departmentCourseDTOs = new ArrayList<>();
-        for (DepartmentCourseModel model : departmentCourseModels) {
-            departmentCourseDTOs.add(CourseDepartmentDTO.fromModel(model));
-        }
-        return departmentCourseDTOs;
+        List<DepartmentCourseModel> models = departmentCourseRepository.findAll();
+        return models.stream().map(CourseDepartmentDTO::fromModel).collect(Collectors.toList());
     }
 
     public CourseDepartmentDTO getDepartmentCourseById(int departmentCourseId) {
         DepartmentCourseModel model = departmentCourseRepository.findById(departmentCourseId)
-                .orElseThrow(() -> new RuntimeException("Department Course not found"));
+                .orElseThrow(() -> new RuntimeException("Department Course not found with id: " + departmentCourseId));
         return CourseDepartmentDTO.fromModel(model);
     }
 
     public List<CourseDepartmentDTO> getCoursesByDepartmentId(int departmentId) {
-        List<DepartmentCourseModel> departmentCourseModels = departmentCourseRepository.findByDepartmentId(departmentId);
-        List<CourseDepartmentDTO> departmentCourseDTOs = new ArrayList<>();
-        for (DepartmentCourseModel model : departmentCourseModels) {
-            departmentCourseDTOs.add(CourseDepartmentDTO.fromModel(model));
-        }
-        return departmentCourseDTOs;
+        List<DepartmentCourseModel> models = departmentCourseRepository.findByDepartmentId(departmentId);
+        return models.stream().map(CourseDepartmentDTO::fromModel).collect(Collectors.toList());
     }
 
     public List<CourseDepartmentDTO> getDepartmentsByCourseCode(String courseCode) {
-        List<DepartmentCourseModel> departmentCourseModels = departmentCourseRepository.findByCourseCode(courseCode);
-        List<CourseDepartmentDTO> departmentCourseDTOs = new ArrayList<>();
-        for (DepartmentCourseModel model : departmentCourseModels) {
-            departmentCourseDTOs.add(CourseDepartmentDTO.fromModel(model));
-        }
-        return departmentCourseDTOs;
+        List<DepartmentCourseModel> models = departmentCourseRepository.findByCourseCode(courseCode);
+        return models.stream().map(CourseDepartmentDTO::fromModel).collect(Collectors.toList());
     }
 
     public List<CourseDepartmentDTO> getAllCoursesInDepartment(String departmentName) {
-        List<DepartmentCourseModel> departmentCourseModels = departmentCourseRepository.findByDepartmentName(departmentName);
-        List<CourseDepartmentDTO> departmentCourseDTOs = new ArrayList<>();
-        for (DepartmentCourseModel model : departmentCourseModels) {
-            departmentCourseDTOs.add(CourseDepartmentDTO.fromModel(model));
-        }
-        return departmentCourseDTOs;
+        List<DepartmentCourseModel> models = departmentCourseRepository.findByDepartmentName(departmentName);
+        return models.stream().map(CourseDepartmentDTO::fromModel).collect(Collectors.toList());
     }
 }
