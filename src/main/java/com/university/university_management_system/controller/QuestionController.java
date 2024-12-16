@@ -13,12 +13,7 @@ public class QuestionController {
         return questionService.getAllQuestions();
     }
 
-    /**
-     * Get question by ID.
-     *
-     * @param id The question ID.
-     * @return QuestionDTO.
-     */
+
     public QuestionDTO getQuestionById(int id) {
         return questionService.getQuestionById(id);
     }
