@@ -25,7 +25,7 @@ public class EnrolledCoursesController {
         return enrolledCourseService.getEnrolledCourseById(enrolledCourseId);
     }
 
-    public List<EnrolledCourseDTO> getCoursesByStudentId(int studentId) {
+    public List<EnrolledCourseDTO> getCoursesByStudentId(String studentId) {
         return enrolledCourseService.getCoursesByStudentId(studentId);
     }
     public List<EnrolledCourseDTO> getStudentsByCourseCode(String courseCode) {
