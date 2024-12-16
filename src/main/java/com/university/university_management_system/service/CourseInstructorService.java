@@ -1,10 +1,12 @@
 package com.university.university_management_system.service;
 
 import com.university.university_management_system.DTOs.CourseInstructorDTO;
+import com.university.university_management_system.exceptions.ApiException;
 import com.university.university_management_system.model.CourseInstructorModel;
-import com.university.university_management_system.model.EnrolledCourseModel;
+import com.university.university_management_system.model.CourseModel;
 import com.university.university_management_system.repository.CourseInstructorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,6 +22,10 @@ public class CourseInstructorService {
         List<CourseInstructorModel> allCourseInstructors = courseInstructorRepository.findAll();
         List <CourseInstructorDTO> allCourseInstructorDtos = new ArrayList<>();
 
+        if (allCourseInstructors.isEmpty()){
+            throw new ApiException("No Course Instructors", HttpStatus.NOT_FOUND);
+        }
+
         for(CourseInstructorModel cim : allCourseInstructors){
             allCourseInstructorDtos.add(CourseInstructorDTO.fromModel(cim));
         }
@@ -27,12 +33,18 @@ public class CourseInstructorService {
     }
 
     public CourseInstructorDTO getCourseInstructorbyId(int courseInstructorId){
-       return CourseInstructorDTO.fromModel(courseInstructorRepository.findById(courseInstructorId).orElseThrow());
+       return CourseInstructorDTO.fromModel(courseInstructorRepository.findById(courseInstructorId).orElseThrow(()->new ApiException("Instructor not found",HttpStatus.NOT_FOUND)));
     }
+
 
     public List<CourseInstructorDTO> getCourseInstructorByCourseCode(String courseCode){
         List<CourseInstructorModel> allCourseInstructors = courseInstructorRepository.findAll();
         List<CourseInstructorDTO> courseInstructorsByCourseCode = new ArrayList<>();
+
+        if (allCourseInstructors.isEmpty()){
+            throw new ApiException("No Course Instructors", HttpStatus.NOT_FOUND);
+        }
+
 
         for(CourseInstructorModel cim : allCourseInstructors){
             if(courseCode.equals(cim.getCourse().getCourseCode())){
@@ -41,27 +53,21 @@ public class CourseInstructorService {
         }
         return courseInstructorsByCourseCode;
     }
-    public List <CourseInstructorDTO> getInstructorsByFacultyId(int facultyId){
-        List<CourseInstructorModel> allCourseInstructors = courseInstructorRepository.findAll();
-        List<CourseInstructorDTO> courseInstructorsByFacultyId = new ArrayList<>();
 
-        for(CourseInstructorModel cim : allCourseInstructors){
-            if(facultyId == cim.getFaculty().getFacultyId()){
-                courseInstructorsByFacultyId.add(CourseInstructorDTO.fromModel(cim));
+
+
+    public List <CourseModel> getCoursesByInstructorId(int instructorId){
+        List<CourseInstructorModel> allCourseInstructors = courseInstructorRepository.findAll();
+        List<CourseModel> coursesOfInstructor = new ArrayList<>();
+
+        if (allCourseInstructors.isEmpty()){
+            throw new ApiException("No Course Instructors", HttpStatus.NOT_FOUND);
+        }
+        for (CourseInstructorModel cim:allCourseInstructors){
+            if (cim.getFaculty().getFacultyId() == instructorId){
+                coursesOfInstructor.add(cim.getCourse());
             }
         }
-        return courseInstructorsByFacultyId;
-    }
-
-    public List <CourseInstructorDTO> getCoursesByInstructorId(int facultyId){
-        List<CourseInstructorModel> allCourseInstructors = courseInstructorRepository.findAll();
-        List<CourseInstructorDTO> coursesByInstructor = new ArrayList<>();
-
-        for (CourseInstructorModel cim : allCourseInstructors) {
-            if (facultyId == cim.getFaculty().getFacultyId()) {
-                coursesByInstructor.add(CourseInstructorDTO.fromModel(cim));
-            }
-        }
-        return coursesByInstructor;
+        return coursesOfInstructor;
     }
 }

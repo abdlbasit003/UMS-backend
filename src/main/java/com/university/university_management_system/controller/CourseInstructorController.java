@@ -1,8 +1,7 @@
 package com.university.university_management_system.controller;
 
 import com.university.university_management_system.DTOs.CourseInstructorDTO;
-import com.university.university_management_system.model.CourseInstructorModel;
-import com.university.university_management_system.repository.CourseInstructorRepository;
+import com.university.university_management_system.model.CourseModel;
 import com.university.university_management_system.service.CourseInstructorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,21 +22,16 @@ public class CourseInstructorController {
         return ResponseEntity.ok(courseInstructorService.getAllCourseInstructors());
     }
     @GetMapping("/{courseInstructorId}")
-    public ResponseEntity <CourseInstructorDTO> getCourseInstructorById(@PathVariable int courseInstructorId){
-        return ResponseEntity.ok(courseInstructorService.getCourseInstructorbyId(courseInstructorId));
+    public CourseInstructorDTO getCourseInstructorById(@PathVariable int courseInstructorId){
+        return courseInstructorService.getCourseInstructorbyId(courseInstructorId);
     }
-    @GetMapping("/{courseCode}")
+    @GetMapping("/course/{courseCode}")
     public ResponseEntity <List<CourseInstructorDTO>> getCourseInstructorsByCourseCode(@PathVariable String courseCode){
         return ResponseEntity.ok(courseInstructorService.getCourseInstructorByCourseCode(courseCode));
     }
-
-    @GetMapping("/{facultyId}")
-    public ResponseEntity <List<CourseInstructorDTO>> getInstructorsByFacultyId(@PathVariable int facultyId) {
-        return ResponseEntity.ok(courseInstructorService.getInstructorsByFacultyId(facultyId));
-    }
-    @GetMapping("/{facultyId}")
-    public ResponseEntity <List<CourseInstructorDTO>> getCoursesByInstructorId(@PathVariable int facultyId) {
-        return ResponseEntity.ok(courseInstructorService.getCoursesByInstructorId(facultyId));
+    @GetMapping("/{instructorId}/courses")
+    public ResponseEntity <List<CourseModel>> getCoursesByInstructorId(@PathVariable int instructorId) {
+        return ResponseEntity.ok(courseInstructorService.getCoursesByInstructorId(instructorId));
     }
 
 }
