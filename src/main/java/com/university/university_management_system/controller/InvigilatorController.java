@@ -1,29 +1,33 @@
 package com.university.university_management_system.controller;
 
-import com.university.university_management_system.model.InvigilatorModel;
-import com.university.university_management_system.repository.InvigilatorRepository;
+import com.university.university_management_system.DTOs.InvigilatorDTO;
+import com.university.university_management_system.service.InvigilatorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @RestController
 @RequestMapping("/invigilators")
 public class InvigilatorController {
 
     @Autowired
-    InvigilatorRepository invigilatorRepository;
+    private InvigilatorService invigilatorService;
 
     @GetMapping("")
-    public List<InvigilatorModel> GetAllInvigilator() {
-        return invigilatorRepository.findAll();
+    public List<InvigilatorDTO> getAllInvigilators() {
+        return invigilatorService.getAllInvigilators();
     }
 
-    @GetMapping("/{invigilatorId}")
-    public InvigilatorModel GetInvigilatorbyid(@PathVariable int invigilatorId) {
-        return invigilatorRepository.findById(invigilatorId).orElseThrow();
+    public InvigilatorDTO getInvigilatorById(int invigilatorId) {
+        return invigilatorService.getInvigilatorById(invigilatorId);
+    }
 
+    public List<InvigilatorDTO> getInvigilatorsByFacultyId(int facultyId) {
+        return invigilatorService.getInvigilatorsByFacultyId(facultyId);
+    }
+
+    public List<InvigilatorDTO> getInvigilatorsByExamHallId(int examHallId) {
+        return invigilatorService.getInvigilatorsByExamHallId(examHallId);
     }
 }
