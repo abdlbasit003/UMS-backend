@@ -26,14 +26,15 @@ public class FacultyController {
     public FacultyDTO getFacultyById( int facultyId){
         return facultyService.getFacultyById(facultyId);
     }
-    public FacultyDTO getFacultyByName( String name){
-        return (FacultyDTO) facultyService.getFacultyByName(name);
+
+    public List<FacultyDTO> getFacultyByName(String name){
+        return facultyService.getFacultyByName(name);
     }
 
-    public FacultyDTO getFacultyByDesignation( String facultydesignation){
-        return (FacultyDTO) facultyService.getFacultyByDesignation(facultydesignation);
+    public List<FacultyDTO> getFacultyByDesignation( String facultyDesignation){
+        return facultyService.getFacultyByDesignation(facultyDesignation);
     }
-    public FacultyDTO getFacultyByUuid(String id) throws Exception {
-        return  facultyService.getFacultyByUuid(id);
+    public FacultyDTO getFacultyByUuid(String uuid){
+        return  facultyService.getFacultyByUuid(uuid);
     }
 }

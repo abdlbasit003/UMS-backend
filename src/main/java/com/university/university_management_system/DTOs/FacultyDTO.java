@@ -13,9 +13,6 @@ public class FacultyDTO {
     private String facultyOffTime;
     private String facultyUuid;
 
-    // Constructors
-    public FacultyDTO() {}
-
     public FacultyDTO(int facultyId, String facultyName, String designation, String facultyArrivalTime, String facultyOffTime, String facultyUuid) {
         this.facultyId = facultyId;
         this.facultyName = facultyName;
