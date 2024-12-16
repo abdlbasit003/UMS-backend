@@ -39,9 +39,7 @@ public class QuestionModel {
         return questionTitle;
     }
 
-    public void setQuestionTitle(String questionTitle) {
-        this.questionTitle = questionTitle;
-    }
+    public void setQuestionTitle(String questionTitle) {this.questionTitle = questionTitle;}
 
     public String getDescription() {
         return description;
