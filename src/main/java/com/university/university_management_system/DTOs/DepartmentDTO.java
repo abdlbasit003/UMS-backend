@@ -15,9 +15,6 @@ import java.util.Map;
         private Map<String, Object> departmentHead;
 
         // Constructors
-        public DepartmentDTO() {
-            this.departmentHead = new HashMap<>();
-        }
 
         public DepartmentDTO(int departmentId, String departmentName, Map<String,Object> departmentHead) {
             this.departmentId = departmentId;
@@ -66,8 +63,8 @@ import java.util.Map;
 */
 
             Map<String,Object> departmentHead  = new HashMap<>();
-            departmentHead.put("id" , departmentModel.getDepartmentHead().getUser().getUuid());
-            departmentHead.put("name" , departmentModel.getDepartmentHead().getUser().getUserName());
+            departmentHead.put("id" , departmentModel.getDepartmentHead().getFacultyId());
+            departmentHead.put("name" , departmentModel.getDepartmentHead().getFacultyName());
 
 
             return new DepartmentDTO(departmentModel.getDepartmentId(), departmentModel.getDepartmentName(),departmentHead);

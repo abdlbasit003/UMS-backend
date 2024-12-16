@@ -1,66 +1,84 @@
 package com.university.university_management_system.service;
+
 import com.university.university_management_system.DTOs.DepartmentDTO;
+import com.university.university_management_system.exceptions.ApiException;
+import com.university.university_management_system.model.DepartmentModel;
+import com.university.university_management_system.repository.DepartmentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Service
 public class DepartmentService {
 
+    @Autowired
+    private DepartmentRepository departmentRepository;
 
-    // Simulate a database or data source
-    private static List<DepartmentDTO> departments = new ArrayList<>();
-
-    // Static initializer to populate the department list
-    static {
-        // Create some sample department data
-        departments.add(new DepartmentDTO(1, "Computer Science", new HashMap<>() {{
-            put("id","f101");
-            put("name", "John Doe");
-        }}));
-        departments.add(new DepartmentDTO(2, "Mathematics", new HashMap<>() {{
-            put("id", "F102");
-            put("name", "Jane Doe");
-        }}));
-    }
-
-    // Method to retrieve all departments
+    // Retrieve all departments
     public List<DepartmentDTO> getAllDepartments() {
-        return departments;
+        List<DepartmentModel> departments = departmentRepository.findAll();
+        List<DepartmentDTO> departmentDTOs = new ArrayList<>();
+
+        for (DepartmentModel department : departments) {
+            departmentDTOs.add(convertToDTO(department));
+        }
+
+        return departmentDTOs;
     }
 
-    // Method to retrieve a department by ID
+    // Retrieve a department by ID
     public DepartmentDTO getDepartmentById(int departmentId) {
-        for (DepartmentDTO department : departments) {
-            if (department.getDepartmentId() == departmentId) {
-                return department;
-            }
-        }
-        return null; // Or throw an exception
+        DepartmentModel department = departmentRepository.findById(departmentId)
+                .orElseThrow(() -> new ApiException("Department not found", HttpStatus.NOT_FOUND));
+        return convertToDTO(department);
     }
 
-    // Method to retrieve departments by department head ID
+    // Retrieve departments by department head ID
     public List<DepartmentDTO> getDepartmentsByDepartmentHeadId(int headId) {
+        List<DepartmentModel> departments = departmentRepository.findAll();
         List<DepartmentDTO> result = new ArrayList<>();
-        for (DepartmentDTO department : departments) {
-            Map<String, Object> head = department.getDepartmentHead();
-            if (head != null && head.get("id").equals(headId)) {
-                result.add(department);
+
+        for (DepartmentModel department : departments) {
+            if (department.getDepartmentHead() != null && department.getDepartmentHead().getFacultyId() == headId) {
+                result.add(convertToDTO(department));
             }
         }
+
+        if (result.isEmpty()) {
+            throw new ApiException("No departments found for the given head ID", HttpStatus.NOT_FOUND);
+        }
+
         return result;
     }
 
-    // Method to retrieve a department by department name
+    // Retrieve a department by department name
     public DepartmentDTO getDepartmentByDepartmentName(String departmentName) {
-        for (DepartmentDTO department : departments) {
-            if (department.getDepartmentName().equals(departmentName)) {
-                return department;
+        List<DepartmentModel> departments = departmentRepository.findAll();
+
+        for (DepartmentModel department : departments) {
+            if (department.getDepartmentName().equalsIgnoreCase(departmentName)) {
+                return convertToDTO(department);
             }
         }
-        return null; // Or throw an exception
+
+        throw new ApiException("Department not found", HttpStatus.NOT_FOUND);
     }
 
-
+    // Helper method to convert DepartmentModel to DepartmentDTO
+    private DepartmentDTO convertToDTO(DepartmentModel department) {
+        return new DepartmentDTO(
+                department.getDepartmentId(),
+                department.getDepartmentName(),
+                department.getDepartmentHead() != null
+                        ? Map.of(
+                        "id", String.valueOf(department.getDepartmentHead().getFacultyId()),
+                        "name", department.getDepartmentHead().getFacultyName()
+                )
+                        : Map.of() // Empty map if no department head
+        );
+    }
 }
