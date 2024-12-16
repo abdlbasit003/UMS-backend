@@ -20,10 +20,10 @@ public class FacultyService {
     public List<FacultyDTO> getAllFaculty() {
         List<FacultyModel> facultyList = facultyRepository.getAllFaculty();
         List<FacultyDTO> facultyDTOS = new ArrayList<>();
-        for (FacultyModel fm : facultyList){
+        for (FacultyModel fm : facultyList) {
             facultyDTOS.add(FacultyDTO.fromModel(fm));
         }
-       return facultyDTOS;
+        return facultyDTOS;
     }
 
 
@@ -35,31 +35,37 @@ public class FacultyService {
 
 
     public List<FacultyDTO> getFacultyByName(String facultyName) {
-        List<FacultyModel> facultyList = facultyRepository.FindByFacultyName(facultyName);
+        List<FacultyModel> facultyList = facultyRepository.getAllFaculty();
         List<FacultyDTO> facultyDTOS = new ArrayList<>();
-        for (FacultyModel fm : facultyList){
-            facultyDTOS.add(FacultyDTO.fromModel(fm));
+        for (FacultyModel fm : facultyList) {
+            if (fm.getFacultyName().equalsIgnoreCase(facultyName)) {
+                facultyDTOS.add(FacultyDTO.fromModel(fm));
+            }
         }
         return facultyDTOS;
-
     }
 
 
     public List<FacultyDTO> getFacultyByDesignation(String designationName) {
-        List<FacultyModel> facultyList = facultyRepository.findByDesignation_DesignationName(designationName);
+        List<FacultyModel> facultyList = facultyRepository.getAllFaculty(); 
         List<FacultyDTO> facultyDTOS = new ArrayList<>();
-        for (FacultyModel fm : facultyList){
-            facultyDTOS.add(FacultyDTO.fromModel(fm));
+        for (FacultyModel fm : facultyList) {
+            if (fm.getDesignation().getDesignationName().equalsIgnoreCase(designationName)) {
+                facultyDTOS.add(FacultyDTO.fromModel(fm));
+            }
         }
         return facultyDTOS;
+
+
     }
-
-
-    public FacultyDTO getFacultyByUuid(String facultyUuid) {
-        FacultyModel faculty = facultyRepository.findByFacultyUuid(facultyUuid);
-        if (faculty == null) {
-            throw new RuntimeException("Faculty not found with UUID: " + facultyUuid);
+    public FacultyDTO getFacultyByUuid(String facultyUuid) throws Exception {
+        List<FacultyModel> facultyList = facultyRepository.getAllFaculty();
+        for (FacultyModel fm : facultyList) {
+            if (fm.getUser().getUuid().equals(facultyUuid)) {
+                return FacultyDTO.fromModel(fm);
+            }
         }
-        return FacultyDTO.fromModel(faculty);
+        throw new Exception("Faculty not found with UUID: " + facultyUuid);
     }
 }
+

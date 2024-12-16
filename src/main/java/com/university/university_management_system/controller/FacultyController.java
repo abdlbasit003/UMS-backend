@@ -33,7 +33,7 @@ public class FacultyController {
     public FacultyDTO getFacultyByDesignation( String facultydesignation){
         return (FacultyDTO) facultyService.getFacultyByDesignation(facultydesignation);
     }
-    public FacultyDTO getFacultyByUuid(String id){
+    public FacultyDTO getFacultyByUuid(String id) throws Exception {
         return  facultyService.getFacultyByUuid(id);
     }
 }

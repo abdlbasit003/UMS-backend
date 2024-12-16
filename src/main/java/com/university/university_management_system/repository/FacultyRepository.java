@@ -11,9 +11,5 @@ public interface FacultyRepository extends JpaRepository<FacultyModel, Integer> 
 
     @Query("SELECT f FROM FacultyModel f JOIN FETCH f.user")
     List<FacultyModel> getAllFaculty();
-    List<FacultyModel> FindByFacultyName(String facultyName);
-    List<FacultyModel> findByDesignation_DesignationName(String designationName);
-
-    FacultyModel findByFacultyUuid(String facultyUuid);
 
 }
