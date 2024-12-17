@@ -5,6 +5,9 @@ import com.university.university_management_system.model.ExamModel;
 import com.university.university_management_system.repository.ExamRepository;
 import com.university.university_management_system.service.ExamService;
 import org.springframework.beans.factory.annotation.Autowired;
+
+
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
