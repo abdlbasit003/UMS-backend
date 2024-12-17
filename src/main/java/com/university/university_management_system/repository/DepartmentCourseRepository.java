@@ -8,11 +8,7 @@ import java.util.List;
 
 @Repository
 public interface DepartmentCourseRepository extends JpaRepository<DepartmentCourseModel, Integer> {
-    //CHANGES MADE BY RAYYAN ASIM : TO RUN CourseDepartmentService
-    List<DepartmentCourseModel> findByDepartmentId(int departmentId);
-    //CHANGES MADE BY RAYYAN ASIM : TO RUN CourseDepartmentService
-    List<DepartmentCourseModel> findByCourseCode(String courseCode);
-    //CHANGES MADE BY RAYYAN ASIM  : TO RUN CourseDepartmentService
-    List<DepartmentCourseModel> findByDepartmentName(String departmentName);
+
+
 
 }
