@@ -58,7 +58,7 @@ public class ExamQuestionService {
             }
             return questionDTOs;
         }
-        throw new ApiException("No questions found for the specified exam", HttpStatus.NOT_FOUND);
+        throw new ApiException("No questions found", HttpStatus.NOT_FOUND);
     }
 
     public List<ExamDTO> getExamsByQuestionId(int questionId) {
