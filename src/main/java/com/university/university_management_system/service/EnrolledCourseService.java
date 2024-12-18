@@ -4,26 +4,16 @@ import com.university.university_management_system.DTOs.EnrolledCourseDTO;
 import com.university.university_management_system.model.EnrolledCourseModel;
 import com.university.university_management_system.repository.EnrolledCourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class EnrolledCourseService {
 
     @Autowired
     EnrolledCourseRepository enrolledCourseRepository;
-
-    public List<EnrolledCourseDTO> getAllEnrolledCourses() {
-        List<EnrolledCourseDTO> enrolledCourses = new ArrayList<>();
-        try {
-            for (EnrolledCourseModel model : enrolledCourseRepository.findAll()) {
-                enrolledCourses.add(EnrolledCourseDTO.fromModel(model));
-            }
-        } catch (Exception e) {
-            throw new RuntimeException("Error fetching all enrolled courses", e);
-        }
-        return enrolledCourses;
-    }
 
     public EnrolledCourseDTO getEnrolledCourseById(int enrolledCourseId) {
         try {
