@@ -5,15 +5,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/examquestions")
+@RequestMapping("/exams/{examId}/questions")
 public class ExamQuestionsController {
 
     @Autowired
     public ExamQuestionService examQuestionsService;
 
     @GetMapping("")
-    public ResponseEntity<?> getAllExamQuestions() {
-        return ResponseEntity.ok().body(examQuestionsService.getAllExamQuestions());
+    public ResponseEntity<?> getAllExamQuestions(@PathVariable int examId) {
+        return ResponseEntity.ok().body(examQuestionsService.getQuestionsByExamId(examId));
     }
 
     @GetMapping("/{examQuestionId}")
@@ -21,12 +21,12 @@ public class ExamQuestionsController {
         return ResponseEntity.ok().body(examQuestionsService.getExamQuestionById(examQuestionId));
     }
 
-    @GetMapping("/exam/{examId}")
+
     public ResponseEntity<?> getQuestionsByExamId(@PathVariable Integer examId) {
         return ResponseEntity.ok().body(examQuestionsService.getQuestionsByExamId(examId));
     }
 
-    @GetMapping("/question/{questionId}")
+
     public ResponseEntity<?> getExamsByQuestionId(@PathVariable Integer questionId) {
         return ResponseEntity.ok().body(examQuestionsService.getExamsByQuestionId(questionId));
     }
