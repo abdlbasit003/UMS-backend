@@ -4,10 +4,12 @@ import com.university.university_management_system.DTOs.EnrolledCourseDTO;
 import com.university.university_management_system.model.EnrolledCourseModel;
 import com.university.university_management_system.repository.EnrolledCourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class EnrolledCourseService {
 
     @Autowired
