@@ -15,18 +15,6 @@ public class EnrolledCourseService {
     @Autowired
     EnrolledCourseRepository enrolledCourseRepository;
 
-    public List<EnrolledCourseDTO> getAllEnrolledCourses() {
-        List<EnrolledCourseDTO> enrolledCourses = new ArrayList<>();
-        try {
-            for (EnrolledCourseModel model : enrolledCourseRepository.findAll()) {
-                enrolledCourses.add(EnrolledCourseDTO.fromModel(model));
-            }
-        } catch (Exception e) {
-            throw new RuntimeException("Error fetching all enrolled courses", e);
-        }
-        return enrolledCourses;
-    }
-
     public EnrolledCourseDTO getEnrolledCourseById(int enrolledCourseId) {
         try {
             EnrolledCourseModel model = enrolledCourseRepository.findById(enrolledCourseId).orElse(null);
