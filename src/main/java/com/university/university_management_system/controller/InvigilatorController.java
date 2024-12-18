@@ -19,15 +19,18 @@ public class InvigilatorController {
         return invigilatorService.getAllInvigilators();
     }
 
-    public InvigilatorDTO getInvigilatorById(int invigilatorId) {
+    @GetMapping("/{invigilatorId}")
+    public InvigilatorDTO getInvigilatorById(@PathVariable int invigilatorId) {
         return invigilatorService.getInvigilatorById(invigilatorId);
     }
 
-    public List<InvigilatorDTO> getInvigilatorsByFacultyId(int facultyId) {
+    @GetMapping("/faculty/{facultyId}")
+    public List<InvigilatorDTO> getInvigilatorsByFacultyId(@PathVariable int facultyId) {
         return invigilatorService.getInvigilatorsByFacultyId(facultyId);
     }
 
-    public List<InvigilatorDTO> getInvigilatorsByExamHallId(int examHallId) {
+    @GetMapping("/examhall/{examHallId}")
+    public List<InvigilatorDTO> getInvigilatorsByExamHallId(@PathVariable int examHallId) {
         return invigilatorService.getInvigilatorsByExamHallId(examHallId);
     }
 }
