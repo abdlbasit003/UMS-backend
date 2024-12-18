@@ -2,14 +2,14 @@ package com.university.university_management_system.controller;
 import java.util.*;
 
 import com.university.university_management_system.DTOs.FacultyDTO;
+import com.university.university_management_system.exceptions.ApiException;
 import com.university.university_management_system.model.FacultyModel;
 import com.university.university_management_system.repository.FacultyRepository;
 import com.university.university_management_system.service.FacultyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/faculty")
@@ -23,18 +23,20 @@ public class FacultyController {
     }
 
     @GetMapping("/{facultyId}")
-    public FacultyDTO getFacultyById( int facultyId){
+    public FacultyDTO getFacultyById(@PathVariable int facultyId){
         return facultyService.getFacultyById(facultyId);
     }
 
-    public List<FacultyDTO> getFacultyByName(String name){
-        return facultyService.getFacultyByName(name);
-    }
 
-    public List<FacultyDTO> getFacultyByDesignation( String facultyDesignation){
-        return facultyService.getFacultyByDesignation(facultyDesignation);
-    }
-    public FacultyDTO getFacultyByUuid(String uuid){
-        return  facultyService.getFacultyByUuid(uuid);
+    @GetMapping("/search")
+    public ResponseEntity<?> searchFaculty(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Integer designationId,
+            @RequestParam(required = false) String uuid
+    ){
+        if (name!=null)return ResponseEntity.ok(facultyService.getFacultyByName(name));
+        if (designationId!=null)return ResponseEntity.ok(facultyService.getFacultyByDesignation(designationId));
+        if (uuid!=null)return ResponseEntity.ok(facultyService.getFacultyByUuid(uuid));
+        throw new ApiException("No search parameter recieved", HttpStatus.BAD_REQUEST);
     }
 }

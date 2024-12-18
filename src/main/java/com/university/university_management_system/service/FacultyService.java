@@ -54,16 +54,16 @@ public class FacultyService {
     }
 
 
-    public List<FacultyDTO> getFacultyByDesignation(String designationName) {
+    public List<FacultyDTO> getFacultyByDesignation(int designationId) {
         List<FacultyModel> facultyList = facultyRepository.getAllFaculty();
         if (facultyList.isEmpty())throw new ApiException("No faculty members found",HttpStatus.NOT_FOUND);
         List<FacultyDTO> facultyDTOS = new ArrayList<>();
         for (FacultyModel fm : facultyList) {
-            if (fm.getDesignation().getDesignationName().equalsIgnoreCase(designationName)) {
+            if (fm.getDesignation().getDesignationId()==designationId) {
                 facultyDTOS.add(FacultyDTO.fromModel(fm));
             }
         }
-        if (facultyDTOS.isEmpty())throw new ApiException("No faculty members found with the designation: "+designationName,HttpStatus.NOT_FOUND);
+        if (facultyDTOS.isEmpty())throw new ApiException("No faculty members found with this designation",HttpStatus.NOT_FOUND);
         return facultyDTOS;
 
 
