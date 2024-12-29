@@ -20,8 +20,8 @@ public interface ExamRepository extends JpaRepository<ExamModel, Integer> {
     @Query("SELECT e FROM ExamModel e WHERE e.examType.examTypeId = :examTypeId")
     List<ExamModel> getExamsByExamTypeId(@Param("examTypeId") int examTypeId);
 
-    @Query("SELECT e FROM ExamModel e WHERE e.examHall.examHallId = :examHallId")
-    List<ExamModel> getExamsByExamHallId(@Param("examHallId") int examHallId);
+  /*  @Query("SELECT e FROM ExaminationRoomModel e WHERE e.examRoom.examinationRoomId = :examinationRoomId")
+    List<ExamModel> getExamsByExaminationRoomId(@Param("examinationRoomId") int examHallId);*/
 
     @Query("SELECT e FROM ExamModel e WHERE e.examMode.examModeId = :examModeId")
     List<ExamModel> getExamsByExamModeId(@Param("examModeId") int examModeId);

@@ -30,13 +30,14 @@ public class ExamModel {
     @Column(name = "exam_date")
     private LocalDate examDate;
 
-    @ManyToOne
+ /*   @ManyToOne
     @JoinColumn(name = "exam_hall_id", referencedColumnName = "exam_hall_id")
-    private ExamHallModel examHall;
+    private ExamHallModel examHall;*/
 
     @OneToOne
     @JoinColumn(name = "exam_mode_id", referencedColumnName = "exam_mode_id")
     private ExamModeModel examMode;
+   // private ExaminationRoomModel examRoom;
 
 
     public int getExamId() {
@@ -63,12 +64,34 @@ public class ExamModel {
         return examDate;
     }
 
-    public ExamHallModel getExamHall() {
-        return examHall;
-    }
+
 
     public ExamModeModel getExamMode() {
         return examMode;
     }
 
+    public void setCourse(CourseModel course) {
+        this.course = course;
+    }
+
+    public void setExamType(ExamTypeModel examType) {
+        this.examType = examType;
+    }
+
+    public void setExamStartTime(LocalTime examStartTime) {
+        this.examStartTime = examStartTime;
+    }
+
+    public void setExamEndTime(LocalTime examEndTime) {
+        this.examEndTime = examEndTime;
+    }
+
+    public void setExamDate(LocalDate examDate) {
+        this.examDate = examDate;
+    }
+
+
+    public void setExamMode(ExamModeModel examMode) {
+        this.examMode = examMode;
+    }
 }

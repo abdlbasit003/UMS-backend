@@ -11,9 +11,9 @@ public class ExaminationRoomModel {
     @Column(name = "examination_room_id")
     private int examinationRoomId;
 
-    @ManyToOne
+/*    @ManyToOne
     @JoinColumn(name = "exam_hall_id", referencedColumnName = "exam_hall_id", nullable = false)
-    private ExamHallModel examHall;
+    private ExamHallModel examHall;*/
 
     @ManyToOne
     @JoinColumn(name = "exam_id", referencedColumnName = "exam_id", nullable = false)
@@ -29,10 +29,10 @@ public class ExaminationRoomModel {
     }
 
 
-    public ExamHallModel getExamHall() {
+   /* public ExamHallModel getExamHall() {
         return examHall;
     }
-
+*/
 
     public ExamModel getExam() {
         return exam;

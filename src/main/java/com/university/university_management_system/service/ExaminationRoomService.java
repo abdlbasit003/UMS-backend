@@ -86,7 +86,7 @@ public class ExaminationRoomService {
         throw new ApiException("No exam rooms", HttpStatus.NOT_FOUND);
     }
 
-    public List<ExaminationRoomDTO> getStudentsInExamHall(int examHallId) {
+ /*   public List<ExaminationRoomDTO> getStudentsInExamHall(int examHallId) {
         List<ExaminationRoomModel> examinationRooms = examinationRoomRepository.findAll();
         ExamHallModel examHallModel = examHallRepository.findById(examHallId).orElseThrow(() -> new ApiException("No exam rooms found", HttpStatus.NOT_FOUND));
         if (!examinationRooms.isEmpty()) {
@@ -100,5 +100,5 @@ public class ExaminationRoomService {
             return roomDTOs;
         }
         throw new ApiException("No exam rooms found", HttpStatus.NOT_FOUND);
-    }
+    }*/
 }

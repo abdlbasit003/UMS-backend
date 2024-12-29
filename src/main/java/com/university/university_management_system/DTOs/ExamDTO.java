@@ -11,7 +11,7 @@ import java.time.LocalTime;
 public class ExamDTO {
     public int examId;
     public Map<String, Object> course;
-    public String examHallName;
+
     public String examTypeName;
     public String examModeName;
     public LocalTime examStartTime;
@@ -19,10 +19,10 @@ public class ExamDTO {
 
     public LocalDate examDate;
 
-    public ExamDTO(int examId, Map<String, Object> course, String examHallName, String examTypeName, String examModeName, LocalTime examStartTime, LocalTime examEndTime, LocalDate examDate) {
+    public ExamDTO(int examId, Map<String, Object> course,  String examTypeName, String examModeName, LocalTime examStartTime, LocalTime examEndTime, LocalDate examDate) {
         this.examId = examId;
         this.course = course;
-        this.examHallName = examHallName;
+
         this.examTypeName = examTypeName;
         this.examModeName = examModeName;
         this.examEndTime = examEndTime;
@@ -46,13 +46,6 @@ public class ExamDTO {
         this.course = course;
     }
 
-    public String getExamHallName() {
-        return examHallName;
-    }
-
-    public void setExamHallName(String examHallName) {
-        this.examHallName = examHallName;
-    }
 
     public String getExamTypeName() {
         return examTypeName;
@@ -98,6 +91,6 @@ public class ExamDTO {
          Map<String, Object> course = new HashMap<>();
          course.put("courseCode",  examModel.getCourse().getCourseCode());
          course.put("courseName", examModel.getCourse().getCourseName());
-        return new ExamDTO(examModel.getExamId(), course , examModel.getExamHall().getExamHallName(), examModel.getExamType().getExamTypeName(), examModel.getExamMode().getExamModeName(), examModel.getExamStartTime(), examModel.getExamEndTime(),examModel.getExamDate());
+        return new ExamDTO(examModel.getExamId(), course ,  examModel.getExamType().getExamTypeName(), examModel.getExamMode().getExamModeName(), examModel.getExamStartTime(), examModel.getExamEndTime(),examModel.getExamDate());
     }
 }

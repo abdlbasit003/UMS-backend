@@ -7,13 +7,14 @@ import com.university.university_management_system.service.ExamService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
-
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 @RestController
 @RequestMapping("/exams")
@@ -21,6 +22,7 @@ public class ExamController {
 
     @Autowired
     ExamService examService;
+
 
     @GetMapping("")
     public ResponseEntity<List<ExamDTO>> getAllExams() {
@@ -42,11 +44,11 @@ public class ExamController {
         return ResponseEntity.ok(examService.getExamsByExamTypeId(examTypeId));
     }
 
-    @GetMapping("/hall/{examHallId}")
-    public ResponseEntity<List<ExamDTO>> getExamsByExamHallId(@PathVariable int examHallId) {
-        return ResponseEntity.ok(examService.getExamsByExamHallId(examHallId));
+   /* @GetMapping("/rooms/{examinationRoomId}")
+    public ResponseEntity<List<ExamDTO>> getExamsByExaminationRoomId(@PathVariable int examinationRoomId) {
+        return ResponseEntity.ok(examService.getExamsByExaminationRoomId(examinationRoomId));
     }
-
+*/
     @GetMapping("/mode/{examModeId}")
     public ResponseEntity<List<ExamDTO>> getExamsByExamModeId(@PathVariable int examModeId){
         return ResponseEntity.ok(examService.getExamsByExamModeId(examModeId));
@@ -60,5 +62,13 @@ public class ExamController {
     @GetMapping("/time")
     public ResponseEntity<List<ExamDTO>> getExamsByTimeSlot(@RequestParam String examStartTime,@RequestParam String examEndTime){
     return ResponseEntity.ok(examService.getExamsByTimeSlot(LocalTime.parse(examStartTime), LocalTime.parse(examEndTime)));
+    }
+    @PostMapping("/create")
+    public ResponseEntity<ExamDTO> createNewExam(@RequestBody Map<String, Object> examBody){
+
+        ExamDTO examDTO = examService.createNewExam(examBody);
+        return new ResponseEntity<>(examDTO, HttpStatus.CREATED);
+
+
     }
 }

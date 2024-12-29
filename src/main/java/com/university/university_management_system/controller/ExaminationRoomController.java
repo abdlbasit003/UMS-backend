@@ -38,8 +38,8 @@ public class ExaminationRoomController {
         return ResponseEntity.ok().body(examinationRoomService.getExaminationRoomsByStudentId(studentId));
     }
 
-    @GetMapping("/hall/{examHallId}")
+    /*@GetMapping("/hall/{examHallId}")
     public ResponseEntity<?> getStudentsInExamHall(@PathVariable Integer examHallId) {
         return ResponseEntity.ok().body(examinationRoomService.getStudentsInExamHall(examHallId));
-    }
+    }*/
 }
