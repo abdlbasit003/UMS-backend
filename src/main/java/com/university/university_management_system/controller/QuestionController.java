@@ -3,12 +3,12 @@ package com.university.university_management_system.controller;
 import com.university.university_management_system.DTOs.QuestionDTO;
 import com.university.university_management_system.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/questions")
@@ -31,10 +31,14 @@ public class QuestionController {
     public List<QuestionDTO> getQuestionsByTypeId(@PathVariable int questionTypeId) {
         return questionService.getQuestionsByTypeId(questionTypeId);
     }
-
-
+    @GetMapping("/type/clo/{cloId}")
     public List<QuestionDTO> getQuestionsByCloId(@PathVariable int cloId) {
         return questionService.getQuestionsByCloId(cloId);
+    }
+    @PostMapping("/create")
+    public ResponseEntity<QuestionDTO> createNewQuestion(@RequestBody Map<String, Object> body) {
+        QuestionDTO contentDTO = questionService.createNewQuestion(body);
+        return new ResponseEntity<>(contentDTO, HttpStatus.CREATED);
     }
 
 
