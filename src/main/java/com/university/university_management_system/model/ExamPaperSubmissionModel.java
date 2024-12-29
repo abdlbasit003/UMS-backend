@@ -30,6 +30,22 @@ public class ExamPaperSubmissionModel {
     @JoinColumn(name = "submitted_by" , referencedColumnName = "faculty_id")
     private FacultyModel submittedBy;
 
+    @OneToOne
+    @JoinColumn(name = "approved_by" , referencedColumnName = "uuid")
+    private UserModel approvedBy;
+
+    @OneToOne
+    @JoinColumn(name = "rejected_by" , referencedColumnName = "uuid")
+    private UserModel rejectedBy;
+
+    @OneToOne
+    @JoinColumn(name = "published_by" , referencedColumnName = "uuid")
+    private UserModel publishedBy;
+
+    @OneToOne
+    @JoinColumn(name = "archived_by" , referencedColumnName = "uuid")
+    private UserModel archivedBy;
+
 
     public int getSubmissionId() {
         return submissionId;
@@ -53,5 +69,57 @@ public class ExamPaperSubmissionModel {
 
     public FacultyModel getSubmittedBy() {
         return submittedBy;
+    }
+
+    public void setExam(ExamModel exam) {
+        this.exam = exam;
+    }
+
+    public void setStatus(ExamPaperStatus status) {
+        this.status = status;
+    }
+
+    public void setSubmissionDueDate(LocalDateTime submissionDueDate) {
+        this.submissionDueDate = submissionDueDate;
+    }
+
+    public void setSubmittedOn(LocalDateTime submittedOn) {
+        this.submittedOn = submittedOn;
+    }
+
+    public void setSubmittedBy(FacultyModel submittedBy) {
+        this.submittedBy = submittedBy;
+    }
+
+    public UserModel getApprovedBy() {
+        return approvedBy;
+    }
+
+    public void setApprovedBy(UserModel approvedBy) {
+        this.approvedBy = approvedBy;
+    }
+
+    public UserModel getRejectedBy() {
+        return rejectedBy;
+    }
+
+    public void setRejectedBy(UserModel rejectedBy) {
+        this.rejectedBy = rejectedBy;
+    }
+
+    public UserModel getPublishedBy() {
+        return publishedBy;
+    }
+
+    public void setPublishedBy(UserModel publishedBy) {
+        this.publishedBy = publishedBy;
+    }
+
+    public UserModel getArchivedBy() {
+        return archivedBy;
+    }
+
+    public void setArchivedBy(UserModel archivedBy) {
+        this.archivedBy = archivedBy;
     }
 }

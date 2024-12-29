@@ -88,7 +88,7 @@ public class ExamSubmissionService {
         return allExamSubmissionDtos;
     }
 
-    public List<ExamSubmissionDTO> getLateExamPaperSubmissionsByExamId(int examId){
+    public List<ExamSubmissionDTO> getLateExamPaperSubmissionsByExamId(){
         List<ExamPaperSubmissionModel> allExamSubmissions = examPaperSubmissionRepository.findAll();
         List <ExamSubmissionDTO> allExamSubmissionDtos = new ArrayList<>();
 
@@ -96,7 +96,7 @@ public class ExamSubmissionService {
             throw new ApiException("No Exam Submissions", HttpStatus.NOT_FOUND);
         }
         for(ExamPaperSubmissionModel eps : allExamSubmissions){
-            if(examId == eps.getExam().getExamId() && eps.getSubmittedOn().isAfter(eps.getSubmissionDueDate())){
+            if(eps.getSubmittedOn().isAfter(eps.getSubmissionDueDate())){
                 allExamSubmissionDtos.add(ExamSubmissionDTO.fromModel(eps));
             }
         }

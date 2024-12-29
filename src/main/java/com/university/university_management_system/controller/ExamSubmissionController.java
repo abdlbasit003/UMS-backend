@@ -33,9 +33,9 @@ public class ExamSubmissionController {
     public ResponseEntity<List<ExamSubmissionDTO>> getPendingExamPaperSubmissionsByExamId(@PathVariable int examId){
         return ResponseEntity.ok(examSubmissionService.getPendingExamPaperSubmissionsByExamId(examId));
     }
-    @GetMapping("/exam/{examId}/late")
-    public ResponseEntity<List<ExamSubmissionDTO>> getLateExamPaperSubmissionsByExamId(@PathVariable int examId){
-        return ResponseEntity.ok(examSubmissionService.getLateExamPaperSubmissionsByExamId(examId));
+    @GetMapping("/late")
+    public ResponseEntity<List<ExamSubmissionDTO>> getLateExamPaperSubmissionsByExamId(){
+        return ResponseEntity.ok(examSubmissionService.getLateExamPaperSubmissionsByExamId());
     }
     @GetMapping("/status/{statusId}")
     public ResponseEntity<List<ExamSubmissionDTO>> getExamPaperSubmissionsByStatusId(@PathVariable int statusId){

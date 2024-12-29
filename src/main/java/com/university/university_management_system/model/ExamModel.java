@@ -30,14 +30,12 @@ public class ExamModel {
     @Column(name = "exam_date")
     private LocalDate examDate;
 
- /*   @ManyToOne
-    @JoinColumn(name = "exam_hall_id", referencedColumnName = "exam_hall_id")
-    private ExamHallModel examHall;*/
+    @Column(name = "weightage")
+    private String weightage;
 
     @OneToOne
     @JoinColumn(name = "exam_mode_id", referencedColumnName = "exam_mode_id")
     private ExamModeModel examMode;
-   // private ExaminationRoomModel examRoom;
 
 
     public int getExamId() {
@@ -93,5 +91,13 @@ public class ExamModel {
 
     public void setExamMode(ExamModeModel examMode) {
         this.examMode = examMode;
+    }
+
+    public String getWeightage() {
+        return weightage;
+    }
+
+    public void setWeightage(String weightage) {
+        this.weightage = weightage;
     }
 }

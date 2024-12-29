@@ -32,6 +32,10 @@ public class StudentModel{
     @JoinColumn(name="student_uuid",referencedColumnName = "uuid")
     private UserModel user;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="semester_id",referencedColumnName = "semester_id")
+    private SemesterModel semester;
+
 
     public String getStudentId() {
         return studentId;
@@ -54,6 +58,13 @@ public class StudentModel{
         return studentEnrollmentYear;
     }
 
+    public SemesterModel getSemester() {
+        return semester;
+    }
+
+    public void setSemester(SemesterModel semester) {
+        this.semester = semester;
+    }
 
     public UserModel getUser() {
         return user;

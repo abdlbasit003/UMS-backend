@@ -27,7 +27,7 @@ public class QuestionController {
         return questionService.getQuestionById(questionId);
     }
 
-    @GetMapping("/type/{questionTypeId}")
+    @GetMapping("/type/{questionType}")
     public List<QuestionDTO> getQuestionsByTypeId(@PathVariable int questionTypeId) {
         return questionService.getQuestionsByTypeId(questionTypeId);
     }
