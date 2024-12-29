@@ -14,21 +14,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/clo")
+
 public class CLOController {
     @Autowired
     CloService cloService;
 
-    @GetMapping("")
-    public ResponseEntity<List<CloDTO>>  getAllCLOs() {
-        return ResponseEntity.ok(cloService.getAllCLOs());
-    }
-    @GetMapping("/{cloId}")
+
+    @GetMapping("clos/{cloId}")
     public ResponseEntity<CloDTO> getCLOById(@PathVariable int cloId){
         return ResponseEntity.ok(cloService.getCLOById(cloId));
     }
 
-    @GetMapping("/courseCode/{courseCode}")
+    @GetMapping("/courses/{courseCode}/clos")
     public ResponseEntity<List<CloDTO>> getCLOsByCourseCode(@PathVariable String courseCode){
 
         return ResponseEntity.ok(cloService.getCLOsByCourseCode(courseCode));

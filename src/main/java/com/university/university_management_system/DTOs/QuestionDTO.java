@@ -65,7 +65,7 @@ public class QuestionDTO {
         Map<String, Object> clo = new HashMap<>();
         clo.put("title",questionModel.getQuestionTitle());
         clo.put("description",questionModel.getDescription());
-        return new QuestionDTO(questionModel.getQuestionId(),questionModel.getQuestionTitle(),questionModel.getQuestionType().getName(),clo,questionModel.getMarks());
+        return new QuestionDTO(questionModel.getQuestionId(),questionModel.getQuestionTitle(),questionModel.getQuestionTypeId().getName(),clo,questionModel.getMarks());
 
     }
 }

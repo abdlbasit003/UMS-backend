@@ -19,18 +19,12 @@ public class CourseDepartmentController {
         return ResponseEntity.ok().body(courseDepartmentService.getCoursesByDepartmentId(departmentId));
     }
 
-    @GetMapping("/departments/{departmentId}/courses/{courseDepartmentId}")
-    public ResponseEntity<?> getCourseDepartmentById(@PathVariable Integer courseDepartmentId) {
-        return ResponseEntity.ok().body(courseDepartmentService.getDepartmentCourseById(courseDepartmentId));
-    }
 
-    @GetMapping("/course/{courseCode}/departments")
+
+    @GetMapping("/courses/{courseCode}/departments")
     public ResponseEntity<?> getDepartmentsByCourseCode(@PathVariable String courseCode) {
         return ResponseEntity.ok().body(courseDepartmentService.getDepartmentsByCourseCode(courseCode));
     }
 
-//    @GetMapping("/coursesInDepartment/{departmentName}")
-//    public ResponseEntity<?> getAllCoursesInDepartment(@PathVariable String departmentName) {
-//        return ResponseEntity.ok().body(courseDepartmentService.getAllCoursesInDepartment(departmentName));
-//    }
+
 }

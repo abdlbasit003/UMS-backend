@@ -45,7 +45,7 @@ public class QuestionService {
         List<QuestionModel> questionModels = questionRepository.findAll();
 
         for (QuestionModel model : questionModels) {
-            if (model.getQuestionType().getTypeId() == questionTypeId) {
+            if (model.getQuestionTypeId().getTypeId() == questionTypeId) {
                 questionDTOs.add(QuestionDTO.fromModel(model));
             }
         }

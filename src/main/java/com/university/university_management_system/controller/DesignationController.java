@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/designations")
 public class DesignationController {
+
     @Autowired
     DesignationRepository designationRepository;
 

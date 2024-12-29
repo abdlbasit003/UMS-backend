@@ -24,13 +24,5 @@ public class DepartmentController {
         return departmentService.getDepartmentById(departmentId);
     }
 
-    @GetMapping("/by-name/{departmentName}")
-    public DepartmentDTO getDepartmentByDepartmentName(@PathVariable String departmentName) {
-        return departmentService.getDepartmentByDepartmentName(departmentName);
-    }
 
-    @GetMapping("/by-head/{headId}")
-    public List<DepartmentDTO> getDepartmentsByDepartmentHeadId(@PathVariable int headId) {
-        return departmentService.getDepartmentsByDepartmentHeadId(headId);
-    }
 }

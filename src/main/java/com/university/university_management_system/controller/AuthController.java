@@ -18,13 +18,12 @@ public class AuthController {
 
 
     @GetMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestParam String email, @RequestParam String password){
-        UserModel user = authService.loginUser(email,password);
-        return ResponseEntity.ok(user);
+    public ResponseEntity<UserModel> loginUser(@RequestParam String email, @RequestParam String password){
+        return ResponseEntity.ok(authService.loginUser(email,password));
     }
 
     @PutMapping("/forgotpass")
-    public ResponseEntity<?> forgotPass(@RequestBody Map<String,String> body){
+    public ResponseEntity<UserModel> forgotPass(@RequestBody Map<String,String> body){
         return ResponseEntity.ok(authService.forgotPassword(body));
 
     }

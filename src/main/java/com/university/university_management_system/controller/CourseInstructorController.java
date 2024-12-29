@@ -13,23 +13,24 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/courseinstructors")
+
 public class CourseInstructorController {
     @Autowired
     CourseInstructorService courseInstructorService;
-    @GetMapping("")
+
+    @GetMapping("/courseinstructors")
     public ResponseEntity <List<CourseInstructorDTO>> getAllCourseInstructors(){
         return ResponseEntity.ok(courseInstructorService.getAllCourseInstructors());
     }
-    @GetMapping("/{courseInstructorId}")
+    @GetMapping("/courseinstructors/{courseInstructorId}")
     public CourseInstructorDTO getCourseInstructorById(@PathVariable int courseInstructorId){
         return courseInstructorService.getCourseInstructorbyId(courseInstructorId);
     }
-    @GetMapping("/course/{courseCode}")
+    @GetMapping("/courses/{courseCode}/instructors")
     public ResponseEntity <List<CourseInstructorDTO>> getCourseInstructorsByCourseCode(@PathVariable String courseCode){
         return ResponseEntity.ok(courseInstructorService.getCourseInstructorByCourseCode(courseCode));
     }
-    @GetMapping("/{instructorId}/courses")
+    @GetMapping("/faculty/{instructorId}/courses")
     public ResponseEntity <List<CourseModel>> getCoursesByInstructorId(@PathVariable int instructorId) {
         return ResponseEntity.ok(courseInstructorService.getCoursesByInstructorId(instructorId));
     }

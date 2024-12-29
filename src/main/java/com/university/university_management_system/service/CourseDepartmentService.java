@@ -1,7 +1,9 @@
 package com.university.university_management_system.service;
 
 import com.university.university_management_system.DTOs.CourseDepartmentDTO;
+import com.university.university_management_system.DTOs.DepartmentDTO;
 import com.university.university_management_system.exceptions.ApiException;
+import com.university.university_management_system.model.CourseModel;
 import com.university.university_management_system.model.DepartmentCourseModel;
 import com.university.university_management_system.model.DepartmentModel;
 import com.university.university_management_system.repository.CourseRepository;
@@ -40,14 +42,14 @@ public class CourseDepartmentService {
         return CourseDepartmentDTO.fromModel(courseDepartmentRepository.findById(departmentCourseId).orElseThrow(()->new ApiException("Department not found", HttpStatus.NOT_FOUND)));
     }
 
-    public List<CourseDepartmentDTO> getCoursesByDepartmentId(int departmentId) {
+    public List<CourseModel> getCoursesByDepartmentId(int departmentId) {
         departmentRepository.findById(departmentId).orElseThrow(()->new ApiException("Invalid department Id",HttpStatus.NOT_FOUND));
         List<DepartmentCourseModel> departmentCourses = courseDepartmentRepository.findAll();
         if (departmentCourses.isEmpty())throw new ApiException("Courses not found",HttpStatus.NOT_FOUND);
-        List<CourseDepartmentDTO> result = new ArrayList<>();
+        List<CourseModel> result = new ArrayList<>();
         for (DepartmentCourseModel model : departmentCourses) {
             if (model.getDepartment().getDepartmentId() == departmentId) {
-                result.add(CourseDepartmentDTO.fromModel(model));
+                result.add(model.getCourse());
             }
         }
         if (result.isEmpty())throw new ApiException("Courses not found in this department",HttpStatus.NOT_FOUND);
@@ -55,15 +57,15 @@ public class CourseDepartmentService {
         return result;
     }
 
-    public List<CourseDepartmentDTO> getDepartmentsByCourseCode(String courseCode) {
+    public List<DepartmentDTO> getDepartmentsByCourseCode(String courseCode) {
         courseRepository.findById(courseCode).orElseThrow(()->new ApiException("Invalid course code",HttpStatus.NOT_FOUND));
         List<DepartmentCourseModel> departmentCourses = courseDepartmentRepository.findAll();
         if (departmentCourses.isEmpty())throw new ApiException("Courses not found",HttpStatus.NOT_FOUND);
-        List<CourseDepartmentDTO> result = new ArrayList<>();
+        List<DepartmentDTO> result = new ArrayList<>();
 
         for (DepartmentCourseModel model : departmentCourses) {
             if (model.getCourse().getCourseCode().equals(courseCode)) {
-                result.add(CourseDepartmentDTO.fromModel(model));
+                result.add(DepartmentDTO.fromModel(model.getDepartment()));
             }
         }
         if (result.isEmpty())throw new ApiException("Courses not found in this department",HttpStatus.NOT_FOUND);
