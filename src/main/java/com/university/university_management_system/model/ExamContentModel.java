@@ -45,4 +45,20 @@ public class ExamContentModel {
     public QuestionModel getQuestion() {
         return question;
     }
+
+    public void setExamContentTitle(String examContentTitle) {
+        this.examContentTitle = examContentTitle;
+    }
+
+    public void setContentType(ExamContentTypeModel contentType) {
+        this.contentType = contentType;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setQuestion(QuestionModel question) {
+        this.question = question;
+    }
 }
