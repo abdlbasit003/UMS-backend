@@ -19,7 +19,6 @@ public class QuestionDTO {
         this.questionType = questionType;
         this.clo=clo;
         this.marks=marks;
-
     }
 
     public int getQuestionId() {
