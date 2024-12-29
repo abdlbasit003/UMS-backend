@@ -1,7 +1,7 @@
 package com.university.university_management_system.service;
 
 import com.university.university_management_system.DTOs.DepartmentDTO;
-import com.university.university_management_system.enums.FacultyDesignation;
+import com.university.university_management_system.utils.Constants;
 import com.university.university_management_system.exceptions.ApiException;
 import com.university.university_management_system.model.DepartmentModel;
 import com.university.university_management_system.model.FacultyModel;
@@ -45,7 +45,7 @@ public class DepartmentService {
         FacultyModel headOfDep = facultyRepository.findById(headId)
                 .orElseThrow(() -> new ApiException("Invalid id for the head of Department", HttpStatus.NOT_FOUND));
 
-        if (!headOfDep.getDesignation().getDesignationName().equals(FacultyDesignation.HEAD_OF_DEPARTMENT.getDesignation())) {
+        if (!headOfDep.getDesignation().getDesignationName().equals(Constants.HEAD_OF_DEPARTMENT)) {
             throw new ApiException("Please provide a valid HOD id", HttpStatus.NOT_FOUND);
         }
 
