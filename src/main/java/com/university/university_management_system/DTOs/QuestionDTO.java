@@ -73,8 +73,8 @@ public class QuestionDTO {
 
     public static QuestionDTO fromModel(QuestionModel questionModel){
         Map<String, Object> clo = new HashMap<>();
-        clo.put("title",questionModel.getQuestionTitle());
-        clo.put("description",questionModel.getDescription());
+        clo.put("title",questionModel.getClo().getTitle());
+        clo.put("description",questionModel.getClo().getDescription());
         return new QuestionDTO(questionModel.getQuestionId(),questionModel.getQuestionTitle(),questionModel.getDescription(),questionModel.getQuestionTypeId().getName(),clo,questionModel.getMarks());
 
     }
