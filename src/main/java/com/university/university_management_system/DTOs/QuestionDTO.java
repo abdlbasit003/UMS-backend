@@ -9,13 +9,15 @@ import java.util.Map;
 public class QuestionDTO {
     public int questionId;
     public String questionTitle;
+    public String description;
     public String questionType;
     public int marks;
     public Map<String, Object> clo;
 
-    public QuestionDTO(int questionId,String questionTitle,String questionType,Map<String,Object> clo,int marks) {
+    public QuestionDTO(int questionId,String questionTitle,String description,String questionType,Map<String,Object> clo,int marks) {
         this.questionId = questionId;
         this.questionTitle = questionTitle;
+        this.description = description;
         this.questionType = questionType;
         this.clo=clo;
         this.marks=marks;
@@ -31,6 +33,14 @@ public class QuestionDTO {
 
     public String getQuestionTitle() {
         return questionTitle;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setQuestionTitle(String questionTitle) {
@@ -65,7 +75,7 @@ public class QuestionDTO {
         Map<String, Object> clo = new HashMap<>();
         clo.put("title",questionModel.getQuestionTitle());
         clo.put("description",questionModel.getDescription());
-        return new QuestionDTO(questionModel.getQuestionId(),questionModel.getQuestionTitle(),questionModel.getQuestionTypeId().getName(),clo,questionModel.getMarks());
+        return new QuestionDTO(questionModel.getQuestionId(),questionModel.getQuestionTitle(),questionModel.getDescription(),questionModel.getQuestionTypeId().getName(),clo,questionModel.getMarks());
 
     }
 }
