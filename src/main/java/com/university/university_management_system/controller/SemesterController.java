@@ -35,11 +35,11 @@ public class SemesterController {
         return semesterService.getBySemesterYear(semesterYear);
     }
     @GetMapping("/start/{startDate}")
-    public List<SemesterModel> getByStartDate(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate){
+    public List<SemesterModel> getByStartDate(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate){
         return semesterService.getByStartDate(startDate);
     }
     @GetMapping("/end/{endDate}")
-    public List<SemesterModel> getByEndDate(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate){
+    public List<SemesterModel> getByEndDate(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate){
         return semesterService.getByEndDate(endDate);
     }
 }
