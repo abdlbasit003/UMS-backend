@@ -138,7 +138,7 @@ public class ExamService {
        try {
            examModel.setCourse(courseRepository.findById(String.valueOf(examBody.get("courseCode"))).orElseThrow(()->new ApiException("No course found for courseCode: "+ examBody.get("courseCode"), HttpStatus.NOT_FOUND)));
            examModel.setExamType(examTypeRepository.findById(Integer.parseInt(String.valueOf(examBody.get("examType")))).orElseThrow(()->new ApiException("No examType found for examTypeId: "+ examBody.get("examType"), HttpStatus.NOT_FOUND)));
-   
+
              examModel.setExamDate(LocalDate.parse(String.valueOf(examBody.get("examDate"))));
              examModel.setExamStartTime(LocalTime.parse(String.valueOf(examBody.get("examStartTime"))));
              examModel.setExamEndTime(LocalTime.parse(String.valueOf(examBody.get("examEndTime"))));
