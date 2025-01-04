@@ -41,7 +41,6 @@ public class CourseInstructorService {
        return CourseInstructorDTO.fromModel(courseInstructorRepository.findById(courseInstructorId).orElseThrow(()->new ApiException("Instructor not found",HttpStatus.NOT_FOUND)));
     }
 
-
     public List<CourseInstructorDTO> getCourseInstructorByCourseCode(String courseCode){
         List<CourseInstructorModel> allCourseInstructors = courseInstructorRepository.findAll();
         List<CourseInstructorDTO> courseInstructorsByCourseCode = new ArrayList<>();

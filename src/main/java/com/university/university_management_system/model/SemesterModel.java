@@ -16,8 +16,9 @@ public class SemesterModel {
     @Column(name = "semester_name")
     private String semesterName;
 
-    @Column(name = "season_id")
-    private int seasonId;
+    @ManyToOne
+    @JoinColumn(name = "season_id", referencedColumnName = "season_id", insertable = false, updatable = false)
+    private SeasonModel seasonModel;
 
     @Column(name = "semester_year")
     private int semesterYear;
@@ -42,16 +43,18 @@ public class SemesterModel {
         return semesterName;
     }
 
+
+
     public void setSemesterName(String semesterName) {
         this.semesterName = semesterName;
     }
 
-    public int getSeasonId() {
-        return seasonId;
+    public SeasonModel getSeasonModel() {
+        return seasonModel;
     }
 
-    public void setSeasonId(int seasonId) {
-        this.seasonId = seasonId;
+    public void setSeasonModel(SeasonModel seasonModel) {
+        this.seasonModel = seasonModel;
     }
 
     public int getSemesterYear() {
