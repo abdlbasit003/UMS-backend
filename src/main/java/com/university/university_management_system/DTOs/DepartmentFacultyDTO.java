@@ -5,7 +5,7 @@ public class DepartmentFacultyDTO {
     private DepartmentDTO departmentDTO;
     private HashMap<String,Object> faculty;
 
-    // Getters and Setters
+   
     public int getDepartmentFacultyId() {
         return departmentFacultyId;
     }
@@ -30,12 +30,12 @@ public class DepartmentFacultyDTO {
         this.faculty = faculty;
     }
 
-    // Static method to convert from DepartmentFacultyModel to DepartmentFacultyDTO
+    
     public static DepartmentFacultyDTO fromModel(DepartmentFacultyModel dfm) {
         DepartmentFacultyDTO dto = new DepartmentFacultyDTO();
         dto.setDepartmentFacultyId(dfm.getDepartmentFacultyId());
 
-        // Assuming DepartmentDTO has a similar fromModel method
+       
         dto.setDepartmentDTO(DepartmentDTO.fromModel(dfm.getDepartment()));
 
         HashMap<String, Object> facultyMap = new HashMap<>();

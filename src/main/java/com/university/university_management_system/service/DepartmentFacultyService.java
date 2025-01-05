@@ -18,6 +18,12 @@ public class DepartmentFacultyService {
     @Autowired
     private DepartmentFacultyRepository departmentFacultyRepository;
 
+    @Autowired
+    private DepartmentService departmentService; // Added DepartmentService
+
+    @Autowired
+    private FacultyService facultyService; // Added FacultyService
+
     public List<DepartmentFacultyDTO> getAll() {
         List<DepartmentFacultyModel> departmentFacultyModels = departmentFacultyRepository.findAll();
         return departmentFacultyModels.stream()
