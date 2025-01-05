@@ -1,5 +1,6 @@
 package com.university.university_management_system.model;
 
+import com.university.university_management_system.DTOs.ExamDTO;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -21,15 +22,6 @@ public class ExamModel {
     @JoinColumn(name = "exam_type_id", referencedColumnName = "exam_type_id")
     private ExamTypeModel examType;
 
-    @Column(name = "exam_start_time")
-    private LocalTime examStartTime;
-
-    @Column(name = "exam_end_time")
-    private LocalTime examEndTime;
-
-    @Column(name = "exam_date")
-    private LocalDate examDate;
-
     @Column(name = "weightage")
     private String weightage;
 
@@ -50,20 +42,6 @@ public class ExamModel {
         return examType;
     }
 
-    public LocalTime getExamStartTime() {
-        return examStartTime;
-    }
-
-    public LocalTime getExamEndTime() {
-        return examEndTime;
-    }
-
-    public LocalDate getExamDate() {
-        return examDate;
-    }
-
-
-
     public ExamModeModel getExamMode() {
         return examMode;
     }
@@ -75,19 +53,6 @@ public class ExamModel {
     public void setExamType(ExamTypeModel examType) {
         this.examType = examType;
     }
-
-    public void setExamStartTime(LocalTime examStartTime) {
-        this.examStartTime = examStartTime;
-    }
-
-    public void setExamEndTime(LocalTime examEndTime) {
-        this.examEndTime = examEndTime;
-    }
-
-    public void setExamDate(LocalDate examDate) {
-        this.examDate = examDate;
-    }
-
 
     public void setExamMode(ExamModeModel examMode) {
         this.examMode = examMode;

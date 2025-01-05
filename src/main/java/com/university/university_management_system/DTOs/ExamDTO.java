@@ -11,23 +11,17 @@ import java.time.LocalTime;
 public class ExamDTO {
     public int examId;
     public Map<String, Object> course;
-
     public String examTypeName;
     public String examModeName;
-    public LocalTime examStartTime;
-    public LocalTime examEndTime;
+    private String weightage;
 
-    public LocalDate examDate;
 
-    public ExamDTO(int examId, Map<String, Object> course,  String examTypeName, String examModeName, LocalTime examStartTime, LocalTime examEndTime, LocalDate examDate) {
+    public ExamDTO(int examId, Map<String, Object> course,  String examTypeName, String examModeName,String weightage) {
         this.examId = examId;
         this.course = course;
-
         this.examTypeName = examTypeName;
         this.examModeName = examModeName;
-        this.examEndTime = examEndTime;
-        this.examStartTime = examStartTime;
-        this.examDate = examDate;
+        this.weightage = weightage;
     }
 
     public int getExamId() {
@@ -63,34 +57,14 @@ public class ExamDTO {
         this.examModeName = examModeName;
     }
 
-    public LocalTime getExamStartTime() {
-        return examStartTime;
-    }
 
-    public void setExamStartTime(LocalTime examStartTime) {
-        this.examStartTime = examStartTime;
-    }
-
-    public LocalTime getExamEndTime() {
-        return examEndTime;
-    }
-
-    public void setExamEndTime(LocalTime examEndTime) {
-        this.examEndTime = examEndTime;
-    }
-
-    public LocalDate getExamDate() {
-        return examDate;
-    }
-
-    public void setExamDate(LocalDate examDate) {
-        this.examDate = examDate;
-    }
 
     public static ExamDTO fromModel(ExamModel examModel){
          Map<String, Object> course = new HashMap<>();
          course.put("courseCode",  examModel.getCourse().getCourseCode());
          course.put("courseName", examModel.getCourse().getCourseName());
-        return new ExamDTO(examModel.getExamId(), course ,  examModel.getExamType().getExamTypeName(), examModel.getExamMode().getExamModeName(), examModel.getExamStartTime(), examModel.getExamEndTime(),examModel.getExamDate());
+        return new ExamDTO(examModel.getExamId(), course ,  examModel.getExamType().getExamTypeName(), examModel.getExamMode().getExamModeName(),examModel.getWeightage());
     }
+
+
 }

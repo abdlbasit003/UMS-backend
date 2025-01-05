@@ -32,6 +32,9 @@ public class ExamService {
     @Autowired
     ExamModeRepository examModeRepository;
 
+    @Autowired
+    ExamPaperSubmissionService examPaperSubmissionService;
+
     public List<ExamDTO> getAllExams(){
 
         List<ExamModel> allExams = examRepository.findAll();
@@ -133,17 +136,13 @@ public class ExamService {
         return examDTOS;
     }
 
-    public ExamDTO createNewExam(Map<String, Object> examBody){
+    public ExamModel createNewExam(Map<String, Object> examBody){
         ExamModel examModel = new ExamModel();
        try {
            examModel.setCourse(courseRepository.findById(String.valueOf(examBody.get("courseCode"))).orElseThrow(()->new ApiException("No course found for courseCode: "+ examBody.get("courseCode"), HttpStatus.NOT_FOUND)));
            examModel.setExamType(examTypeRepository.findById(Integer.parseInt(String.valueOf(examBody.get("examType")))).orElseThrow(()->new ApiException("No examType found for examTypeId: "+ examBody.get("examType"), HttpStatus.NOT_FOUND)));
-
-             examModel.setExamDate(LocalDate.parse(String.valueOf(examBody.get("examDate"))));
-             examModel.setExamStartTime(LocalTime.parse(String.valueOf(examBody.get("examStartTime"))));
-             examModel.setExamEndTime(LocalTime.parse(String.valueOf(examBody.get("examEndTime"))));
-
            examModel.setExamMode(examModeRepository.findById(Integer.parseInt(String.valueOf(examBody.get("examMode")))).orElseThrow(()->new ApiException("No examMode found for examModeId: "+ examBody.get("examMode"), HttpStatus.NOT_FOUND)));
+           examModel.setWeightage(String.valueOf(examBody.get("weightage")));
        }catch (ApiException e){
           throw new ApiException("Error creating new Exam", HttpStatus.BAD_REQUEST);
        }
@@ -152,7 +151,7 @@ public class ExamService {
        }catch (ApiException e){
            throw new ApiException("Error creating new  Exam", HttpStatus.INTERNAL_SERVER_ERROR);
        }
-       return ExamDTO.fromModel(examModel);
+       return examModel;
     }
 
 }

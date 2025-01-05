@@ -63,12 +63,7 @@ public class ExamController {
     public ResponseEntity<List<ExamDTO>> getExamsByTimeSlot(@RequestParam String examStartTime,@RequestParam String examEndTime){
     return ResponseEntity.ok(examService.getExamsByTimeSlot(LocalTime.parse(examStartTime), LocalTime.parse(examEndTime)));
     }
-    @PostMapping("/create")
-    public ResponseEntity<ExamDTO> createNewExam(@RequestBody Map<String, Object> examBody){
-
-        ExamDTO examDTO = examService.createNewExam(examBody);
-        return new ResponseEntity<>(examDTO, HttpStatus.CREATED);
 
 
-    }
+
 }
