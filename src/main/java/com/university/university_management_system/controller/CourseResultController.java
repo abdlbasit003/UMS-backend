@@ -1,8 +1,6 @@
 package com.university.university_management_system.controller;
 
 import com.university.university_management_system.DTOs.CourseResultDTO;
-import com.university.university_management_system.model.CourseResultModel;
-import com.university.university_management_system.repository.CourseResultRepository;
 import com.university.university_management_system.service.CourseResultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,18 +11,39 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-
+@RequestMapping("/courseresults")
 public class CourseResultController {
 
     @Autowired
-    CourseResultService courseResultService;
+    private CourseResultService courseResultService;
 
-    @GetMapping("/courseresults")
+    @GetMapping
     public List<CourseResultDTO> getAllCourseResults() {
-        return courseResultService.getAllResults();
+        return courseResultService.getAll();
     }
-    @GetMapping("/courseresults/{courseResultId}")
+
+    @GetMapping("/{courseResultId}")
     public CourseResultDTO getCourseResultById(@PathVariable int courseResultId) {
-        return courseResultService.getById(courseResultId);
+        return courseResultService.getByCourseResultId(courseResultId);
+    }
+
+    @GetMapping("/student/{studentId}")
+    public List<CourseResultDTO> getCourseResultsByStudentId(@PathVariable int studentId) {
+        return courseResultService.getByStudentId(studentId);
+    }
+
+    @GetMapping("/course/{courseCode}")
+    public List<CourseResultDTO> getCourseResultsByCourseCode(@PathVariable String courseCode) {
+        return courseResultService.getByCourseCode(courseCode);
+    }
+
+    @GetMapping("/exam/{examId}")
+    public List<CourseResultDTO> getCourseResultsByExamId(@PathVariable int examId) {
+        return courseResultService.getByExamId(examId);
+    }
+
+    @GetMapping("/semester/{studentId}/{semesterId}")
+    public List<CourseResultDTO> getCourseResultsBySemesterId(@PathVariable String studentId, @PathVariable int semesterId) {
+        return courseResultService.getBySemesterId(studentId, semesterId);
     }
 }

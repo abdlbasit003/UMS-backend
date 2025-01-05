@@ -73,16 +73,15 @@ public class CourseResultDTO {
     }
 
 
-    public static CourseResultDTO fromModel(CourseResultModel courseResultModel){
-        Map<String,Object> course = new HashMap<>();
-        course.put("courseCode",courseResultModel.getCourse().getCourseCode());
-        course.put("course",courseResultModel.getCourse().getCourseName());
+    public static CourseResultDTO fromModel(CourseResultModel courseResultModel) {
+        Map<String, Object> course = new HashMap<>();
+        course.put("courseCode", courseResultModel.getCourse().getCourseCode());
+        course.put("course", courseResultModel.getCourse().getCourseName());
 
-        return new CourseResultDTO(courseResultModel.getCourseResultId(),courseResultModel.getMarksObtained(),courseResultModel.getGrade(),
-                    StudentDTO.fromModel(courseResultModel.getStudent()),course,ExamDTO.fromModel(courseResultModel.getExam())
-                );
-
+        return new CourseResultDTO(courseResultModel.getCourseResultId(), courseResultModel.getMarksObtained(),
+                courseResultModel.getGrade(), StudentDTO.fromModel(courseResultModel.getStudent()), course, ExamDTO.fromModel(courseResultModel.getExam()));
     }
+
 
 
 }
