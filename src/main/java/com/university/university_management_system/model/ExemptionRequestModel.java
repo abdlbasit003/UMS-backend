@@ -8,33 +8,33 @@ public class ExemptionRequestModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "request_id")
+    @Column(name = "exemption_request_id")
     private int requestId;
 
     @ManyToOne
-    @JoinColumn(name = "student", nullable = false)
+    @JoinColumn(name = "student_id")
     private StudentModel student;
 
     @ManyToOne
-    @JoinColumn(name = "exam", nullable = false)
+    @JoinColumn(name = "exam_id")
     private ExamModel exam;
 
     @ManyToOne
-    @JoinColumn(name = "exemption_request_type", nullable = false)
+    @JoinColumn(name = "request_type_id")
     private ExemptionRequestTypeModel exemptionRequestType;
 
     @ManyToOne
-    @JoinColumn(name = "status", nullable = false)
+    @JoinColumn(name = "request_status_id")
     private ExamPaperStatus status;
 
-    @Column(name = "date_submitted_on", nullable = false)
+    @Column(name = "submitted_on")
     private LocalDateTime dateSubmittedOn;
 
     @ManyToOne
-    @JoinColumn(name = "reviewed_by_id")
+    @JoinColumn(name = "reviewed_by")
     private UserModel reviewedBy;
 
-    @Column(name = "date_reviewed_on")
+    @Column(name = "reviewed_on")
     private LocalDateTime dateReviewedOn;
 
     public int getRequestId() {

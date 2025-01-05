@@ -16,30 +16,98 @@ public class ExemptionRequestDTO {
     private UserModel reviewedBy;
     private LocalDateTime reviewedOn;
 
+    public ExemptionRequestDTO(int requestId, StudentDTO student, ExamDTO exam, HashMap<String, String> requestType, HashMap<String, String> requestStatus, LocalDateTime submittedOn, UserModel reviewedBy, LocalDateTime reviewedOn) {
+        this.requestId = requestId;
+        this.student = student;
+        this.exam = exam;
+        this.requestType = requestType;
+        this.requestStatus = requestStatus;
+        this.submittedOn = submittedOn;
+        this.reviewedBy = reviewedBy;
+        this.reviewedOn = reviewedOn;
+    }
+
+    public int getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(int requestId) {
+        this.requestId = requestId;
+    }
+
+    public StudentDTO getStudent() {
+        return student;
+    }
+
+    public void setStudent(StudentDTO student) {
+        this.student = student;
+    }
+
+    public ExamDTO getExam() {
+        return exam;
+    }
+
+    public void setExam(ExamDTO exam) {
+        this.exam = exam;
+    }
+
+    public HashMap<String, String> getRequestType() {
+        return requestType;
+    }
+
+    public void setRequestType(HashMap<String, String> requestType) {
+        this.requestType = requestType;
+    }
+
+    public HashMap<String, String> getRequestStatus() {
+        return requestStatus;
+    }
+
+    public void setRequestStatus(HashMap<String, String> requestStatus) {
+        this.requestStatus = requestStatus;
+    }
+
+    public LocalDateTime getSubmittedOn() {
+        return submittedOn;
+    }
+
+    public void setSubmittedOn(LocalDateTime submittedOn) {
+        this.submittedOn = submittedOn;
+    }
+
+    public UserModel getReviewedBy() {
+        return reviewedBy;
+    }
+
+    public void setReviewedBy(UserModel reviewedBy) {
+        this.reviewedBy = reviewedBy;
+    }
+
+    public LocalDateTime getReviewedOn() {
+        return reviewedOn;
+    }
+
+    public void setReviewedOn(LocalDateTime reviewedOn) {
+        this.reviewedOn = reviewedOn;
+    }
+
     public static ExemptionRequestDTO fromModel(ExemptionRequestModel model) {
-        ExemptionRequestDTO DTO = new ExemptionRequestDTO();
-        DTO.requestId = model.getRequestId();
-        DTO.student = StudentDTO.fromModel(model.getStudent());
-        DTO.exam = ExamDTO.fromModel(model.getExam());
-
-        DTO.requestType = new HashMap<>();
-        DTO.requestType.put("requestId", String.valueOf(model.getExemptionRequestType().getRequestTypeId()));
-        DTO.requestType.put("requestType", model.getExemptionRequestType().getName());
-
-        DTO.requestStatus = new HashMap<>();
-        DTO.requestStatus.put("requestStatusId", String.valueOf(model.getStatus().getStatusId()));
-        DTO.requestStatus.put("requestStatus", model.getStatus().getStatusName());
-
-        DTO.submittedOn = model.getDateSubmittedOn();
-
-        if (model.getReviewedBy() != null) {
-            DTO.reviewedBy = model.getReviewedBy();
-        }else {
-            DTO.reviewedBy = null;
-        }
-
-        DTO.reviewedOn = model.getDateReviewedOn();
-        return DTO;
+        HashMap<String,String> requestType = new HashMap<>();
+        requestType.put("requestId", String.valueOf(model.getExemptionRequestType().getRequestTypeId()));
+        requestType.put("requestType", model.getExemptionRequestType().getName());
+        HashMap<String,String> requestStatus = new HashMap<>();
+        requestStatus.put("requestStatusId", String.valueOf(model.getStatus().getStatusId()));
+        requestStatus.put("requestStatus", model.getStatus().getStatusName());
+        return new ExemptionRequestDTO(
+                model.getRequestId(),
+                StudentDTO.fromModel(model.getStudent()),
+                ExamDTO.fromModel(model.getExam()),
+                requestType,
+                requestStatus,
+                model.getDateSubmittedOn(),
+                model.getReviewedBy(),
+                model.getDateReviewedOn()
+        );
     }
 
 }

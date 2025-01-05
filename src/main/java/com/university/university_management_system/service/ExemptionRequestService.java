@@ -4,14 +4,19 @@ import com.university.university_management_system.DTOs.ExemptionRequestDTO;
 import com.university.university_management_system.model.ExemptionRequestModel;
 import com.university.university_management_system.repository.ExemptionRequestRepository;
 import com.university.university_management_system.exceptions.ApiException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class ExemptionRequestService {
 
+    @Autowired
     private ExemptionRequestRepository repository;
 
     public List<ExemptionRequestDTO> getAllExemptionRequests() {
