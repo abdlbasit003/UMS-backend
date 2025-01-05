@@ -22,7 +22,7 @@ public class DepartmentFacultyDTO {
         this.departmentDTO = departmentDTO;
     }
 
-    public HashMap<String, String> getFaculty() {
+    public HashMap<String, Object> getFaculty() {
         return faculty;
     }
 

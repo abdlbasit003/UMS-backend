@@ -19,10 +19,10 @@ public class DepartmentFacultyService {
     private DepartmentFacultyRepository departmentFacultyRepository;
 
     @Autowired
-    private DepartmentService departmentService; // Added DepartmentService
+    private DepartmentService departmentService;
 
     @Autowired
-    private FacultyService facultyService; // Added FacultyService
+    private FacultyService facultyService; 
 
     public List<DepartmentFacultyDTO> getAll() {
         List<DepartmentFacultyModel> departmentFacultyModels = departmentFacultyRepository.findAll();
@@ -41,20 +41,37 @@ public class DepartmentFacultyService {
     }
 
     public List<DepartmentFacultyDTO> getByDepartmentId(int departmentId) {
+
+        try {
+            departmentService.getDepartmentById(departmentId); // This will throw an exception if the department does not exist
+        } catch (ApiException e) {
+            throw new ApiException("Department not found with ID: " + departmentId, HttpStatus.NOT_FOUND);
+        }
+
         List<DepartmentFacultyModel> departmentFacultyModels = departmentFacultyRepository.findByDepartmentId(departmentId);
         if (departmentFacultyModels.isEmpty()) {
             throw new ApiException("No Department Faculty found for Department ID: " + departmentId, HttpStatus.NOT_FOUND);
         }
+
         return departmentFacultyModels.stream()
                 .map(DepartmentFacultyDTO::fromModel)
                 .collect(Collectors.toList());
     }
 
     public List<DepartmentFacultyDTO> getByFacultyId(int facultyId) {
+
+        try {
+            facultyService.getFacultyById(facultyId);
+        } catch (ApiException e) {
+            throw new ApiException("Faculty not found with ID: " + facultyId, HttpStatus.NOT_FOUND);
+        }
+
+
         List<DepartmentFacultyModel> departmentFacultyModels = departmentFacultyRepository.findByFacultyId(facultyId);
         if (departmentFacultyModels.isEmpty()) {
             throw new ApiException("No Department Faculty found for Faculty ID: " + facultyId, HttpStatus.NOT_FOUND);
         }
+
         return departmentFacultyModels.stream()
                 .map(DepartmentFacultyDTO::fromModel)
                 .collect(Collectors.toList());
