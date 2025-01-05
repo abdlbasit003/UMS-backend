@@ -1,26 +1,36 @@
 package com.university.university_management_system.controller;
-import java.util.*;
 
-import com.university.university_management_system.model.DepartmentFacultyModel;
-import com.university.university_management_system.repository.DepartmentFacultyRepository;
+import com.university.university_management_system.DTOs.DepartmentFacultyDTO;
+import com.university.university_management_system.service.DepartmentFacultyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/departmentfaculty")
 public class DepartmentFacultyController {
+
     @Autowired
-    DepartmentFacultyRepository departmentFacultyRepository;
+    private DepartmentFacultyService departmentFacultyService;
 
     @GetMapping("")
-    public List<DepartmentFacultyModel> getall(){
-        return departmentFacultyRepository.findAll();
+    public List<DepartmentFacultyDTO> getAll() {
+        return departmentFacultyService.getAll();
     }
+
     @GetMapping("/{departmentFacultyId}")
-    public DepartmentFacultyModel getbyid(@PathVariable int departmentFacultyId){
-        return departmentFacultyRepository.findById(departmentFacultyId).orElseThrow();
+    public DepartmentFacultyDTO getById(@PathVariable int departmentFacultyId) {
+        return departmentFacultyService.getByDepartmentFacultyId(departmentFacultyId);
+    }
+
+    @GetMapping("/byDepartment/{departmentId}")
+    public List<DepartmentFacultyDTO> getByDepartmentId(@PathVariable int departmentId) {
+        return departmentFacultyService.getByDepartmentId(departmentId);
+    }
+
+    @GetMapping("/byFaculty/{facultyId}")
+    public List<DepartmentFacultyDTO> getByFacultyId(@PathVariable int facultyId) {
+        return departmentFacultyService.getByFacultyId(facultyId);
     }
 }
