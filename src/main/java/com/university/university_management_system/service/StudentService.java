@@ -6,6 +6,9 @@ import com.university.university_management_system.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class StudentService {
 
@@ -14,20 +17,13 @@ public class StudentService {
     StudentRepository studentRepository;
 
 
-    public static StudentDTO fromModel(StudentModel studentModel){
-        return new StudentDTO(
-                studentModel.getUser().getUuid(),
-                studentModel.getStudentId(),
-                studentModel.getStudentName(),
-                studentModel.getDepartment().getDepartmentName(),
-                studentModel.getStudentEnrollmentYear(),
-                studentModel.getStudentCgpa()
-        );
+    public List<StudentDTO> getAllStudents(){
+        return studentRepository.getAllStudents().stream().map(StudentDTO::fromModel).collect(Collectors.toList());
     }
 
     public StudentDTO getStudentById(String studentId){
         StudentModel studentModel = studentRepository.getById(studentId);
-        return StudentService.fromModel(studentModel);
+        return StudentDTO.fromModel(studentModel);
     }
 
 

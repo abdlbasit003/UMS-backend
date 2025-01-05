@@ -48,6 +48,6 @@ public class EnrolledCourseDTO {
         courseMap.put("courseCode", model.getCourse().getCourseCode());
         courseMap.put("courseName", model.getCourse().getCourseName());
 
-        return new EnrolledCourseDTO(courseMap, StudentService.fromModel(model.getStudent()), model.getEnrolledCourseId());
+        return new EnrolledCourseDTO(courseMap, StudentDTO.fromModel(model.getStudent()), model.getEnrolledCourseId());
     }
 }
