@@ -1,3 +1,8 @@
+package com.university.university_management_system.DTOs;
+
+import com.university.university_management_system.DTOs.DepartmentDTO;
+import com.university.university_management_system.model.DepartmentFacultyModel;
+
 import java.util.HashMap;
 
 public class DepartmentFacultyDTO {
@@ -26,7 +31,7 @@ public class DepartmentFacultyDTO {
         return faculty;
     }
 
-    public void setFaculty(HashMap<String, String> faculty) {
+    public void setFaculty(HashMap<String, Object> faculty) {
         this.faculty = faculty;
     }
 
