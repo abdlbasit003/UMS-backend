@@ -23,17 +23,16 @@ public class ExaminationRoomController {
     }
 
     @GetMapping("/{examRoomId}")
-
     public ResponseEntity<?> getExaminationRoomById(@PathVariable Integer examRoomId) {
         return ResponseEntity.ok().body(examinationRoomService.getExaminationRoomById(examRoomId));
     }
 
-    @GetMapping("/exam/{examId}")
+    @GetMapping("/exam/{examId}/rooms")
     public ResponseEntity<?> getExaminationRoomsByExamId(@PathVariable Integer examId) {
         return ResponseEntity.ok().body(examinationRoomService.getExaminationRoomsByExamId(examId));
     }
 
-    @GetMapping("/student/{studentId}")
+    @GetMapping("/student/{studentId}/rooms")
     public ResponseEntity<?> getExaminationRoomsByStudentId(@PathVariable String studentId) {
         return ResponseEntity.ok().body(examinationRoomService.getExaminationRoomsByStudentId(studentId));
     }
