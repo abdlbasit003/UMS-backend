@@ -2,10 +2,11 @@ package com.university.university_management_system.service;
 
 import com.university.university_management_system.model.ExemptionRequestTypeModel;
 import com.university.university_management_system.repository.ExemptionRequestTypeRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public class ExemptionRequestTypeService {
 
     private ExemptionRequestTypeRepository repository;
