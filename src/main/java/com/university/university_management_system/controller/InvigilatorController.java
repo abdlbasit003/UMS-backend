@@ -8,28 +8,27 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/invigilators")
 public class InvigilatorController {
 
     @Autowired
     private InvigilatorService invigilatorService;
 
-    @GetMapping("")
+    @GetMapping("/invigilators")
     public List<InvigilatorDTO> getAllInvigilators() {
         return invigilatorService.getAllInvigilators();
     }
 
-    @GetMapping("/{invigilatorId}")
+    @GetMapping("/invigilators/{invigilatorId}")
     public InvigilatorDTO getInvigilatorById(@PathVariable int invigilatorId) {
         return invigilatorService.getInvigilatorById(invigilatorId);
     }
 
-    @GetMapping("/faculty/{facultyId}")
+    @GetMapping("/faculty/{facultyId}/invigilators")
     public List<InvigilatorDTO> getInvigilatorsByFacultyId(@PathVariable int facultyId) {
         return invigilatorService.getInvigilatorsByFacultyId(facultyId);
     }
 
-    @GetMapping("/examhall/{examHallId}")
+    @GetMapping("/examhall/{examHallId}/invigilators")
     public List<InvigilatorDTO> getInvigilatorsByExamHallId(@PathVariable int examHallId) {
         return invigilatorService.getInvigilatorsByExamHallId(examHallId);
     }
