@@ -6,6 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ExaminationRoomRepository extends JpaRepository<ExaminationRoomModel, Integer> {
-    List <ExaminationRoomModel> findAll();
-    ExaminationRoomModel findById(int examinationRoomId);
+
 }

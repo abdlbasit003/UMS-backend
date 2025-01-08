@@ -29,51 +29,41 @@ public class ExamQuestionService {
 
     public List<ExamQuestionsDTO> getAllExamQuestions() {
         List<ExamQuestionsModel> examQuestions = examQuestionsRepository.findAll();
-        if (!examQuestions.isEmpty()) {
-            List<ExamQuestionsDTO> examQuestionsDTOs = new ArrayList<>();
-            for (ExamQuestionsModel examQuestion : examQuestions) {
-                ExamQuestionsDTO dto = ExamQuestionsDTO.fromModel(examQuestion);
-                examQuestionsDTOs.add(dto);
-            }
-            return examQuestionsDTOs;
+        if (examQuestions.isEmpty()) {
+            throw new ApiException("No questions found", HttpStatus.NOT_FOUND);
         }
-        throw new ApiException("No questions found", HttpStatus.NOT_FOUND);
+        return examQuestions.stream()
+                .map(ExamQuestionsDTO::fromModel)
+                .toList();
     }
 
+
     public ExamQuestionsDTO getExamQuestionById(int examQuestionId) {
-        ExamQuestionsModel examQuestion = examQuestionsRepository.findById(examQuestionId).orElseThrow(() -> new ApiException("Question not found", HttpStatus.NOT_FOUND));
+        ExamQuestionsModel examQuestion = examQuestionsRepository.findById(examQuestionId)
+                .orElseThrow(() -> new ApiException("Question not found", HttpStatus.NOT_FOUND));
         return ExamQuestionsDTO.fromModel(examQuestion);
     }
 
+
     public List<QuestionDTO> getQuestionsByExamId(int examId) {
-        List<ExamQuestionsModel> examQuestions = examQuestionsRepository.findAll();
-        ExamModel examModel = examRepository.findById(examId).orElseThrow(() -> new ApiException("No question found", HttpStatus.NOT_FOUND));
-        if (!examQuestions.isEmpty()) {
-            List<QuestionDTO> questionDTOs = new ArrayList<>();
-            for (ExamQuestionsModel examQuestion : examQuestions) {
-                if (examQuestion.getExam().getExamId() == examId) {
-                    QuestionDTO dto = QuestionDTO.fromModel(examQuestion.getQuestion());
-                    questionDTOs.add(dto);
-                }
-            }
-            return questionDTOs;
-        }
-        throw new ApiException("No questions found", HttpStatus.NOT_FOUND);
+        examRepository.findById(examId)
+                .orElseThrow(() -> new ApiException("No question found", HttpStatus.NOT_FOUND));
+
+        return examQuestionsRepository.findAll().stream()
+                .filter(examQuestion -> examQuestion.getExam().getExamId() == examId)
+                .map(examQuestion -> QuestionDTO.fromModel(examQuestion.getQuestion()))
+                .toList();
     }
 
+
     public List<ExamDTO> getExamsByQuestionId(int questionId) {
-        List<ExamQuestionsModel> examQuestions = examQuestionsRepository.findAll();
-        QuestionModel questionModel = questionRepository.findById(questionId).orElseThrow(() -> new ApiException("No exams found for this question", HttpStatus.NOT_FOUND));
-        if (!examQuestions.isEmpty()) {
-            List<ExamDTO> examDTOs = new ArrayList<>();
-            for (ExamQuestionsModel examQuestion : examQuestions) {
-                if (examQuestion.getQuestion().getQuestionId() == questionId) {
-                    ExamDTO dto = ExamDTO.fromModel(examQuestion.getExam());
-                    examDTOs.add(dto);
-                }
-            }
-            return examDTOs;
-        }
-        throw new ApiException("No exams found for this question", HttpStatus.NOT_FOUND);
+        questionRepository.findById(questionId)
+                .orElseThrow(() -> new ApiException("No exams found for this question", HttpStatus.NOT_FOUND));
+
+        return examQuestionsRepository.findAll().stream()
+                .filter(examQuestion -> examQuestion.getQuestion().getQuestionId() == questionId)
+                .map(examQuestion -> ExamDTO.fromModel(examQuestion.getExam()))
+                .toList();
     }
+
 }

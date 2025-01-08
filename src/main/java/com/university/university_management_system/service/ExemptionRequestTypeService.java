@@ -1,7 +1,10 @@
 package com.university.university_management_system.service;
 
+import com.university.university_management_system.exceptions.ApiException;
 import com.university.university_management_system.model.ExemptionRequestTypeModel;
 import com.university.university_management_system.repository.ExemptionRequestTypeRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.method.HandlerTypePredicate;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,12 +22,6 @@ public class ExemptionRequestTypeService {
     }
 
     public ExemptionRequestTypeModel getRequestTypeById(int id) {
-        Optional<ExemptionRequestTypeModel> requestType = repository.findById(id);
-
-        if (requestType.isPresent()) {
-            return requestType.get();
-        }else{
-            throw new RuntimeException("Exemption request type with ID " + id + " can't be found.");
-        }
+        return repository.findById(id).orElseThrow(()->new ApiException("Exemption request type with ID " + id + " can't be found.", HttpStatus.NOT_FOUND));
     }
 }

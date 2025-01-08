@@ -34,53 +34,24 @@ public class DepartmentFacultyService {
     }
 
     public DepartmentFacultyDTO getByDepartmentFacultyId(int departmentFacultyId) {
-        Optional<DepartmentFacultyModel> departmentFacultyModel = departmentFacultyRepository.findById(departmentFacultyId);
-        if (departmentFacultyModel.isPresent()) {
-            return DepartmentFacultyDTO.fromModel(departmentFacultyModel.get());
-        } else {
-            throw new ApiException("Department Faculty not found with ID: " + departmentFacultyId, HttpStatus.NOT_FOUND);
-        }
+        return DepartmentFacultyDTO.fromModel(departmentFacultyRepository.findById(departmentFacultyId).orElseThrow(()->new ApiException("Department Faculty not found with ID: " + departmentFacultyId, HttpStatus.NOT_FOUND)));
+
     }
 
     public List<DepartmentFacultyDTO> getByDepartmentId(int departmentId) {
-        try {
-            departmentService.getDepartmentById(departmentId); // This will throw an exception if the department does not exist
-        } catch (ApiException e) {
-            throw new ApiException("Department not found with ID: " + departmentId, HttpStatus.NOT_FOUND);
-        }
-        List<DepartmentFacultyModel> models = departmentFacultyRepository.findAll();
-        if (models.isEmpty()) {
-            throw new ApiException("No Department ID: " + departmentId, HttpStatus.NOT_FOUND);
-        }
-        List<DepartmentFacultyDTO> dtos = new ArrayList<>();
-        for (DepartmentFacultyModel dfm : models){
-            if (dfm.getDepartment().getDepartmentId() == departmentId){
-                dtos.add(DepartmentFacultyDTO.fromModel(dfm));
-            }
-        }
-        return dtos;
+        departmentService.getDepartmentById(departmentId); // This will throw an exception if the department does not exist
+        return departmentFacultyRepository.findAll()
+                .stream().filter(dfm->dfm.getDepartment().getDepartmentId()==departmentId)
+                .map(DepartmentFacultyDTO::fromModel)
+                .toList();
+
     }
 
     public List<DepartmentFacultyDTO> getByFacultyId(int facultyId) {
-
-        try {
-            facultyService.getFacultyById(facultyId);
-        } catch (ApiException e) {
-            throw new ApiException("Faculty not found with ID: " + facultyId, HttpStatus.NOT_FOUND);
-        }
-
-
-        List<DepartmentFacultyModel> departmentFacultyModels = departmentFacultyRepository.findAll();
-        List<DepartmentFacultyDTO> dtos = new ArrayList<>();
-        if (departmentFacultyModels.isEmpty()) {
-            throw new ApiException("No Faculty found for Faculty ID: " + facultyId, HttpStatus.NOT_FOUND);
-        }
-
-        for (DepartmentFacultyModel dfm : departmentFacultyModels){
-            if (dfm.getFaculty().getFacultyId() == facultyId){
-                dtos.add(DepartmentFacultyDTO.fromModel(dfm));
-            }
-        }
-        return dtos;
+        facultyService.getFacultyById(facultyId);
+        return departmentFacultyRepository.findAll()
+                .stream().filter(dfm->dfm.getFaculty().getFacultyId()==facultyId)
+                .map(DepartmentFacultyDTO::fromModel)
+                .toList();
     }
 }

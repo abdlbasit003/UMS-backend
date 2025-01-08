@@ -17,14 +17,17 @@ public class StudentService {
     StudentRepository studentRepository;
 
 
-    public List<StudentDTO> getAllStudents(){
-        return studentRepository.getAllStudents().stream().map(StudentDTO::fromModel).collect(Collectors.toList());
+    public List<StudentDTO> getAllStudents() {
+        return studentRepository.getAllStudents().stream()
+                .map(StudentDTO::fromModel)
+                .collect(Collectors.toList());
     }
 
-    public StudentDTO getStudentById(String studentId){
+    public StudentDTO getStudentById(String studentId) {
         StudentModel studentModel = studentRepository.getById(studentId);
         return StudentDTO.fromModel(studentModel);
     }
+
 
 
 

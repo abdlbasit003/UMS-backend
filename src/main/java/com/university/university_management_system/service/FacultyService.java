@@ -24,14 +24,13 @@ public class FacultyService {
 
     public List<FacultyDTO> getAllFaculty() {
         List<FacultyModel> facultyList = facultyRepository.getAllFaculty();
-        if (facultyList.isEmpty())throw new ApiException("No faculty members found",HttpStatus.NOT_FOUND);
-        List<FacultyDTO> facultyDTOS = new ArrayList<>();
-        for (FacultyModel fm : facultyList) {
-            facultyDTOS.add(FacultyDTO.fromModel(fm));
+        if (facultyList.isEmpty()) {
+            throw new ApiException("No faculty members found", HttpStatus.NOT_FOUND);
         }
-        return facultyDTOS;
+        return facultyList.stream()
+                .map(FacultyDTO::fromModel)
+                .toList();
     }
-
 
     public FacultyDTO getFacultyById(int facultyId) {
         FacultyModel faculty = facultyRepository.findById(facultyId)
@@ -39,44 +38,47 @@ public class FacultyService {
         return FacultyDTO.fromModel(faculty);
     }
 
-
     public List<FacultyDTO> getFacultyByName(String facultyName) {
         List<FacultyModel> facultyList = facultyRepository.getAllFaculty();
-        if (facultyList.isEmpty())throw new ApiException("No faculty members found",HttpStatus.NOT_FOUND);
-        List<FacultyDTO> facultyDTOS = new ArrayList<>();
-        for (FacultyModel fm : facultyList) {
-            if (fm.getFacultyName().equalsIgnoreCase(facultyName)) {
-                facultyDTOS.add(FacultyDTO.fromModel(fm));
-            }
+        if (facultyList.isEmpty()) {
+            throw new ApiException("No faculty members found", HttpStatus.NOT_FOUND);
         }
-        if (facultyDTOS.isEmpty())throw new ApiException("No faculty members found with the name: "+facultyName,HttpStatus.NOT_FOUND);
+        List<FacultyDTO> facultyDTOS = facultyList.stream()
+                .filter(fm -> fm.getFacultyName().equalsIgnoreCase(facultyName))
+                .map(FacultyDTO::fromModel)
+                .toList();
+        if (facultyDTOS.isEmpty()) {
+            throw new ApiException("No faculty members found with the name: " + facultyName, HttpStatus.NOT_FOUND);
+        }
         return facultyDTOS;
     }
-
 
     public List<FacultyDTO> getFacultyByDesignation(int designationId) {
         List<FacultyModel> facultyList = facultyRepository.getAllFaculty();
-        if (facultyList.isEmpty())throw new ApiException("No faculty members found",HttpStatus.NOT_FOUND);
-        List<FacultyDTO> facultyDTOS = new ArrayList<>();
-        for (FacultyModel fm : facultyList) {
-            if (fm.getDesignation().getDesignationId()==designationId) {
-                facultyDTOS.add(FacultyDTO.fromModel(fm));
-            }
+        if (facultyList.isEmpty()) {
+            throw new ApiException("No faculty members found", HttpStatus.NOT_FOUND);
         }
-        if (facultyDTOS.isEmpty())throw new ApiException("No faculty members found with this designation",HttpStatus.NOT_FOUND);
+        List<FacultyDTO> facultyDTOS = facultyList.stream()
+                .filter(fm -> fm.getDesignation().getDesignationId() == designationId)
+                .map(FacultyDTO::fromModel)
+                .toList();
+        if (facultyDTOS.isEmpty()) {
+            throw new ApiException("No faculty members found with this designation", HttpStatus.NOT_FOUND);
+        }
         return facultyDTOS;
-
-
     }
-    public FacultyDTO getFacultyByUuid(String facultyUuid){
+
+    public FacultyDTO getFacultyByUuid(String facultyUuid) {
         List<FacultyModel> facultyList = facultyRepository.getAllFaculty();
-        if (facultyList.isEmpty())throw new ApiException("No faculty members found",HttpStatus.NOT_FOUND);
-        for (FacultyModel fm : facultyList) {
-            if (fm.getUser().getUuid().equals(facultyUuid)) {
-                return FacultyDTO.fromModel(fm);
-            }
+        if (facultyList.isEmpty()) {
+            throw new ApiException("No faculty members found", HttpStatus.NOT_FOUND);
         }
-        throw new ApiException("Faculty not found with UUID: " + facultyUuid,HttpStatus.NOT_FOUND);
+        return facultyList.stream()
+                .filter(fm -> fm.getUser().getUuid().equals(facultyUuid))
+                .findFirst()
+                .map(FacultyDTO::fromModel)
+                .orElseThrow(() -> new ApiException("Faculty not found with UUID: " + facultyUuid, HttpStatus.NOT_FOUND));
     }
+
 }
 

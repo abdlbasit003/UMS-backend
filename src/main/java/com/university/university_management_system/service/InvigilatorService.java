@@ -16,39 +16,29 @@ public class InvigilatorService {
     private InvigilatorRepository invigilatorRepository;
 
     public List<InvigilatorDTO> getAllInvigilators() {
-        List<InvigilatorDTO> invigilators = new ArrayList<>();
-        for (InvigilatorModel model : invigilatorRepository.findAll()) {
-            invigilators.add(InvigilatorDTO.fromModel(model));
-        }
-        return invigilators;
+        return invigilatorRepository.findAll().stream()
+                .map(InvigilatorDTO::fromModel)
+                .toList();
     }
 
     public InvigilatorDTO getInvigilatorById(int invigilatorId) {
-        InvigilatorModel model = invigilatorRepository.findById(invigilatorId).orElse(null);
-        if (model == null) {
-            throw new RuntimeException("INvigilator not found with the ID: " + invigilatorId);
-        }
+        InvigilatorModel model = invigilatorRepository.findById(invigilatorId)
+                .orElseThrow(() -> new RuntimeException("Invigilator not found with the ID: " + invigilatorId));
         return InvigilatorDTO.fromModel(model);
     }
 
     public List<InvigilatorDTO> getInvigilatorsByFacultyId(int facultyId) {
-        List<InvigilatorDTO> invigilators = new ArrayList<>();
-        for (InvigilatorModel model : invigilatorRepository.findAll()) {
-            if (model.getFaculty().getFacultyId() == facultyId) {
-                invigilators.add(InvigilatorDTO.fromModel(model));
-            }
-        }
-        return invigilators;
+        return invigilatorRepository.findAll().stream()
+                .filter(model -> model.getFaculty().getFacultyId() == facultyId)
+                .map(InvigilatorDTO::fromModel)
+                .toList();
     }
 
     public List<InvigilatorDTO> getInvigilatorsByExamHallId(int examHallId) {
-        List<InvigilatorDTO> invigilators = new ArrayList<>();
-
-        for (InvigilatorModel model : invigilatorRepository.findAll()) {
-            if (model.getExamHall().getExamHallId() == examHallId) {
-                invigilators.add(InvigilatorDTO.fromModel(model));
-            }
-        }
-        return invigilators;
+        return invigilatorRepository.findAll().stream()
+                .filter(model -> model.getExamHall().getExamHallId() == examHallId)
+                .map(InvigilatorDTO::fromModel)
+                .toList();
     }
+
 }

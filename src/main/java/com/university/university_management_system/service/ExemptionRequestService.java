@@ -20,80 +20,50 @@ public class ExemptionRequestService {
     private ExemptionRequestRepository repository;
 
     public List<ExemptionRequestDTO> getAllExemptionRequests() {
-        List<ExemptionRequestModel> models = repository.findAll();
-        List<ExemptionRequestDTO> DTOs = new ArrayList<>();
-
-        for (ExemptionRequestModel model : models) {
-            DTOs.add(ExemptionRequestDTO.fromModel(model));
-        }
-        return DTOs;
+        return repository.findAll().stream()
+                .map(ExemptionRequestDTO::fromModel)
+                .toList();
     }
 
     public ExemptionRequestDTO getExemptionRequestById(int id) {
-        ExemptionRequestModel model = repository.findById(id).orElse(null);
-
-        if (model == null) {
-            throw new ApiException("Exception request not found", HttpStatus.NOT_FOUND);
-        }return ExemptionRequestDTO.fromModel(model);
+        ExemptionRequestModel model = repository.findById(id)
+                .orElseThrow(() -> new ApiException("Exception request not found", HttpStatus.NOT_FOUND));
+        return ExemptionRequestDTO.fromModel(model);
     }
 
     public List<ExemptionRequestDTO> getByStudent(String studentId) {
-        List<ExemptionRequestModel> models = repository.findAll();
-        List<ExemptionRequestDTO> DTOs = new ArrayList<>();
-
-        for (ExemptionRequestModel model : models) {
-            if (model.getStudent().getStudentId().equals(studentId)) {
-                DTOs.add(ExemptionRequestDTO.fromModel(model));
-            }
-        }
-        return DTOs;
+        return repository.findAll().stream()
+                .filter(model -> model.getStudent().getStudentId().equals(studentId))
+                .map(ExemptionRequestDTO::fromModel)
+                .toList();
     }
 
     public List<ExemptionRequestDTO> getByExam(int examId) {
-        List<ExemptionRequestModel> models = repository.findAll();
-        List<ExemptionRequestDTO> DTOs = new ArrayList<>();
-
-        for (ExemptionRequestModel model : models) {
-            if (model.getExam().getExamId() == examId) {
-                DTOs.add(ExemptionRequestDTO.fromModel(model));
-            }
-        }
-        return DTOs;
+        return repository.findAll().stream()
+                .filter(model -> model.getExam().getExamId() == examId)
+                .map(ExemptionRequestDTO::fromModel)
+                .toList();
     }
 
     public List<ExemptionRequestDTO> getByCourse(String courseCode) {
-        List<ExemptionRequestModel> models = repository.findAll();
-        List<ExemptionRequestDTO> DTOs = new ArrayList<>();
-
-        for (ExemptionRequestModel model : models) {
-            if (model.getExam().getCourse().getCourseCode().equals(courseCode)) {
-                DTOs.add(ExemptionRequestDTO.fromModel(model));
-            }
-        }
-        return DTOs;
+        return repository.findAll().stream()
+                .filter(model -> model.getExam().getCourse().getCourseCode().equals(courseCode))
+                .map(ExemptionRequestDTO::fromModel)
+                .toList();
     }
 
     public List<ExemptionRequestDTO> getByStatus(int statusId) {
-        List<ExemptionRequestModel> models = repository.findAll();
-        List<ExemptionRequestDTO> DTOs = new ArrayList<>();
-
-        for (ExemptionRequestModel model : models) {
-            if (model.getStatus().getStatusId() == statusId) {
-                DTOs.add(ExemptionRequestDTO.fromModel(model));
-            }
-        }
-        return DTOs;
+        return repository.findAll().stream()
+                .filter(model -> model.getStatus().getStatusId() == statusId)
+                .map(ExemptionRequestDTO::fromModel)
+                .toList();
     }
 
     public List<ExemptionRequestDTO> getByExemptionType(int requestTypeId) {
-        List<ExemptionRequestModel> models = repository.findAll();
-        List<ExemptionRequestDTO> DTOs = new ArrayList<>();
-
-        for (ExemptionRequestModel model : models) {
-            if (model.getExemptionRequestType().getRequestTypeId() == requestTypeId) {
-                DTOs.add(ExemptionRequestDTO.fromModel(model));
-            }
-        }
-        return DTOs;
+        return repository.findAll().stream()
+                .filter(model -> model.getExemptionRequestType().getRequestTypeId() == requestTypeId)
+                .map(ExemptionRequestDTO::fromModel)
+                .toList();
     }
+
 }

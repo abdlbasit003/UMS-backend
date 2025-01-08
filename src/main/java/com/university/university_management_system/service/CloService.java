@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CloService {
@@ -21,16 +22,11 @@ public class CloService {
             throw new ApiException("No CLO's Found", HttpStatus.NOT_FOUND);
 
         }
-        List<CloDTO> cloDTOs = new ArrayList<>();
-        for (CLOModel cloModel : cloModels){
-            cloDTOs.add(CloDTO.fromModel(cloModel));
-        }
-        return cloDTOs;
+        return cloModels.stream().map(CloDTO::fromModel).toList();
     }
 
     public CloDTO getCLOById(int cloId){
-        CLOModel cloModel = cloRepository.findById(cloId).orElseThrow(()->new ApiException("No CLO found for cloID: "+ cloId, HttpStatus.NOT_FOUND));
-        return CloDTO.fromModel(cloModel);
+        return CloDTO.fromModel(cloRepository.findById(cloId).orElseThrow(()->new ApiException("No CLO found for cloID: "+ cloId, HttpStatus.NOT_FOUND)));
     }
 
     public List<CloDTO> getCLOsByCourseCode(String courseCode){
@@ -39,10 +35,6 @@ public class CloService {
             throw new ApiException("No CLO's found for courseCode: "+ courseCode, HttpStatus.NOT_FOUND);
 
         }
-        List<CloDTO> cloDTOs = new ArrayList<>();
-        for (CLOModel cloModel : cloModels){
-            cloDTOs.add(CloDTO.fromModel(cloModel));
-        }
-        return cloDTOs;
+        return cloModels.stream().map(CloDTO::fromModel).toList();
     }
 }

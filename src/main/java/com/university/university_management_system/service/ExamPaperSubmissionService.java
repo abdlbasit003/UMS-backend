@@ -26,155 +26,106 @@ public class ExamPaperSubmissionService {
     @Autowired
     FacultyRepository facultyRepository;
 
-    public List<ExamSubmissionDTO> getAllExamPaperSubmissions(){
+    public List<ExamSubmissionDTO> getAllExamPaperSubmissions() {
         List<ExamPaperSubmissionModel> allExamSubmissions = examPaperSubmissionRepository.findAll();
-        List <ExamSubmissionDTO> allExamSubmissionDtos = new ArrayList<>();
-
-        if (allExamSubmissions.isEmpty()){
+        if (allExamSubmissions.isEmpty()) {
             throw new ApiException("No Exam Submissions", HttpStatus.NOT_FOUND);
         }
-
-        for(ExamPaperSubmissionModel eps : allExamSubmissions){
-            allExamSubmissionDtos.add(ExamSubmissionDTO.fromModel(eps));
-        }
-
-        return allExamSubmissionDtos;
-    }
-    public List<ExamSubmissionDTO> getExamPaperSubmissionByExamId(int examId){
-        List<ExamPaperSubmissionModel> allExamSubmissions = examPaperSubmissionRepository.findAll();
-        List <ExamSubmissionDTO> allExamSubmissionDtos = new ArrayList<>();
-        ExamModel examModel = examRepository.findById(examId).orElseThrow(()-> new ApiException("Invalid Exam ID", HttpStatus.NOT_FOUND));
-
-        if(allExamSubmissions.isEmpty()){
-            throw new ApiException("No Exam Submissions", HttpStatus.NOT_FOUND);
-        }
-        for(ExamPaperSubmissionModel eps : allExamSubmissions){
-            if(examId == eps.getExam().getExamId()){
-                allExamSubmissionDtos.add(ExamSubmissionDTO.fromModel(eps));
-            }
-        }
-        return allExamSubmissionDtos;
-    }
-    public List<ExamSubmissionDTO> getExamPaperSubmissionsByFacultyId (int facultyId){
-        List<ExamPaperSubmissionModel> allExamSubmissions = examPaperSubmissionRepository.findAll();
-        List <ExamSubmissionDTO> allExamSubmissionDtos = new ArrayList<>();
-        FacultyModel facultyModel = facultyRepository.findById(facultyId).orElseThrow(()-> new ApiException("Invalid Faculty ID", HttpStatus.NOT_FOUND));
-
-
-        if(allExamSubmissions.isEmpty()){
-            throw new ApiException("No Exam Submissions", HttpStatus.NOT_FOUND);
-        }
-        for(ExamPaperSubmissionModel eps : allExamSubmissions){
-            if(facultyId == eps.getSubmittedBy().getFacultyId()){
-                allExamSubmissionDtos.add(ExamSubmissionDTO.fromModel(eps));
-            }
-        }
-        return allExamSubmissionDtos;
+        return allExamSubmissions.stream()
+                .map(ExamSubmissionDTO::fromModel)
+                .toList();
     }
 
-    public List<ExamSubmissionDTO> getPendingExamPaperSubmissionsByExamId(int examId){
-        List<ExamPaperSubmissionModel> allExamSubmissions = examPaperSubmissionRepository.findAll();
-        List <ExamSubmissionDTO> allExamSubmissionDtos = new ArrayList<>();
-        ExamModel examModel = examRepository.findById(examId).orElseThrow(()-> new ApiException("Invalid Exam ID", HttpStatus.NOT_FOUND));
-
-        if(allExamSubmissions.isEmpty()){
-            throw new ApiException("No Exam Submissions", HttpStatus.NOT_FOUND);
-        }
-        for(ExamPaperSubmissionModel eps : allExamSubmissions){
-            if(examId == eps.getExam().getExamId() && eps.getSubmittedOn() == null ){
-                allExamSubmissionDtos.add(ExamSubmissionDTO.fromModel(eps));
-            }
-        }
-        return allExamSubmissionDtos;
-    }
-
-    public List<ExamSubmissionDTO> getAllLateSubmissions(){
-        List<ExamPaperSubmissionModel> allExamSubmissions = examPaperSubmissionRepository.findAll();
-        List <ExamSubmissionDTO> allExamSubmissionDtos = new ArrayList<>();
-
-        if(allExamSubmissions.isEmpty()){
-            throw new ApiException("No Exam Submissions", HttpStatus.NOT_FOUND);
-        }
-        for(ExamPaperSubmissionModel eps : allExamSubmissions){
-            if(eps.getSubmittedOn().isAfter(eps.getSubmissionDueDate())){
-                allExamSubmissionDtos.add(ExamSubmissionDTO.fromModel(eps));
-            }
-        }
-        return allExamSubmissionDtos;
-    }
-
-    public List<ExamSubmissionDTO> getAllSubmissionsByStatusId(int statusId){
-        List<ExamPaperSubmissionModel> allExamSubmissions = examPaperSubmissionRepository.findAll();
-        List <ExamSubmissionDTO> allExamSubmissionDtos = new ArrayList<>();
-        ExamPaperStatus examPaperSubmissionModel = examPaperStatusRepository.findById(statusId).orElseThrow(()->new ApiException("Invalid Status ID", HttpStatus.NOT_FOUND));
-
-
-        if(allExamSubmissions.isEmpty()){
-            throw new ApiException("No Exam Submissions", HttpStatus.NOT_FOUND);
-        }
-        for(ExamPaperSubmissionModel eps : allExamSubmissions){
-            if(statusId == eps.getStatus().getStatusId()){
-                allExamSubmissionDtos.add(ExamSubmissionDTO.fromModel(eps));
-            }
-        }
-        return allExamSubmissionDtos;
-    }
-    public List<ExamSubmissionDTO> getLateExamPaperSubmissionsByExamId(int examId) {
-        List<ExamPaperSubmissionModel> allExamSubmissions = examPaperSubmissionRepository.findAll();
-        List<ExamSubmissionDTO> lateExamSubmissionDtos = new ArrayList<>();
-        ExamModel examModel = examRepository.findById(examId)
+    public List<ExamSubmissionDTO> getExamPaperSubmissionByExamId(int examId) {
+        examRepository.findById(examId)
                 .orElseThrow(() -> new ApiException("Invalid Exam ID", HttpStatus.NOT_FOUND));
 
+        return examPaperSubmissionRepository.findAll().stream()
+                .filter(eps -> examId == eps.getExam().getExamId())
+                .map(ExamSubmissionDTO::fromModel)
+                .toList();
+    }
+
+    public List<ExamSubmissionDTO> getExamPaperSubmissionsByFacultyId(int facultyId) {
+        facultyRepository.findById(facultyId)
+                .orElseThrow(() -> new ApiException("Invalid Faculty ID", HttpStatus.NOT_FOUND));
+
+        return examPaperSubmissionRepository.findAll().stream()
+                .filter(eps -> facultyId == eps.getSubmittedBy().getFacultyId())
+                .map(ExamSubmissionDTO::fromModel)
+                .toList();
+    }
+
+
+    public List<ExamSubmissionDTO> getPendingExamPaperSubmissionsByExamId(int examId) {
+        examRepository.findById(examId)
+                .orElseThrow(() -> new ApiException("Invalid Exam ID", HttpStatus.NOT_FOUND));
+
+        return examPaperSubmissionRepository.findAll().stream()
+                .filter(eps -> examId == eps.getExam().getExamId() && eps.getSubmittedOn() == null)
+                .map(ExamSubmissionDTO::fromModel)
+                .toList();
+    }
+
+
+    public List<ExamSubmissionDTO> getAllLateSubmissions() {
+        List<ExamPaperSubmissionModel> allExamSubmissions = examPaperSubmissionRepository.findAll();
         if (allExamSubmissions.isEmpty()) {
             throw new ApiException("No Exam Submissions", HttpStatus.NOT_FOUND);
         }
 
-        for (ExamPaperSubmissionModel eps : allExamSubmissions) {
-            if (examId == eps.getExam().getExamId() && eps.getSubmittedOn() != null && eps.getSubmittedOn().isAfter(eps.getSubmissionDueDate())) {
-                lateExamSubmissionDtos.add(ExamSubmissionDTO.fromModel(eps));
-            }
-        }
-        return lateExamSubmissionDtos;
-
-
-    }
-    public List<ExamSubmissionDTO> getAllPendingSubmissionsByExamId(int examId) {
-        List<ExamPaperSubmissionModel> allExamSubmissions = examPaperSubmissionRepository.findAll();
-        List<ExamSubmissionDTO> pendingExamSubmissionDtos = new ArrayList<>();
-        ExamModel examModel = examRepository.findById(examId)
-                .orElseThrow(() -> new ApiException("Invalid Exam ID", HttpStatus.NOT_FOUND));
-
-        if (allExamSubmissions.isEmpty()) {
-            throw new ApiException("No Exam Submissions", HttpStatus.NOT_FOUND);
-        }
-
-        for (ExamPaperSubmissionModel eps : allExamSubmissions) {
-            if (examId == eps.getExam().getExamId() && eps.getSubmittedOn() == null) {
-                pendingExamSubmissionDtos.add(ExamSubmissionDTO.fromModel(eps));
-            }
-        }
-        return pendingExamSubmissionDtos;
+        return allExamSubmissions.stream()
+                .filter(eps -> eps.getSubmittedOn().isAfter(eps.getSubmissionDueDate()))
+                .map(ExamSubmissionDTO::fromModel)
+                .toList();
     }
 
-    public List<ExamSubmissionDTO> getExamPaperSubmissionsByStatusId(int examId, int statusId) {
-        List<ExamPaperSubmissionModel> allExamSubmissions = examPaperSubmissionRepository.findAll();
-        List<ExamSubmissionDTO> filteredExamSubmissionDtos = new ArrayList<>();
-        ExamModel examModel = examRepository.findById(examId)
-                .orElseThrow(() -> new ApiException("Invalid Exam ID", HttpStatus.NOT_FOUND));
-        ExamPaperStatus examPaperStatus = examPaperStatusRepository.findById(statusId)
+
+    public List<ExamSubmissionDTO> getAllSubmissionsByStatusId(int statusId) {
+        examPaperStatusRepository.findById(statusId)
                 .orElseThrow(() -> new ApiException("Invalid Status ID", HttpStatus.NOT_FOUND));
 
-        if (allExamSubmissions.isEmpty()) {
-            throw new ApiException("No Exam Submissions", HttpStatus.NOT_FOUND);
-        }
-
-        for (ExamPaperSubmissionModel eps : allExamSubmissions) {
-            if (examId == eps.getExam().getExamId() && statusId == eps.getStatus().getStatusId()) {
-                filteredExamSubmissionDtos.add(ExamSubmissionDTO.fromModel(eps));
-            }
-        }
-        return filteredExamSubmissionDtos;
+        return examPaperSubmissionRepository.findAll().stream()
+                .filter(eps -> statusId == eps.getStatus().getStatusId())
+                .map(ExamSubmissionDTO::fromModel)
+                .toList();
     }
+
+    public List<ExamSubmissionDTO> getLateExamPaperSubmissionsByExamId(int examId) {
+        examRepository.findById(examId)
+                .orElseThrow(() -> new ApiException("Invalid Exam ID", HttpStatus.NOT_FOUND));
+
+        return examPaperSubmissionRepository.findAll().stream()
+                .filter(eps -> examId == eps.getExam().getExamId() &&
+                        eps.getSubmittedOn() != null &&
+                        eps.getSubmittedOn().isAfter(eps.getSubmissionDueDate()))
+                .map(ExamSubmissionDTO::fromModel)
+                .toList();
+    }
+
+    public List<ExamSubmissionDTO> getAllPendingSubmissionsByExamId(int examId) {
+        examRepository.findById(examId)
+                .orElseThrow(() -> new ApiException("Invalid Exam ID", HttpStatus.NOT_FOUND));
+
+        return examPaperSubmissionRepository.findAll().stream()
+                .filter(eps -> examId == eps.getExam().getExamId() && eps.getSubmittedOn() == null)
+                .map(ExamSubmissionDTO::fromModel)
+                .toList();
+    }
+
+
+    public List<ExamSubmissionDTO> getExamPaperSubmissionsByStatusId(int examId, int statusId) {
+        examRepository.findById(examId)
+                .orElseThrow(() -> new ApiException("Invalid Exam ID", HttpStatus.NOT_FOUND));
+        examPaperStatusRepository.findById(statusId)
+                .orElseThrow(() -> new ApiException("Invalid Status ID", HttpStatus.NOT_FOUND));
+
+        return examPaperSubmissionRepository.findAll().stream()
+                .filter(eps -> examId == eps.getExam().getExamId() && statusId == eps.getStatus().getStatusId())
+                .map(ExamSubmissionDTO::fromModel)
+                .toList();
+    }
+
 
 
 }

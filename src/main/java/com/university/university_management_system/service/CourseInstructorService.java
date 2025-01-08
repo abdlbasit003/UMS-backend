@@ -1,17 +1,13 @@
 package com.university.university_management_system.service;
-
 import com.university.university_management_system.DTOs.CourseInstructorDTO;
 import com.university.university_management_system.exceptions.ApiException;
 import com.university.university_management_system.model.CourseInstructorModel;
 import com.university.university_management_system.model.CourseModel;
-import com.university.university_management_system.model.FacultyModel;
 import com.university.university_management_system.repository.CourseInstructorRepository;
 import com.university.university_management_system.repository.CourseRepository;
-import com.university.university_management_system.repository.FacultyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,18 +19,15 @@ public class CourseInstructorService {
     @Autowired
     CourseRepository courseRepository;
 
+    @Autowired
+    FacultyService facultyService;
+
     public List<CourseInstructorDTO> getAllCourseInstructors(){
         List<CourseInstructorModel> allCourseInstructors = courseInstructorRepository.findAll();
-        List <CourseInstructorDTO> allCourseInstructorDtos = new ArrayList<>();
-
         if (allCourseInstructors.isEmpty()){
             throw new ApiException("No Course Instructors", HttpStatus.NOT_FOUND);
         }
-
-        for(CourseInstructorModel cim : allCourseInstructors){
-            allCourseInstructorDtos.add(CourseInstructorDTO.fromModel(cim));
-        }
-        return allCourseInstructorDtos;
+        return allCourseInstructors.stream().map(CourseInstructorDTO::fromModel).toList();
     }
 
     public CourseInstructorDTO getCourseInstructorbyId(int courseInstructorId){
@@ -42,33 +35,26 @@ public class CourseInstructorService {
     }
 
     public List<CourseInstructorDTO> getCourseInstructorByCourseCode(String courseCode){
+        courseRepository.findById(courseCode).orElseThrow(()->new ApiException("Invalid Course Code", HttpStatus.NOT_FOUND));
         List<CourseInstructorModel> allCourseInstructors = courseInstructorRepository.findAll();
-        List<CourseInstructorDTO> courseInstructorsByCourseCode = new ArrayList<>();
-        CourseModel course = courseRepository.findById(courseCode).orElseThrow(()->new ApiException("Invalid Course Code", HttpStatus.NOT_FOUND));
         if (allCourseInstructors.isEmpty()){
             throw new ApiException("No Course Instructors", HttpStatus.NOT_FOUND);
         }
 
-        for(CourseInstructorModel cim : allCourseInstructors){
-            if(courseCode.equals(cim.getCourse().getCourseCode())){
-                courseInstructorsByCourseCode.add(CourseInstructorDTO.fromModel(cim));
-            }
-        }
-        return courseInstructorsByCourseCode;
+        return allCourseInstructors.stream().
+                filter(ci->ci.getCourse().getCourseCode().equals(courseCode))
+                .map(CourseInstructorDTO::fromModel).toList();
     }
 
     public List <CourseModel> getCoursesByInstructorId(int instructorId){
+        facultyService.getFacultyById(instructorId);
         List<CourseInstructorModel> allCourseInstructors = courseInstructorRepository.findAll();
-        List<CourseModel> coursesOfInstructor = new ArrayList<>();
-
         if (allCourseInstructors.isEmpty()){
             throw new ApiException("No Course Instructors", HttpStatus.NOT_FOUND);
         }
-        for (CourseInstructorModel cim:allCourseInstructors){
-            if (cim.getFaculty().getFacultyId() == instructorId){
-                coursesOfInstructor.add(cim.getCourse());
-            }
-        }
-        return coursesOfInstructor;
+        return allCourseInstructors.stream().
+                filter(cim->cim.getFaculty().getFacultyId()==instructorId)
+                .map(CourseInstructorModel::getCourse)
+                .toList();
     }
 }

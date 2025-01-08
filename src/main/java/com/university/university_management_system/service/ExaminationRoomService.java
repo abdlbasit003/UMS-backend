@@ -32,73 +32,38 @@ public class ExaminationRoomService {
 
 
     public List<ExaminationRoomDTO> getAllExaminationRooms() {
-        List<ExaminationRoomModel> examRooms = examinationRoomRepository.findAll();
-        if (!examRooms.isEmpty()) {
-            List<ExaminationRoomDTO> examRoomDTOs = new ArrayList<>();
-            for (ExaminationRoomModel room : examRooms) {
-                ExaminationRoomDTO dto = ExaminationRoomDTO.fromModel(room);
-                examRoomDTOs.add(dto);
-            }
-            return examRoomDTOs;
-        }
-        throw new ApiException("Not found", HttpStatus.NOT_FOUND);
+        return examinationRoomRepository.findAll()
+                .stream().map(ExaminationRoomDTO::fromModel)
+                .toList();
     }
 
     public ExaminationRoomDTO getExaminationRoomById(int examinationRoomId) {
-        ExaminationRoomModel examRooms = examinationRoomRepository.findById(examinationRoomId);
-        if (examRooms.getExaminationRoomId() == examinationRoomId) {
-            ExaminationRoomDTO examRoomDto = null;
-            examRoomDto = ExaminationRoomDTO.fromModel(examRooms);
-            return examRoomDto;
-        }
-        throw new ApiException("Not found", HttpStatus.NOT_FOUND);
+
+        return ExaminationRoomDTO.fromModel(examinationRoomRepository.findById(examinationRoomId)
+                .orElseThrow(() -> new ApiException("Not found", HttpStatus.NOT_FOUND)));
+
     }
+
 
     public List<ExaminationRoomDTO> getExaminationRoomsByExamId(int examId) {
-        List<ExaminationRoomModel> examRooms = examinationRoomRepository.findAll();
-        ExamModel examModel = examRepository.findById(examId).orElseThrow(()-> new ApiException("No exam rooms found", HttpStatus.NOT_FOUND));
-        if (!examRooms.isEmpty()) {
-            List<ExaminationRoomDTO> roomDTOs = new ArrayList<>();
-            for (ExaminationRoomModel rooms : examRooms) {
-                if (rooms.getExam().getExamId() == examId) {
-                    ExaminationRoomDTO dto = ExaminationRoomDTO.fromModel(rooms);
-                    roomDTOs.add(dto);
-                }
-            }
-            return roomDTOs;
-        }
-        throw new ApiException("Invalid Exam ID", HttpStatus.NOT_FOUND);
+        ExamModel examModel = examRepository.findById(examId)
+                .orElseThrow(() -> new ApiException("No exam rooms found", HttpStatus.NOT_FOUND));
+        return examinationRoomRepository.findAll().stream()
+                .filter(rooms -> rooms.getExam().getExamId() == examId)
+                .map(ExaminationRoomDTO::fromModel)
+                .toList();
     }
+
 
     public List<ExaminationRoomDTO> getExaminationRoomsByStudentId(String studentId) {
-        List<ExaminationRoomModel> examinationRooms = examinationRoomRepository.findAll();
-        StudentModel student = studentRepository.findById(studentId).orElseThrow(()-> new ApiException("No exam rooms found", HttpStatus.NOT_FOUND));
-        if (!examinationRooms.isEmpty()) {
-            List<ExaminationRoomDTO> roomDTOs = new ArrayList<>();
-            for (ExaminationRoomModel room : examinationRooms) {
-                if (room.getStudent().getStudentId().equals(studentId)) {
-                    ExaminationRoomDTO dto = ExaminationRoomDTO.fromModel(room);
-                    roomDTOs.add(dto);
-                }
-            }
-            return roomDTOs;
-        }
-        throw new ApiException("No exam rooms", HttpStatus.NOT_FOUND);
+        StudentModel student = studentRepository.findById(studentId)
+                .orElseThrow(() -> new ApiException("No exam rooms found", HttpStatus.NOT_FOUND));
+        return examinationRoomRepository.findAll().stream()
+                .filter(room -> room.getStudent().getStudentId().equals(studentId))
+                .map(ExaminationRoomDTO::fromModel)
+                .toList();
     }
 
- /*   public List<ExaminationRoomDTO> getStudentsInExamHall(int examHallId) {
-        List<ExaminationRoomModel> examinationRooms = examinationRoomRepository.findAll();
-        ExamHallModel examHallModel = examHallRepository.findById(examHallId).orElseThrow(() -> new ApiException("No exam rooms found", HttpStatus.NOT_FOUND));
-        if (!examinationRooms.isEmpty()) {
-            List<ExaminationRoomDTO> roomDTOs = new ArrayList<>();
-            for (ExaminationRoomModel room : examinationRooms) {
-                if (room.getExam().getExamHall().getExamHallId() == examHallId) {
-                    ExaminationRoomDTO dto = ExaminationRoomDTO.fromModel(room);
-                    roomDTOs.add(dto);
-                }
-            }
-            return roomDTOs;
-        }
-        throw new ApiException("No exam rooms found", HttpStatus.NOT_FOUND);
-    }*/
+
+
 }

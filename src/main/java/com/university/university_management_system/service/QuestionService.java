@@ -26,36 +26,27 @@ public class QuestionService {
 
 
     public List<QuestionDTO> getAllQuestions() {
-        List<QuestionDTO> questionDTOs = new ArrayList<>();
         List<QuestionModel> questionModels = questionRepository.findAll();
-
-        if (!questionModels.isEmpty()) {
-            for (QuestionModel model : questionModels) {
-                questionDTOs.add(QuestionDTO.fromModel(model));
-            }
-            return questionDTOs;
-        } else {
+        if (questionModels.isEmpty()) {
             throw new ApiException("No questions found.", HttpStatus.NOT_FOUND);
         }
+        return questionModels.stream()
+                .map(QuestionDTO::fromModel)
+                .toList();
     }
 
     public QuestionDTO getQuestionById(int questionId) {
-        QuestionModel model = questionRepository.findById(questionId).orElse(null);
-        if (model == null) {
-            throw new ApiException("Question not found with the ID ", HttpStatus.NOT_FOUND);
-        }
+        QuestionModel model = questionRepository.findById(questionId)
+                .orElseThrow(() -> new ApiException("Question not found with the ID", HttpStatus.NOT_FOUND));
         return QuestionDTO.fromModel(model);
     }
 
     public List<QuestionDTO> getQuestionsByTypeId(int questionTypeId) {
-        List<QuestionDTO> questionDTOs = new ArrayList<>();
         List<QuestionModel> questionModels = questionRepository.findAll();
-
-        for (QuestionModel model : questionModels) {
-            if (model.getQuestionTypeId().getTypeId() == questionTypeId) {
-                questionDTOs.add(QuestionDTO.fromModel(model));
-            }
-        }
+        List<QuestionDTO> questionDTOs = questionModels.stream()
+                .filter(model -> model.getQuestionTypeId().getTypeId() == questionTypeId)
+                .map(QuestionDTO::fromModel)
+                .toList();
 
         if (questionDTOs.isEmpty()) {
             throw new ApiException("No questions found for Question Type ID: " + questionTypeId, HttpStatus.NOT_FOUND);
@@ -65,14 +56,11 @@ public class QuestionService {
     }
 
     public List<QuestionDTO> getQuestionsByCloId(int cloId) {
-        List<QuestionDTO> questionDTOs = new ArrayList<>();
         List<QuestionModel> questionModels = questionRepository.findAll();
-
-        for (QuestionModel model : questionModels) {
-            if (model.getClo().getCloId() == cloId) {
-                questionDTOs.add(QuestionDTO.fromModel(model));
-            }
-        }
+        List<QuestionDTO> questionDTOs = questionModels.stream()
+                .filter(model -> model.getClo().getCloId() == cloId)
+                .map(QuestionDTO::fromModel)
+                .toList();
 
         if (questionDTOs.isEmpty()) {
             throw new ApiException("No questions found for CLO ID: " + cloId, HttpStatus.NOT_FOUND);
@@ -80,24 +68,26 @@ public class QuestionService {
 
         return questionDTOs;
     }
+
     public QuestionDTO createNewQuestion(Map<String, Object> questionBody) {
         QuestionModel questionModel = new QuestionModel();
         try {
             questionModel.setQuestionTitle(String.valueOf(questionBody.get("title")));
             questionModel.setDescription((String) questionBody.get("description"));
             questionModel.setMarks(Integer.parseInt(String.valueOf(questionBody.get("marks"))));
-            questionModel.setClo(cloRepository.findById(Integer.parseInt(String.valueOf(questionBody.get("cloID")))).orElseThrow(() -> new ApiException("Question not found", HttpStatus.NOT_FOUND)));
-            questionModel.setQuestionTypeId(questionTypeRepository.findById(Integer.parseInt(String.valueOf(questionBody.get("questionType")))).orElseThrow(() -> new ApiException("Question not found", HttpStatus.NOT_FOUND)));
-        }
-        catch (ApiException e) {
+            questionModel.setClo(cloRepository.findById(Integer.parseInt(String.valueOf(questionBody.get("cloID"))))
+                    .orElseThrow(() -> new ApiException("Question not found", HttpStatus.NOT_FOUND)));
+            questionModel.setQuestionTypeId(questionTypeRepository.findById(Integer.parseInt(String.valueOf(questionBody.get("questionType"))))
+                    .orElseThrow(() -> new ApiException("Question not found", HttpStatus.NOT_FOUND)));
+        } catch (ApiException e) {
             throw new ApiException("Error creating questions", HttpStatus.BAD_REQUEST);
         }
         try {
             questionRepository.save(questionModel);
-        }
-        catch (ApiException e) {
+        } catch (ApiException e) {
             throw new ApiException("Error creating questions", HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return QuestionDTO.fromModel(questionModel);
     }
+
 }

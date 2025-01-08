@@ -1,6 +1,7 @@
 package com.university.university_management_system.service;
 
 import com.university.university_management_system.DTOs.DepartmentDTO;
+import com.university.university_management_system.DTOs.DepartmentFacultyDTO;
 import com.university.university_management_system.utils.Constants;
 import com.university.university_management_system.exceptions.ApiException;
 import com.university.university_management_system.model.DepartmentModel;
@@ -24,56 +25,30 @@ public class DepartmentService {
     private FacultyRepository facultyRepository;
 
     public List<DepartmentDTO> getAllDepartments() {
-        List<DepartmentModel> departments = departmentRepository.findAll();
-        if (departments.isEmpty()) {
-            throw new ApiException("No departments found", HttpStatus.NOT_FOUND);
-        }
-        List<DepartmentDTO> departmentDTOs = new ArrayList<>();
-        for (DepartmentModel department : departments) {
-            departmentDTOs.add(DepartmentDTO.fromModel(department));
-        }
-        return departmentDTOs;
+        return departmentRepository.findAll()
+                .stream().map(DepartmentDTO::fromModel).toList();
     }
 
     public DepartmentDTO getDepartmentById(int departmentId) {
-        DepartmentModel department = departmentRepository.findById(departmentId)
+        return departmentRepository.findById(departmentId)
+                .map(DepartmentDTO::fromModel)
                 .orElseThrow(() -> new ApiException("Department not found", HttpStatus.NOT_FOUND));
-        return DepartmentDTO.fromModel(department);
     }
 
     public List<DepartmentDTO> getDepartmentsByDepartmentHeadId(int headId) {
         FacultyModel headOfDep = facultyRepository.findById(headId)
-                .orElseThrow(() -> new ApiException("Invalid id for the head of Department", HttpStatus.NOT_FOUND));
+                .filter(faculty -> faculty.getDesignation().getDesignationName().equals(Constants.HEAD_OF_DEPARTMENT))
+                .orElseThrow(() -> new ApiException("Invalid id for the head of Department or not a valid HOD", HttpStatus.NOT_FOUND));
 
-        if (!headOfDep.getDesignation().getDesignationName().equals(Constants.HEAD_OF_DEPARTMENT)) {
-            throw new ApiException("Please provide a valid HOD id", HttpStatus.NOT_FOUND);
+        List<DepartmentDTO> result = departmentRepository.findAll().stream()
+                .filter(department -> department.getDepartmentHead() != null && department.getDepartmentHead().getFacultyId() == headId)
+                .map(DepartmentDTO::fromModel)
+                .toList();
+
+        if (result.isEmpty()) {
+            throw new ApiException("No departments found for the given head ID", HttpStatus.NOT_FOUND);
         }
-
-        List<DepartmentModel> departments = departmentRepository.findAll();
-        if (!departments.isEmpty()) {
-            List<DepartmentDTO> result = new ArrayList<>();
-            for (DepartmentModel department : departments) {
-                if (department.getDepartmentHead() != null && department.getDepartmentHead().getFacultyId() == headId) {
-                    result.add(DepartmentDTO.fromModel(department));
-                }
-            }
-
-            if (result.isEmpty()) {
-                throw new ApiException("No departments found for the given head ID", HttpStatus.NOT_FOUND);
-            }
-            return result;
-        }
-
-        throw new ApiException("No departments found", HttpStatus.NOT_FOUND);
+        return result;
     }
 
-    public DepartmentDTO getDepartmentByDepartmentName(String departmentName) {
-        List<DepartmentModel> departments = departmentRepository.findAll();
-        for (DepartmentModel department : departments) {
-            if (department.getDepartmentName().equalsIgnoreCase(departmentName)) {
-                return DepartmentDTO.fromModel(department);
-            }
-        }
-        throw new ApiException("Department not found", HttpStatus.NOT_FOUND);
-    }
 }

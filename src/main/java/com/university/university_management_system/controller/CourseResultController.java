@@ -28,7 +28,7 @@ public class CourseResultController {
     }
 
     @GetMapping("/student/{studentId}")
-    public List<CourseResultDTO> getCourseResultsByStudentId(@PathVariable int studentId) {
+    public List<CourseResultDTO> getCourseResultsByStudentId(@PathVariable String studentId) {
         return courseResultService.getByStudentId(studentId);
     }
 
