@@ -8,23 +8,22 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("students/{studentId}/enrolledcourses")
 public class EnrolledCoursesController {
 
     @Autowired
     EnrolledCourseService enrolledCourseService;
 
-    @GetMapping("")
+    @GetMapping("/enrolledcourses")
     public List<EnrolledCourseDTO> getAllEnrolledCourses(@PathVariable String studentId) {
         return enrolledCourseService.getCoursesByStudentId(studentId);
     }
 
-    @GetMapping("/{enrolledCourseId}")
+    @GetMapping("/enrolledcourses//{enrolledCourseId}")
     public EnrolledCourseDTO getEnrolledCourseById(@PathVariable int enrolledCourseId) {
         return enrolledCourseService.getEnrolledCourseById(enrolledCourseId);
     }
 
-    @GetMapping("/bycourse/{courseCode}")
+    @GetMapping("/courses/{courseCode}/students")   
     public List<EnrolledCourseDTO> getStudentsByCourseCode(@PathVariable String courseCode) {
         return enrolledCourseService.getStudentsByCourseCode(courseCode);
     }
