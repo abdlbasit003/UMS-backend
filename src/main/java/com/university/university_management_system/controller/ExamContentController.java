@@ -12,28 +12,28 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/exam-contents")
+
 public class ExamContentController {
 
     @Autowired
     private ExamContentService examContentService;
 
-    @GetMapping
+    @GetMapping("/exam-contents")
     public List<ExamContentDTO> getAllExamContents() {
         return examContentService.getAllExamContents();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/exam-contents/{id}")
     public ExamContentDTO getExamContentById(@PathVariable int id) {
         return examContentService.getExamContentById(id);
     }
 
-    @GetMapping("/content-type/{contentTypeId}")
+    @GetMapping("/content-type/{contentTypeId}/exam-contents")
     public List<ExamContentDTO> getExamContentsByContentTypeId(@PathVariable int contentTypeId) {
         return examContentService.getExamContentsByContentTypeId(contentTypeId);
     }
 
-    @GetMapping("/question/{questionId}")
+    @GetMapping("/question/{questionId}/exam-contents")
     public List<ExamContentDTO> getExamContentsByQuestionId(@PathVariable int questionId) {
         return examContentService.getExamContentsByQuestionId(questionId);
     }
