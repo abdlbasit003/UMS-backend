@@ -61,7 +61,7 @@ public class ExamScheduleController {
         return examScheduleService.getCompleteScheduleOfStudent(studentId);
     }
 
-    @GetMapping("/course/{coursecode}")
+    @GetMapping("/course/{courseCode}")
     public List<ExamScheduleDTO> getByCourse(@PathVariable String courseCode) {
         return examScheduleService.getByCourse(courseCode);
     }
