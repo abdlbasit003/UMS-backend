@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Tag (name = "Designation", description = "Designation endpoints" )
+
 @RequestMapping("/designations")
 public class DesignationController {
 

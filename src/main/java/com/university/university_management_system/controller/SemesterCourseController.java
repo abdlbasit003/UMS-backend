@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@Tag (name = "SemesterCourse", description = "SemesterCourse endpoints" )
+
 @RequestMapping("/semester_courses")
 public class SemesterCourseController {
     @Autowired

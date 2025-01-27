@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
+@Tag(name = "Authentication", descirption = "Auth endpoints")
 public class AuthController {
 
 

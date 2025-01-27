@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@Tag (name = "Course Result", description = "Course Result endpoints" )
+
 @RequestMapping("/courseresults")
 public class CourseResultController {
 

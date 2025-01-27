@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@Tag (name = "Exam Type", description = "Exam Type endpoints" )
+
 @RequestMapping("/examtypes")
 public class ExamTypeController {
     @Autowired

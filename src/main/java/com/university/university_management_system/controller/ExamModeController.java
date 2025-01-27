@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@Tag (name = "Exam Mode", description = "Exam Mode endpoints" )
+
 @RequestMapping("/exammodes")
 public class ExamModeController {
     @Autowired

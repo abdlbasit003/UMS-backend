@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@Tag (name = "Exam Paper Submission", description = "Exam Paper Submission endpoints" )
+
 @RequestMapping("/exampapersubmissions")
 public class ExamPaperSubmissionController {
     @Autowired

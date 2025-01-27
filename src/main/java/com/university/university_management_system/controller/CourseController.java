@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@Tag (name = "Course", description = "Course endpoints" )
+
 @RequestMapping("/courses")
 public class CourseController {
     @Autowired

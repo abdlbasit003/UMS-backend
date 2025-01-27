@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@Tag (name = "Department", description = "Department endpoints" )
+
 @RequestMapping("/departments")
 public class DepartmentController {
 

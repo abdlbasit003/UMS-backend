@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@Tag (name = "Course Instructor", description = "Course Instructor endpoints" )
 
 public class CourseInstructorController {
     @Autowired

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-
+@Tag (name = "CLO", description = "CLO endpoints" )
 public class CLOController {
     @Autowired
     CloService cloService;

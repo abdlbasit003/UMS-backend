@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@Tag (name = "Question", description = "Question endpoints" )
+
 @RequestMapping("/questions")
 public class QuestionController {
 
