@@ -10,7 +10,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/exam-schedules")
+@RequestMapping("/examschedules")
 public class ExamScheduleController {
 
     @Autowired
@@ -36,12 +36,12 @@ public class ExamScheduleController {
         return examScheduleService.getByExaminationRoomId(roomId);
     }
 
-    @GetMapping("/start-time")
+    @GetMapping("/starttime")
     public List<ExamScheduleDTO> getByStartTime(@RequestParam LocalTime startTime) {
         return examScheduleService.getByStartTime(startTime);
     }
 
-    @GetMapping("/end-time")
+    @GetMapping("/endtime")
     public List<ExamScheduleDTO> getByEndTime(@RequestParam LocalTime endTime) {
         return examScheduleService.getByEndTime(endTime);
     }
@@ -61,8 +61,8 @@ public class ExamScheduleController {
         return examScheduleService.getCompleteScheduleOfStudent(studentId);
     }
 
-    @GetMapping("/course")
-    public List<ExamScheduleDTO> getByCourse(@RequestParam String courseCode) {
+    @GetMapping("/course/{coursecode}")
+    public List<ExamScheduleDTO> getByCourse(@PathVariable String courseCode) {
         return examScheduleService.getByCourse(courseCode);
     }
 }
