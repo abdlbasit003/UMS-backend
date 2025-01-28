@@ -3,6 +3,7 @@ package com.university.university_management_system.controller;
 
 import com.university.university_management_system.model.UserModel;
 import com.university.university_management_system.service.AuthService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@Tag(name = "Authentication", descirption = "Auth endpoints")
+@Tag(name = "Authentication",description = "Auth endpoints")
 public class AuthController {
 
 
