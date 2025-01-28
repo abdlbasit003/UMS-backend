@@ -135,7 +135,7 @@ public class ExamScheduleService {
         List<ExamScheduleDTO> examScheduleDTOS = new ArrayList<>();
         for (ExamScheduleModel model : schedules) {
             for (EnrolledCourseDTO enrolledCourse : enrolledCourseDTOS) {
-                if (model.getExaminationRoom().getStudent().getStudentId().equals(enrolledCourse.getStudentDTO().getStudentId())) {
+                if (model.getExaminationRoom().getStudent().getStudentId().equals(enrolledCourse.getStudent().getStudentId())) {
                     examScheduleDTOS.add(ExamScheduleDTO.fromModel(model));
                 }
             }

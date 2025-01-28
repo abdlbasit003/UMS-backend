@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +32,8 @@ public class ExamService {
     ExamTypeRepository examTypeRepository;
     @Autowired
     ExamModeRepository examModeRepository;
+    @Autowired
+    ExamPaperSubmissionService examPaperSubmissionService;
 
     public List<ExamDTO> getAllExams() {
         List<ExamModel> allExams = examRepository.findAll();
@@ -117,7 +120,13 @@ public class ExamService {
             throw new ApiException("Error creating new Exam", HttpStatus.BAD_REQUEST);
         }
         try {
+            Map<String,Object> submissionBody = new HashMap<>();
+            submissionBody.put("exam",examModel);
+            submissionBody.put("dueDate","02-03-2025");
+            submissionBody.put("submittedBy",examBody.get("submittedBy"));
             examRepository.save(examModel);
+            examPaperSubmissionService.createExamSubmission(submissionBody);
+
         } catch (ApiException e) {
             throw new ApiException("Error creating new Exam", HttpStatus.INTERNAL_SERVER_ERROR);
         }

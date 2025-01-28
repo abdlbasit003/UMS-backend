@@ -23,7 +23,7 @@ public class EnrolledCourseDTO {
         return enrolledCourseId;
     }
 
-    public StudentDTO getStudentDTO() {
+    public StudentDTO getStudent() {
         return studentDTO;
     }
 
@@ -35,7 +35,7 @@ public class EnrolledCourseDTO {
         this.enrolledCourseId = enrolledCourseId;
     }
 
-    public void setStudentDTO(StudentDTO studentDTO) {
+    public void setStudent(StudentDTO studentDTO) {
         this.studentDTO = studentDTO;
     }
 

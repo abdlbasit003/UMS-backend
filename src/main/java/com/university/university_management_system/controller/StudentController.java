@@ -30,5 +30,12 @@ public class StudentController {
 
 
     }
+    @GetMapping("/uid/{uuid}")
+    public ResponseEntity<?> getStudentByUuid(@PathVariable String uuid){
+        return ResponseEntity.ok(studentService.getStudentByUUid(uuid));
+
+
+    }
+
 
 }
