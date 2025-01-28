@@ -1,5 +1,6 @@
 package com.university.university_management_system.DTOs;
 
+import com.university.university_management_system.model.SemesterModel;
 import com.university.university_management_system.model.StudentModel;
 
 public class StudentDTO {
@@ -10,15 +11,17 @@ public class StudentDTO {
     private String studentName;
     private String departmentName;
     private String enrollmentYear;
+    private SemesterModel semester;
     private double CGPA;
 
 
-    public StudentDTO(String uuid, String studentId, String studentName, String departmentName, String enrollmentYear, double CGPA) {
+    public StudentDTO(String uuid, String studentId, String studentName, String departmentName, String enrollmentYear,SemesterModel semester, double CGPA) {
         this.uuid = uuid;
         this.studentId = studentId;
         this.studentName = studentName;
         this.departmentName = departmentName;
         this.enrollmentYear = enrollmentYear;
+        this.semester = semester;
         this.CGPA = CGPA;
     }
 
@@ -70,6 +73,14 @@ public class StudentDTO {
         this.CGPA = CGPA;
     }
 
+    public SemesterModel getSemester() {
+        return semester;
+    }
+
+    public void setSemester(SemesterModel semester) {
+        this.semester = semester;
+    }
+
     public static StudentDTO fromModel(StudentModel studentModel){
         return new StudentDTO(
                 studentModel.getUser().getUuid(),
@@ -77,6 +88,7 @@ public class StudentDTO {
                 studentModel.getStudentName(),
                 studentModel.getDepartment().getDepartmentName(),
                 studentModel.getStudentEnrollmentYear(),
+                studentModel.getSemester(),
                 studentModel.getStudentCgpa()
         );
     }

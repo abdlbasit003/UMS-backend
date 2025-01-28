@@ -28,6 +28,11 @@ public class StudentService {
         return StudentDTO.fromModel(studentModel);
     }
 
+    public StudentDTO getStudentByUUid(String uuid){
+        StudentModel studentModel = studentRepository.getByUuid(uuid);
+        return StudentDTO.fromModel(studentModel);
+    }
+
 
 
 

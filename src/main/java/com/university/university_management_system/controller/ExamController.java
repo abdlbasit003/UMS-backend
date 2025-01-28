@@ -65,7 +65,6 @@ public class ExamController {
     }
     @PostMapping("/create")
     public ResponseEntity<ExamDTO> createNewExam(@RequestBody Map<String, Object> examBody){
-
         ExamDTO examDTO = examService.createNewExam(examBody);
         return new ResponseEntity<>(examDTO, HttpStatus.CREATED);
 

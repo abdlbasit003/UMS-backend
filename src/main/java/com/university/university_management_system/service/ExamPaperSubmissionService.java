@@ -11,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ExamPaperSubmissionService {
@@ -126,6 +128,18 @@ public class ExamPaperSubmissionService {
                 .toList();
     }
 
-
+    public void createExamSubmission(Map<String,Object> body){
+            ExamPaperSubmissionModel examPaperSubmissionModel = new ExamPaperSubmissionModel();
+            examPaperSubmissionModel.setExam((ExamModel) body.get("exam"));
+            examPaperSubmissionModel.setSubmissionDueDate(LocalDateTime.parse(String.valueOf(body.get("dueDate"))));
+            examPaperSubmissionModel.setStatus(examPaperStatusRepository.findById(1).orElseThrow());
+            examPaperSubmissionModel.setSubmittedBy(facultyRepository.findById((int)body.get("submittedBy")).orElseThrow());
+            examPaperSubmissionModel.setSubmittedOn(LocalDateTime.now());
+            examPaperSubmissionModel.setApprovedBy(null);
+            examPaperSubmissionModel.setArchivedBy(null);
+            examPaperSubmissionModel.setPublishedBy(null);
+            examPaperSubmissionModel.setRejectedBy(null);
+            examPaperSubmissionRepository.save(examPaperSubmissionModel);
+    }
 
 }
