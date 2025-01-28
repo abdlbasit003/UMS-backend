@@ -10,12 +10,14 @@ import com.university.university_management_system.model.ExamScheduleModel;
 import com.university.university_management_system.repository.ExamScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class ExamScheduleService {
 
     @Autowired
