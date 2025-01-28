@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@Tag (name = "Faculty", description = "Faculty endpoints" )
+
 @RequestMapping("/faculty")
 public class FacultyController {
     @Autowired

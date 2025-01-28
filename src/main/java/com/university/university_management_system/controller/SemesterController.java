@@ -11,6 +11,8 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
+@Tag (name = "Semester", description = "Semester endpoints" )
+
 @RequestMapping("/semesters")
 public class SemesterController {
 

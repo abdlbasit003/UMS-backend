@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@Tag (name = "Examination Room", description = "Examination Rooom endpoints" )
+
 @RequestMapping("/examrooms")
 public class ExaminationRoomController {
 

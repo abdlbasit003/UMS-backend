@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@Tag (name = "Exam Content", description = "Exam Content endpoints" )
+
 @RequestMapping("/exam-contents")
 public class ExamContentController {
 

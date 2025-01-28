@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@Tag (name = "Exam Questions", description = "Exam Questions endpoints" )
+
 @RequestMapping("/exams/{examId}/questions")
 public class ExamQuestionsController {
 

@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/semestercourses")
+@Tag (name = "SemesterCourse", description = "SemesterCourse endpoints" )
 public class SemesterCourseController {
     @Autowired
     SemesterCourseService semesterCourseService;

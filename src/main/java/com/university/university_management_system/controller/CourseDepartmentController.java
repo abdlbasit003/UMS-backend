@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@Tag (name = "CourseDepartment", description = "CourseDepartment endpoints" )
+
 public class CourseDepartmentController {
 
     @Autowired

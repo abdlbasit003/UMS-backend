@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@Tag (name = "Exemption Request", description = "Exemption Request endpoints" )
+
 public class ExemptionRequestController {
 
     @Autowired
