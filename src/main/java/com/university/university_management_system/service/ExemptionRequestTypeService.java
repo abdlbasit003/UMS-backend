@@ -5,10 +5,11 @@ import com.university.university_management_system.model.ExemptionRequestTypeMod
 import com.university.university_management_system.repository.ExemptionRequestTypeRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.method.HandlerTypePredicate;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public class ExemptionRequestTypeService {
 
     private ExemptionRequestTypeRepository repository;
