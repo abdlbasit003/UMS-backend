@@ -2,6 +2,7 @@ package com.university.university_management_system.controller;
 
 import com.university.university_management_system.DTOs.ExamScheduleDTO;
 import com.university.university_management_system.service.ExamScheduleService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/examschedules")
+@Tag(name = "Exam Schedules")
 public class ExamScheduleController {
 
     @Autowired
