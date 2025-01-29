@@ -2,10 +2,9 @@ package com.university.university_management_system.service;
 
 import com.university.university_management_system.DTOs.QuestionDTO;
 import com.university.university_management_system.exceptions.ApiException;
+import com.university.university_management_system.model.ExamQuestionsModel;
 import com.university.university_management_system.model.QuestionModel;
-import com.university.university_management_system.repository.CLORepository;
-import com.university.university_management_system.repository.QuestionRepository;
-import com.university.university_management_system.repository.QuestionTypeRepository;
+import com.university.university_management_system.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -23,6 +22,10 @@ public class QuestionService {
     private CLORepository cloRepository;
     @Autowired
     QuestionTypeRepository questionTypeRepository;
+    @Autowired
+    ExamRepository examRepository;
+    @Autowired
+    ExamQuestionsRepository examQuestionsRepository;
 
 
     public List<QuestionDTO> getAllQuestions() {
@@ -71,6 +74,7 @@ public class QuestionService {
 
     public QuestionDTO createNewQuestion(Map<String, Object> questionBody) {
         QuestionModel questionModel = new QuestionModel();
+        ExamQuestionsModel examQuestionsModel = new ExamQuestionsModel();
         try {
             questionModel.setQuestionTitle(String.valueOf(questionBody.get("title")));
             questionModel.setDescription((String) questionBody.get("description"));
@@ -79,11 +83,17 @@ public class QuestionService {
                     .orElseThrow(() -> new ApiException("Question not found", HttpStatus.NOT_FOUND)));
             questionModel.setQuestionTypeId(questionTypeRepository.findById(Integer.parseInt(String.valueOf(questionBody.get("questionType"))))
                     .orElseThrow(() -> new ApiException("Question not found", HttpStatus.NOT_FOUND)));
+
+
         } catch (ApiException e) {
             throw new ApiException("Error creating questions", HttpStatus.BAD_REQUEST);
         }
         try {
             questionRepository.save(questionModel);
+            examQuestionsModel.setQuestion(questionModel);
+            examQuestionsModel.setExam(examRepository.findById(Integer.parseInt(String.valueOf(questionBody.get("examId"))))
+                    .orElseThrow(() -> new ApiException("Exam not found", HttpStatus.NOT_FOUND)));
+            examQuestionsRepository.save(examQuestionsModel);
         } catch (ApiException e) {
             throw new ApiException("Error creating questions", HttpStatus.INTERNAL_SERVER_ERROR);
         }
